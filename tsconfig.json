@@ -8,6 +8,8 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "outDir": "./dist",
-    "typeRoots": ["./node_modules/@types"]
-  }
+    "typeRoots": ["./node_modules/@types"]  // Ensure types are picked from here
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

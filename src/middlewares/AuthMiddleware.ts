@@ -10,7 +10,7 @@ interface DecodedToken extends JwtPayload {
 
 // Create a custom request interface extending Express.Request
 interface AuthenticatedRequest extends Request {
-  user?: DecodedToken;
+  user?: any;
 }
 
 const secret = process.env.JWT_SECRET || 'your-secret-key';
