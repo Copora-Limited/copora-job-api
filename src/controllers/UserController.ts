@@ -1,3 +1,4 @@
+// src/controllers/UserController.ts
 import { Request, Response, NextFunction } from 'express';
 import multer from 'multer';
 import { AuthenticatedRequest } from '../types/AuthenticatedRequest'; // Adjust the import based on your project structure

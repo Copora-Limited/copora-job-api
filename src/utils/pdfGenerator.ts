@@ -24,8 +24,8 @@ export const generatePDF = (data: {
             const doc = new PDFDocument({ margins: { top: 100, bottom: 100, left: 50, right: 50 } });
 
             // Paths to the header and footer images
-            const headerImagePath = path.join(__dirname, 'images', 'letter-header.png');
-            const footerImagePath = path.join(__dirname, 'images', 'letter-footer.png');
+            const headerImagePath = path.resolve(__dirname, '..', '..', '..', 'images', 'letter-header.png');
+            const footerImagePath = path.resolve(__dirname, '..', '..', '..', 'images', 'letter-footer.png');           
 
             // Split jobDescription string into bullet points
             const jobDescriptionBullets = data.jobDescription

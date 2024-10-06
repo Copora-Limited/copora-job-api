@@ -13,7 +13,6 @@ exports.PersonalDetailsController = void 0;
 const PersonalDetailsService_1 = require("../services/PersonalDetailsService");
 const UserService_1 = require("../services/UserService");
 const cloudinary_1 = require("cloudinary");
-// APP-C57FF572
 // Configure Cloudinary
 cloudinary_1.v2.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

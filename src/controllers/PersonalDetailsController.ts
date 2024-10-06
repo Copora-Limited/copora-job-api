@@ -1,23 +1,16 @@
+// src/controllers/PersonalDetailsController.ts
 import { Request, Response } from 'express';
 import { PersonalDetailsService } from '../services/PersonalDetailsService';
 import { UserService } from '../services/UserService';
 import { v2 as cloudinary } from 'cloudinary';
 
-
-// APP-C57FF572
-
 // Configure Cloudinary
-
-
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
   });
 export class PersonalDetailsController {
-
-
-
   // Helper function to upload a file to Cloudinary
   static async uploadPassportPhoto(file: Express.Multer.File | undefined): Promise<string> {
     if (!file) return '';

@@ -14,8 +14,8 @@ const generatePDF = (data, outputPath) => {
             const dateSigned = `${data.day} ${data.month}, ${data.year}`;
             const doc = new pdfkit_1.default({ margins: { top: 100, bottom: 100, left: 50, right: 50 } });
             // Paths to the header and footer images
-            const headerImagePath = path_1.default.join(__dirname, 'images', 'letter-header.png');
-            const footerImagePath = path_1.default.join(__dirname, 'images', 'letter-footer.png');
+            const headerImagePath = path_1.default.resolve(__dirname, '..', '..', '..', 'images', 'letter-header.png');
+            const footerImagePath = path_1.default.resolve(__dirname, '..', '..', '..', 'images', 'letter-footer.png');
             // Split jobDescription string into bullet points
             const jobDescriptionBullets = data.jobDescription
                 .split('.')
