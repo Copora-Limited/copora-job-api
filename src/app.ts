@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import rateLimiter from './middlewares/rateLimiter'; // Import the rate limiter middleware
 import userRoutes from './routes/UserRoutes';
 import userPrivateRoutes from './routes/UsersPrivateRoutes';
+import BulkEmailRoutes from './routes/BulkEmailRoutes';
 import userApplicant from './routes/ApplicationRoutes';
 import AgreementConsentRoutes from './routes/AgreementConsentRoutes';
 import ApplicationRoutes from './routes/ApplicationRoutes';
@@ -40,7 +41,7 @@ AppDataSource.initialize()
     const app = express();
     const isLocal = process.env.NODE_ENV === 'development'; // Check if running in development mode
 
-    const port = process.env.PORT || 8000;
+    const port = process.env.PORT || 4000;
     const url = isLocal ? process.env.LOCAL_URL : process.env.REMOTE_URL;
 
     // Trust the proxy (important when running behind a load balancer or proxy)
@@ -75,6 +76,7 @@ AppDataSource.initialize()
     app.use(`/users`, userRoutes);
     app.use(`/applicant`, userApplicant);
     app.use(`/auth/users`, userPrivateRoutes);
+    app.use(`/bulk-email`, BulkEmailRoutes);
     app.use(`/agreement-consent`, AgreementConsentRoutes);
     app.use(`/application`, ApplicationRoutes);
     app.use(`/bank-details`, BankDetailsRoutes);

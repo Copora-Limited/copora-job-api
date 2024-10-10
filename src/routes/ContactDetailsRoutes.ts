@@ -29,7 +29,10 @@ const router = Router();
  *               phone:
  *                 type: string
  *                 example: "+1234567890"
- *               street:
+ *               address_line_1:
+ *                 type: string
+ *                 example: "123 Main St"
+ *               address_line_2:
  *                 type: string
  *                 example: "123 Main St"
  *               country:
@@ -99,9 +102,12 @@ router.post('/', ContactDetailsController.createContactDetails);
  *               phone:
  *                 type: string
  *                 example: "+0987654321"
- *               street:
+ *               address_line_1:
  *                 type: string
  *                 example: "456 Elm St"
+ *               address_line_2:
+ *                 type: string
+ *                 example: "123 Main St"
  *               country:
  *                 type: string
  *                 example: "USA"

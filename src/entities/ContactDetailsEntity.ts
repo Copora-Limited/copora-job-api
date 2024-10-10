@@ -15,7 +15,10 @@ export class ContactDetails {
     phone: string;
 
     @Column()
-    street: string;
+    address_line_1: string;
+
+    @Column()
+    address_line_2: string;
 
     @Column()
     country: string;

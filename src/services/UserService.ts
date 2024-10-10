@@ -175,7 +175,9 @@ export class UserService {
 
   async findByEmail(email: string): Promise<User | null> {
     try {
-      return await userRepository.findOne({ where: { email } });
+      const normalizedEmail = email.trim().toLowerCase();
+      console.log(`Searching for user with email: ${normalizedEmail}`); // Debugging
+      return await userRepository.findOne({ where: { email: normalizedEmail } });
     } catch (error) {
       console.error('Error finding user by email:', error);
       throw new Error('Could not find user by email');

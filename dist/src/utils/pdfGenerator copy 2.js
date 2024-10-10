@@ -23,7 +23,7 @@ const generatePDF = (data, outputPath) => {
             doc.fontSize(16).font('Times-Roman').text('between', { align: 'center' });
             doc.moveDown(2);
             // Company Name (Centered and Bold)
-            doc.fontSize(20).font('Times-Bold').text('COPORA LTD', { align: 'center' });
+            doc.fontSize(20).font('Times-Bold').text('COPORA LIMITED', { align: 'center' });
             doc.moveDown(3);
             // "and" text (Centered)
             doc.fontSize(16).font('Times-Roman').text('and', { align: 'center' });
@@ -798,27 +798,41 @@ const generatePDF = (data, outputPath) => {
             // Add the signature section on a new page
             doc.addPage();
             // Title for the acceptance section
-            doc.font('Times-Bold').fontSize(12).text(`Above terms are accepted between COPORA Ltd and ${data.firstName} ${data.middleName || ''} ${data.lastName}`, {
+            doc.font('Times-Bold').fontSize(12).text('Above terms are accepted between COPORA Ltd and:', {
                 align: 'left',
                 indent: 20,
                 lineGap: 15
             });
             // Add some space for the other party’s details
             doc.moveDown(3);
+            // Signature section for COPORA Ltd
+            doc.fontSize(10).font('Times-Roman').text('Signed on behalf of COPORA LTD:', { indent: 20 });
+            doc.moveDown(1);
+            // Details for COPORA Ltd's representative
+            doc.text('Name: Andrew Smith', { indent: 40 });
+            doc.moveDown(0.5);
+            doc.text('Job Title: Chief Executive Director', { indent: 40 });
+            doc.moveDown(0.5);
+            //  doc.text(`Date: ${dateSigned}`, { indent: 40 });
+            //  doc.moveDown(3);
             // Load and use cursive font for the signatures
             const cursiveFontPath = path_1.default.join(__dirname, 'fonts', 'GreatVibes-Regular.ttf');
             doc.font(cursiveFontPath);
             // Capture the current vertical position for the grid layout
-            const signatureYPosition = doc.y;
+            // const signatureYPosition = doc.y;
             // COPORA Ltd signature (left side)
-            doc.fontSize(24).text('Andrew Smith', 50, signatureYPosition, { width: 200, align: 'left' });
-            doc.font('Times-Roman').fontSize(12).text('Managing Director, Copora Limited', 50, doc.y, { width: 200, align: 'left' });
+            doc.fontSize(24).text('Andrew Smith', 50, { width: 200, align: 'left' });
+            doc.font('Times-Roman').fontSize(12).text('Executive Director, Copora Limited', 50, { width: 200, align: 'left' });
             doc.moveDown(2);
             doc.text(`Date: ${dateSigned}`, 50, doc.y, { width: 200, align: 'left' });
+            // Signature section for the other party
+            doc.text(`Signed by: ${data.firstName} ${data.middleName || ''} ${data.lastName}`, { indent: 20 });
+            doc.moveDown(1.5);
+            doc.text('`Date: ${dateSigned}`', { indent: 20 });
             // Employee Signature (right side)
             doc.font(cursiveFontPath);
-            doc.fontSize(24).text(`${data.firstName} ${data.middleName || ''} ${data.lastName}`, 400, signatureYPosition, { width: 200, align: 'left' });
-            doc.font('Times-Roman').fontSize(12).text('Employee', 400, doc.y, { width: 200, align: 'left' });
+            doc.fontSize(24).text(`${data.firstName} ${data.lastName}`, 400, { width: 200, align: 'left' });
+            doc.font('Times-Roman').fontSize(12).text('Employee', 400, { width: 200, align: 'left' });
             doc.moveDown(2);
             doc.text(`Date: ${dateSigned}`, 400, doc.y, { width: 200, align: 'left' });
             // Finalize the PDF file if not already done in previous code

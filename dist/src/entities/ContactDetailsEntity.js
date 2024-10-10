@@ -29,7 +29,11 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], ContactDetails.prototype, "street", void 0);
+], ContactDetails.prototype, "address_line_1", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], ContactDetails.prototype, "address_line_2", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)

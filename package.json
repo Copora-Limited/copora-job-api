@@ -5,12 +5,10 @@
     "main": "dist/src/app.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon dist/src/app.js && npm run start-cron",
+        "start": "nodemon dist/src/app.js",
         "build": "tsc",
         "generate-swagger": "node generateSwagger.js",
-        "postbuild": "npm run generate-swagger",
-        "seed": "ts-node src/seeds/seedProductImage.ts",
-        "start-cron": "ts-node src/cron-job/sendOnboardingReminder.ts"
+        "postbuild": "npm run generate-swagger"
     },
     "keywords": [],
     "author": "",

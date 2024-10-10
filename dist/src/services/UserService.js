@@ -178,7 +178,9 @@ class UserService {
     findByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                return yield exports.userRepository.findOne({ where: { email } });
+                const normalizedEmail = email.trim().toLowerCase();
+                console.log(`Searching for user with email: ${normalizedEmail}`); // Debugging
+                return yield exports.userRepository.findOne({ where: { email: normalizedEmail } });
             }
             catch (error) {
                 console.error('Error finding user by email:', error);

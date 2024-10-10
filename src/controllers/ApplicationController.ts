@@ -214,7 +214,7 @@ export class ApplicationController {
         Telephone: applicantData.contactDetails?.phone,
         Mobile: applicantData.contactDetails?.phone, // Assuming phone is used for both
         Email: applicantData.user?.email,
-        Address: `${applicantData.contactDetails?.street}, ${applicantData.contactDetails?.town}, ${applicantData.contactDetails?.postcode}`,
+        Address: `${applicantData.contactDetails?.address_line_1}, ${applicantData.contactDetails?.town}, ${applicantData.contactDetails?.postcode}`,
         Country: applicantData.contactDetails?.country,
         Gender: applicantData.personalDetails?.gender,
         Birthday: applicantData.personalDetails?.dateOfBirth,
@@ -294,7 +294,7 @@ export class ApplicationController {
           Telephone: contactDetails?.phone,
           Mobile: contactDetails?.phone, // Assuming phone is used for both
           Email: user?.email,
-          Address: `${contactDetails?.street}, ${contactDetails?.town}, ${contactDetails?.postcode}`,
+          Address: `${contactDetails?.address_line_1}, ${contactDetails?.town}, ${contactDetails?.postcode}`,
           Country: contactDetails?.country,
           Gender: personalDetails?.gender,
           Birthday: personalDetails?.dateOfBirth,
@@ -385,7 +385,7 @@ export class ApplicationController {
       doc.text(`Telephone: ${applicantData.contactDetails?.phone || 'N/A'}`);
       doc.text(`Mobile: ${applicantData.contactDetails?.phone || 'N/A'}`);
       doc.text(`Email: ${applicantData.user?.email || 'N/A'}`);
-      doc.text(`Address: ${applicantData.contactDetails?.street || 'N/A'}, ${applicantData.contactDetails?.town || 'N/A'}, ${applicantData.contactDetails?.postcode || 'N/A'}`);
+      doc.text(`Address: ${applicantData.contactDetails?.address_line_1 || 'N/A'}, ${applicantData.contactDetails?.town || 'N/A'}, ${applicantData.contactDetails?.postcode || 'N/A'}`);
       doc.text(`Country: ${applicantData.contactDetails?.country || 'N/A'}`);
       doc.text(`Gender: ${applicantData.personalDetails?.gender || 'N/A'}`);
       doc.text(`Birthday: ${applicantData.personalDetails?.dateOfBirth || 'N/A'}`);

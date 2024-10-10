@@ -21,20 +21,6 @@ const router = (0, express_1.Router)();
  *                 type: string
  *                 example: APP-3E5E1BE8
  *                 description: The application number of the applicant
- *               jobTitle:
- *                 type: string
- *                 example: "House Keeper"
- *                 description: The title of the job
- *               jobDescription:
- *                 type: string
- *                 description: The job description provided as a string of bullet points, each separated by a period (.)
- *                 example: "Cleaning and maintaining rooms and premises in accordance with Company standards. Ensuring supplies are stocked and equipment is maintained. Responding to requests for housekeeping services. Following health and safety regulations."
- *               startDate:
- *                 type: string
- *                 example: "09 May 2024"
- *               amount:
- *                 type: string
- *                 example: "500 USD"
  *     responses:
  *       200:
  *         description: Agreement document created successfully

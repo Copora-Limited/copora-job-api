@@ -8,10 +8,10 @@ const BulkEmailController_1 = __importDefault(require("../controllers/BulkEmailC
 const router = (0, express_1.Router)();
 /**
  * @swagger
- * /admin/send-bulk-email:
+ * /bulk-email/send-bulk-email:
  *   post:
- *     summary: Send bulk email to users based on filters
- *     description: Allows admin to send bulk emails to users based on their onboarding status, state, or other criteria.
+ *     summary: Send bulk email to specified email addresses
+ *     description: Allows admin to send bulk emails to a list of recipients with a custom subject and content.
  *     tags: [Admin - Private Endpoints]
  *     requestBody:
  *       content:
@@ -19,16 +19,30 @@ const router = (0, express_1.Router)();
  *           schema:
  *             type: object
  *             properties:
- *               onboardingStatus:
+ *               emails:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: email
+ *                   description: Email address of the recipient.
+ *                   example: "sakinropo@gmail.com"
+ *                 description: An array of recipient email addresses.
+ *                 example: [
+ *                   "sakinropo@gmail.com",
+ *                   "engineering@copora.com"
+ *                 ]
+ *               customSubject:
  *                 type: string
- *                 description: The onboarding status of the users to filter.
- *                 example: Onboarding completed
- *               state:
+ *                 description: The subject of the email.
+ *                 example: "Exciting News: Your Journey Begins Here!"
+ *               customContent:
  *                 type: string
- *                 description: The state of the users to filter.
- *                 example: London
+ *                 description: The content/body of the email.
+ *                 example: "We're thrilled to welcome you to our community! Get ready for an amazing experience with us. Let's embark on this journey together!"
  *           required:
- *             - onboardingStatus
+ *             - emails
+ *             - customSubject
+ *             - customContent
  *     responses:
  *       200:
  *         description: Bulk email sent successfully.
@@ -43,14 +57,8 @@ const router = (0, express_1.Router)();
  *                 recipients:
  *                   type: array
  *                   items:
- *                     type: object
- *                     properties:
- *                       email:
- *                         type: string
- *                         example: johndoe@example.com
- *                       name:
- *                         type: string
- *                         example: John Doe
+ *                     type: string
+ *                     example: sakinropo@gmail.com
  *       400:
  *         description: Bad request, missing or invalid fields.
  *         content:
@@ -60,7 +68,7 @@ const router = (0, express_1.Router)();
  *               properties:
  *                 message:
  *                   type: string
- *                   example: Onboarding status is required.
+ *                   example: Emails array is required and should not be empty.
  *       500:
  *         description: Server error.
  *         content:
@@ -74,5 +82,5 @@ const router = (0, express_1.Router)();
  *     security:
  *       - bearerAuth: []  # Apply bearerAuth security scheme
  */
-router.post('/admin/send-bulk-email', BulkEmailController_1.default.sendBulkEmail);
+router.post('/send-bulk-email', BulkEmailController_1.default.sendBulkEmail);
 exports.default = router;

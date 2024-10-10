@@ -1,41 +1,55 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.generatePDF = void 0;
-const pdfkit_1 = __importDefault(require("pdfkit"));
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
+import PDFDocument from 'pdfkit';
+import fs from 'fs';
+import path from 'path';
+
 // Function to generate a PDF using pdfkit with header and footer images
-const generatePDF = (data, outputPath) => {
+export const generatePDF = (data: {
+    firstName: string;
+    lastName: string;
+    middleName?: string;
+    email: string;
+    address: string;
+    day: string;
+    month: string;
+    year: number;
+}, outputPath: string): Promise<void> => {
+    
     return new Promise((resolve, reject) => {
         try {
             const dateSigned = `${data.day} ${data.month}, ${data.year}`;
-            const doc = new pdfkit_1.default({ margins: { top: 100, bottom: 100, left: 50, right: 50 } });
+            const doc = new PDFDocument({ margins: { top: 100, bottom: 100, left: 50, right: 50 } });
+    
             // Write the PDF to a file
-            const writeStream = fs_1.default.createWriteStream(outputPath);
+            const writeStream = fs.createWriteStream(outputPath);
             doc.pipe(writeStream);
+    
             // Title (Centered and Large)
             doc.fontSize(24).font('Times-Bold').text('Terms of Engagement for Temporary Workers', { align: 'center' });
             doc.moveDown(5);
+    
             // "between" text (Centered)
             doc.fontSize(16).font('Times-Roman').text('between', { align: 'center' });
             doc.moveDown(2);
+    
             // Company Name (Centered and Bold)
-            doc.fontSize(20).font('Times-Bold').text('COPORA LTD', { align: 'center' });
+            doc.fontSize(20).font('Times-Bold').text('COPORA LIMITED', { align: 'center' });
             doc.moveDown(3);
+    
             // "and" text (Centered)
             doc.fontSize(16).font('Times-Roman').text('and', { align: 'center' });
             doc.moveDown(3);
+    
             // Employee's Name (Centered and Bold)
             const employeeName = `${data.firstName} ${data.middleName || ''} ${data.lastName}`.trim();
             doc.fontSize(20).font('Times-Bold').text(employeeName, { align: 'center' });
+    
             // Add a new page for the table of contents
             doc.addPage();
+
             // Title for the table of contents
             doc.fontSize(20).font('Times-Bold').text('Contents', { align: 'center' });
             doc.moveDown(2);
+
             // Table of Contents Entries
             const contents = [
                 { clause: '1', title: 'Interpretation', page: '3' },
@@ -60,40 +74,56 @@ const generatePDF = (data, outputPath) => {
                 { clause: '20', title: 'Jurisdiction', page: '13' },
                 { clause: '21', title: 'Disclaimer', page: '13' },
             ];
+
             // Iterate through the contents to add them to the PDF
             contents.forEach((item) => {
                 // Set up the text formatting
                 doc.fontSize(12).font('Times-Roman');
+
                 // Format the line with dots between the title and page number
                 const line = `${item.clause}. ${item.title}`;
                 const dots = '.'.repeat(125 - line.length); // Adjust for line length consistency
                 const formattedLine = `${line}${dots}${item.page}`;
+
                 // Add the formatted line to the PDF
                 doc.text(formattedLine, { align: 'left' });
                 doc.moveDown(0.5);
             });
+
+
             // Add a new page for the next section
             doc.addPage();
+
             // Title and spacing for the agreement section
             doc.fontSize(20).font('Times-Bold').text(`THIS AGREEMENT is dated ${dateSigned}`, { align: 'center' });
             doc.moveDown(2);
+
             // Parties section
             doc.fontSize(12).font('Times-Roman').text('Parties', { align: 'left' });
             doc.moveDown(1);
+
             // Details of the parties
-            doc.text('(1) COPORA LTD incorporated and registered in England and Wales with company number 09864017 whose registered office is at 71-75 Shelton Street, Covent Garden, London, England, WC2H 9JQ (Employment Business).', { align: 'left', indent: 20 });
+            doc.text(
+                '(1) COPORA LTD incorporated and registered in England and Wales with company number 09864017 whose registered office is at 71-75 Shelton Street, Covent Garden, London, England, WC2H 9JQ (Employment Business).',
+                { align: 'left', indent: 20 }
+            );
             doc.moveDown(1);
+
             doc.text('(2) of', { align: 'left', indent: 20 });
             doc.moveDown(2);
+
             // Agreed terms section
             doc.fontSize(12).font('Times-Bold').text('Agreed terms', { align: 'left' });
             doc.moveDown(1);
+
             // Interpretation section
             doc.fontSize(12).font('Times-Bold').text('1. Interpretation', { align: 'left' });
             doc.moveDown(1);
+
             // Subclause 1.1
             doc.fontSize(12).font('Times-Roman').text('1.1 The definitions and rules of interpretation in this clause apply to this agreement.', { align: 'left' });
             doc.moveDown(1);
+
             // Definitions and their descriptions
             const definitions = [
                 { term: 'Assignment', description: 'the temporary services to be carried out by the Temporary Worker for the Client, as more particularly described in clause 3 and in the Assignment Confirmation.' },
@@ -108,6 +138,7 @@ const generatePDF = (data, outputPath) => {
                 { term: 'Group', description: 'in relation to a company, that company, each and any subsidiary or holding company of that company.' },
                 { term: 'Holding company', description: 'has the meaning given in clause 1.5.' }
             ];
+
             // Iterate through the definitions and add them to the PDF
             definitions.forEach((item) => {
                 // Format the term in bold and its description in regular text
@@ -115,8 +146,10 @@ const generatePDF = (data, outputPath) => {
                 doc.font('Times-Roman').text(` ${item.description}`, { align: 'left', indent: 20 });
                 doc.moveDown(1);
             });
+
             // Add a new page for the next section
             doc.addPage();
+
             // Intellectual Property Rights and related definitions section
             const additionalDefinitions = [
                 {
@@ -176,6 +209,7 @@ const generatePDF = (data, outputPath) => {
                     description: 'the Working Time Regulations 1998 (SI 1988/1833).'
                 }
             ];
+
             // Iterate through the additional definitions and add them to the PDF
             additionalDefinitions.forEach((item) => {
                 // Format the term in bold and its description in regular text
@@ -183,12 +217,15 @@ const generatePDF = (data, outputPath) => {
                 doc.font('Times-Roman').text(` ${item.description}`, { align: 'left', indent: 20 });
                 doc.moveDown(1);
             });
+
             // Adding clause 1.2 after the list of definitions
             doc.moveDown(1);
             doc.font('Times-Bold').text('1.2', { continued: true });
             doc.font('Times-Roman').text(' A person includes a natural person, corporate or unincorporated body (whether or not having separate legal personality).', { align: 'left', indent: 20 });
+
             // Add a new page for the next section
             doc.addPage();
+
             // Adding the new clauses and sections
             const clausesAndSections = [
                 {
@@ -248,6 +285,7 @@ const generatePDF = (data, outputPath) => {
                     text: 'For the purposes of the Conduct Regulations 2003, the Employment Business acts as an Employment Business in relation to the Introduction and supply of the Temporary Worker to the Client.'
                 }
             ];
+
             // Iterate through the clauses and sections, and add them to the PDF
             clausesAndSections.forEach((item) => {
                 // Format the clause number in bold and its text in regular font
@@ -255,8 +293,10 @@ const generatePDF = (data, outputPath) => {
                 doc.font('Times-Roman').text(` ${item.text}`, { align: 'left', indent: 20 });
                 doc.moveDown(1);
             });
+
             // Add a new page for the "Assignments" section
             doc.addPage();
+
             // Adding the "Assignments" section and clauses
             const assignmentsSection = [
                 {
@@ -316,6 +356,7 @@ const generatePDF = (data, outputPath) => {
                     text: 'Where the provisions of clause 3.6 have been met but the Assignment extends beyond the intended five consecutive Business Day period, the Employment Business shall provide the remaining Assignment Confirmation to the Temporary Worker in paper or electronic form within eight Business Days of the start of the Assignment or by the end of the Assignment, if sooner.'
                 }
             ];
+
             // Iterate through the clauses and sections, and add them to the PDF
             assignmentsSection.forEach((item) => {
                 // Format the clause number in bold and its text in regular font
@@ -323,8 +364,10 @@ const generatePDF = (data, outputPath) => {
                 doc.font('Times-Roman').text(` ${item.text}`, { align: 'left', indent: 20 });
                 doc.moveDown(1);
             });
+
             // Add a new page for the "Temporary Worker's Obligations" section
             doc.addPage();
+
             // Adding the "Temporary Worker's Obligations" section and clauses
             const obligationsSection = [
                 {
@@ -392,6 +435,7 @@ const generatePDF = (data, outputPath) => {
                     text: 'worked in more than two roles during an assignment with the Client and on at least two occasions has worked in a role that was not the same role as the previous role.'
                 }
             ];
+
             // Iterate through the clauses and sections, and add them to the PDF
             obligationsSection.forEach((item) => {
                 // Format the clause number in bold and its text in regular font
@@ -399,6 +443,7 @@ const generatePDF = (data, outputPath) => {
                 doc.font('Times-Roman').text(` ${item.text}`, { align: 'left', indent: 20 });
                 doc.moveDown(1);
             });
+
             // Adding new clauses for "Temporary Worker's Obligations," "Remuneration," "Time Sheets," and "Annual Leave" sections
             const additionalSectionsOne = [
                 {
@@ -454,6 +499,7 @@ const generatePDF = (data, outputPath) => {
                     text: 'All entitlement to annual leave must be taken during the course of the holiday year in which it accrues and no untaken holiday can be carried forward to the next holiday year.'
                 }
             ];
+
             // Iterate through the additional sections and add them to the PDF
             additionalSectionsOne.forEach((item) => {
                 // Format the clause number in bold and its text in regular font
@@ -461,7 +507,8 @@ const generatePDF = (data, outputPath) => {
                 doc.font('Times-Roman').text(` ${item.text}`, { align: 'left', indent: 20 });
                 doc.moveDown(1);
             });
-            // Adding additional clauses for "Annual Leave," "Sickness Absence," and "Termination" sections
+
+           // Adding additional clauses for "Annual Leave," "Sickness Absence," and "Termination" sections
             const additionalSectionsTwo = [
                 {
                     clause: '7.2',
@@ -516,6 +563,7 @@ const generatePDF = (data, outputPath) => {
                     text: 'Unless exceptional circumstances apply, the Temporary Worker\'s failure to inform the Client or the Employment Business of their inability to attend work as required by clause 4.3 will be treated as termination of the Assignment by the Temporary Worker.'
                 }
             ];
+
             // Iterate through the additional sections and add them to the PDF
             additionalSectionsTwo.forEach((item) => {
                 // Format the clause number in bold and its text in regular font
@@ -523,6 +571,7 @@ const generatePDF = (data, outputPath) => {
                 doc.font('Times-Roman').text(` ${item.text}`, { align: 'left', indent: 20 });
                 doc.moveDown(1);
             });
+
             // Adding more clauses for "Termination", "Intellectual Property Rights", "Confidentiality", and "Data Protection"
             const additionalSectionsThree = [
                 {
@@ -582,6 +631,7 @@ const generatePDF = (data, outputPath) => {
                     text: 'information about their physical or mental health or condition to monitor sick leave and take decisions as to their fitness for work;'
                 }
             ];
+
             // Iterate through the additional sections and add them to the PDF
             additionalSectionsThree.forEach((item) => {
                 // Format the clause number in bold and its text in regular font
@@ -589,6 +639,7 @@ const generatePDF = (data, outputPath) => {
                 doc.font('Times-Roman').text(` ${item.text}`, { align: 'left', indent: 20 });
                 doc.moveDown(1);
             });
+
             // Adding additional clauses for "Data Protection," "Warranties and Indemnities," and "No Partnership or Agency" sections
             const additionalSectionsFour = [
                 {
@@ -664,6 +715,7 @@ const generatePDF = (data, outputPath) => {
                     text: 'Nothing in this agreement is intended to, or shall be deemed to, establish any partnership or joint venture between any of the parties, constitute any party the agent of another party, or authorise any party to make or enter into any commitments for or on behalf of any other party.'
                 }
             ];
+
             // Iterate through the additional sections and add them to the PDF
             additionalSectionsFour.forEach((item) => {
                 // Format the clause number in bold and its text in regular font
@@ -671,6 +723,7 @@ const generatePDF = (data, outputPath) => {
                 doc.font('Times-Roman').text(` ${item.text}`, { align: 'left', indent: 20 });
                 doc.moveDown(1);
             });
+
             // Adding additional clauses for "No Partnership or Agency," "Entire Agreement," "Third Party Rights," and "Notices" sections
             const additionalSectionsFive = [
                 {
@@ -750,6 +803,7 @@ const generatePDF = (data, outputPath) => {
                     text: 'This clause does not apply to the service of any proceedings or other documents in any legal action or, where applicable, any arbitration or other method of dispute resolution.'
                 }
             ];
+
             // Iterate through the additional sections and add them to the PDF
             additionalSectionsFive.forEach((item) => {
                 // Format the clause number in bold and its text in regular font
@@ -757,6 +811,7 @@ const generatePDF = (data, outputPath) => {
                 doc.font('Times-Roman').text(` ${item.text}`, { align: 'left', indent: 20 });
                 doc.moveDown(1);
             });
+
             // Adding additional clauses for "Severance," "Governing Law," "Jurisdiction," and "Disclaimer" sections
             const furtherSections = [
                 {
@@ -788,6 +843,7 @@ const generatePDF = (data, outputPath) => {
                     text: 'This agreement has been entered into on the date stated at the beginning of it.'
                 }
             ];
+
             // Iterate through the further sections and add them to the PDF
             furtherSections.forEach((item) => {
                 // Format the clause number in bold and its text in regular font
@@ -795,41 +851,70 @@ const generatePDF = (data, outputPath) => {
                 doc.font('Times-Roman').text(` ${item.text}`, { align: 'left', indent: 20 });
                 doc.moveDown(1);
             });
+
             // Add the signature section on a new page
             doc.addPage();
+
             // Title for the acceptance section
-            doc.font('Times-Bold').fontSize(12).text(`Above terms are accepted between COPORA Ltd and ${data.firstName} ${data.middleName || ''} ${data.lastName}`, {
+            doc.font('Times-Bold').fontSize(12).text('Above terms are accepted between COPORA Ltd and:', {
                 align: 'left',
                 indent: 20,
                 lineGap: 15
             });
+
             // Add some space for the other party’s details
             doc.moveDown(3);
+
+            // Signature section for COPORA Ltd
+            doc.fontSize(10).font('Times-Roman').text('Signed on behalf of COPORA LTD:', { indent: 20 });
+            doc.moveDown(1);
+
+             // Details for COPORA Ltd's representative
+             doc.text('Name: Andrew Smith', { indent: 40 });
+             doc.moveDown(0.5);
+             doc.text('Job Title: Chief Executive Director', { indent: 40 });
+             doc.moveDown(0.5);
+            //  doc.text(`Date: ${dateSigned}`, { indent: 40 });
+            //  doc.moveDown(3);
+
             // Load and use cursive font for the signatures
-            const cursiveFontPath = path_1.default.join(__dirname, 'fonts', 'GreatVibes-Regular.ttf');
+            const cursiveFontPath = path.join(__dirname, 'fonts', 'GreatVibes-Regular.ttf');
             doc.font(cursiveFontPath);
+
             // Capture the current vertical position for the grid layout
-            const signatureYPosition = doc.y;
+            // const signatureYPosition = doc.y;
+
             // COPORA Ltd signature (left side)
-            doc.fontSize(24).text('Andrew Smith', 50, signatureYPosition, { width: 200, align: 'left' });
-            doc.font('Times-Roman').fontSize(12).text('Managing Director, Copora Limited', 50, doc.y, { width: 200, align: 'left' });
+            doc.fontSize(24).text('Andrew Smith', 50, { width: 200, align: 'left' });
+            doc.font('Times-Roman').fontSize(12).text('Executive Director, Copora Limited', 50,{ width: 200, align: 'left' });
             doc.moveDown(2);
+           
             doc.text(`Date: ${dateSigned}`, 50, doc.y, { width: 200, align: 'left' });
+
+            // Signature section for the other party
+            doc.text(`Signed by: ${data.firstName} ${data.middleName || ''} ${data.lastName}`, { indent: 20 });
+            doc.moveDown(1.5);
+            doc.text('`Date: ${dateSigned}`', { indent: 20 });
+
             // Employee Signature (right side)
             doc.font(cursiveFontPath);
-            doc.fontSize(24).text(`${data.firstName} ${data.middleName || ''} ${data.lastName}`, 400, signatureYPosition, { width: 200, align: 'left' });
-            doc.font('Times-Roman').fontSize(12).text('Employee', 400, doc.y, { width: 200, align: 'left' });
+            doc.fontSize(24).text(`${data.firstName} ${data.lastName}`, 400, { width: 200, align: 'left' });
+            doc.font('Times-Roman').fontSize(12).text('Employee', 400, { width: 200, align: 'left' });
             doc.moveDown(2);
             doc.text(`Date: ${dateSigned}`, 400, doc.y, { width: 200, align: 'left' });
+
             // Finalize the PDF file if not already done in previous code
             doc.end();
+
             // Listen for the 'finish' event to resolve the promise when the PDF is fully written
             writeStream.on('finish', resolve);
-        }
-        catch (error) {
+
+
+        } catch (error) {
             console.error('Error generating PDF:', error);
             reject(error);
         }
     });
+    
+    
 };
-exports.generatePDF = generatePDF;

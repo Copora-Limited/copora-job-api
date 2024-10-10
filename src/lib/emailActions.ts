@@ -77,16 +77,56 @@ export async function sendOnboardingHospitalityWorkerEmail(user: { firstName: st
 }
 
 
+// Function to send bulk onboarding completion emails
 export async function sendBulkOnboardingCompletionEmails(
-    users: { firstName: string; email: string }[],
-    customSubject: string,
-    customContent: string
-  ): Promise<void> {
-    for (const user of users) {
-      const html = bulkEmailTemplate(user, customContent); // Generate the email content using the custom message
-      await sendEmail(user.email, customSubject, html);    // Send the email to each user with the custom subject
+  recipients: { email: string; firstName: string }[],
+  customSubject: string,
+  customContent: string
+): Promise<void> {
+  for (const recipient of recipients) {
+    if (!recipient.email) {
+      console.error(`Error: No email defined for recipient: ${JSON.stringify(recipient)}`);
+      continue; // Skip if email is missing
+    }
+
+    try {
+      const html = bulkEmailTemplate(recipient.firstName, customContent); // Generate the email content with the recipient's name
+      console.log(`Sending email to ${recipient.email} (${recipient.firstName})`); // Log the email and name being sent
+
+      await sendEmail(recipient.email, customSubject, html); // Send the email
+
+      console.log(`Email sent to ${recipient.email} (${recipient.firstName}) successfully`);
+    } catch (error) {
+      console.error(`Error sending email to ${recipient.email} (${recipient.firstName}):`, error);
     }
   }
+}
+
+// Function to send emails in batches
+export async function sendEmailsInBatches(
+  recipients: { email: string; firstName: string }[],
+  customSubject: string,
+  customContent: string,
+  batchSize: number = 50
+): Promise<void> {
+  for (let i = 0; i < recipients.length; i += batchSize) {
+    const batch = recipients.slice(i, i + batchSize);
+
+    try {
+      await Promise.all(
+        batch.map((recipient) => 
+          sendBulkOnboardingCompletionEmails([recipient], customSubject, customContent))
+      );
+      console.log(`Batch ${i / batchSize + 1} processed successfully`);
+
+      // Delay between batches to prevent overwhelming the SMTP server
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 second
+    } catch (error) {
+      console.error(`Error processing batch ${i / batchSize + 1}:`, error);
+    }
+  }
+}
+
 
 
   export async function sendAgreementEmail(user: { firstName: string; email: string }, pdfPath: string) {

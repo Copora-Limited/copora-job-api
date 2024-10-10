@@ -45,7 +45,7 @@ const createAgreement = (req, res) => __awaiter(void 0, void 0, void 0, function
             return res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
         }
         const { firstName, lastName, middleName, email } = existingApplicant;
-        const { street, country, postcode } = applicantContact;
+        const { address_line_1, address_line_2, country, postcode } = applicantContact;
         // Get today's date
         const { day, month, year } = getCurrentDate();
         // Generate agreement data
@@ -54,11 +54,7 @@ const createAgreement = (req, res) => __awaiter(void 0, void 0, void 0, function
             lastName,
             middleName,
             email,
-            address: `${street}, ${country}, ${postcode}`,
-            jobTitle,
-            jobDescription,
-            startDate, // Employment start date (today's date)
-            amount,
+            address: `${address_line_1}, ${address_line_2}, ${country}, ${postcode}`,
             day,
             month,
             year

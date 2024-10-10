@@ -229,7 +229,7 @@ class ApplicationController {
                     Telephone: (_f = applicantData.contactDetails) === null || _f === void 0 ? void 0 : _f.phone,
                     Mobile: (_g = applicantData.contactDetails) === null || _g === void 0 ? void 0 : _g.phone, // Assuming phone is used for both
                     Email: (_h = applicantData.user) === null || _h === void 0 ? void 0 : _h.email,
-                    Address: `${(_j = applicantData.contactDetails) === null || _j === void 0 ? void 0 : _j.street}, ${(_k = applicantData.contactDetails) === null || _k === void 0 ? void 0 : _k.town}, ${(_l = applicantData.contactDetails) === null || _l === void 0 ? void 0 : _l.postcode}`,
+                    Address: `${(_j = applicantData.contactDetails) === null || _j === void 0 ? void 0 : _j.address_line_1}, ${(_k = applicantData.contactDetails) === null || _k === void 0 ? void 0 : _k.town}, ${(_l = applicantData.contactDetails) === null || _l === void 0 ? void 0 : _l.postcode}`,
                     Country: (_m = applicantData.contactDetails) === null || _m === void 0 ? void 0 : _m.country,
                     Gender: (_o = applicantData.personalDetails) === null || _o === void 0 ? void 0 : _o.gender,
                     Birthday: (_p = applicantData.personalDetails) === null || _p === void 0 ? void 0 : _p.dateOfBirth,
@@ -306,7 +306,7 @@ class ApplicationController {
                         Telephone: contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.phone,
                         Mobile: contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.phone, // Assuming phone is used for both
                         Email: user === null || user === void 0 ? void 0 : user.email,
-                        Address: `${contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.street}, ${contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.town}, ${contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.postcode}`,
+                        Address: `${contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.address_line_1}, ${contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.town}, ${contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.postcode}`,
                         Country: contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.country,
                         Gender: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.gender,
                         Birthday: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.dateOfBirth,
@@ -391,7 +391,7 @@ class ApplicationController {
                 doc.text(`Telephone: ${((_f = applicantData.contactDetails) === null || _f === void 0 ? void 0 : _f.phone) || 'N/A'}`);
                 doc.text(`Mobile: ${((_g = applicantData.contactDetails) === null || _g === void 0 ? void 0 : _g.phone) || 'N/A'}`);
                 doc.text(`Email: ${((_h = applicantData.user) === null || _h === void 0 ? void 0 : _h.email) || 'N/A'}`);
-                doc.text(`Address: ${((_j = applicantData.contactDetails) === null || _j === void 0 ? void 0 : _j.street) || 'N/A'}, ${((_k = applicantData.contactDetails) === null || _k === void 0 ? void 0 : _k.town) || 'N/A'}, ${((_l = applicantData.contactDetails) === null || _l === void 0 ? void 0 : _l.postcode) || 'N/A'}`);
+                doc.text(`Address: ${((_j = applicantData.contactDetails) === null || _j === void 0 ? void 0 : _j.address_line_1) || 'N/A'}, ${((_k = applicantData.contactDetails) === null || _k === void 0 ? void 0 : _k.town) || 'N/A'}, ${((_l = applicantData.contactDetails) === null || _l === void 0 ? void 0 : _l.postcode) || 'N/A'}`);
                 doc.text(`Country: ${((_m = applicantData.contactDetails) === null || _m === void 0 ? void 0 : _m.country) || 'N/A'}`);
                 doc.text(`Gender: ${((_o = applicantData.personalDetails) === null || _o === void 0 ? void 0 : _o.gender) || 'N/A'}`);
                 doc.text(`Birthday: ${((_p = applicantData.personalDetails) === null || _p === void 0 ? void 0 : _p.dateOfBirth) || 'N/A'}`);
