@@ -53,7 +53,7 @@ export class ReferenceController {
                     } else {
                         // Create new reference
                         const newReference = await ReferenceService.create({
-                            applicationNo,
+                            applicationNo, 
                             ...entry
                         });
                         newEntries.push(newReference);

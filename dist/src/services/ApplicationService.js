@@ -72,7 +72,9 @@ class ApplicationService {
                 const foodSafetyQuestionnaire = yield data_source_1.AppDataSource.getRepository(FoodSafetyQuestionnaireEntity_1.FoodSafetyQuestionnaire).findOneBy({ applicationNo });
                 const bankDetails = yield data_source_1.AppDataSource.getRepository(BankDetailsEntity_1.BankDetails).findOneBy({ applicationNo });
                 const agreementConsent = yield data_source_1.AppDataSource.getRepository(AgreementConsentEntity_1.AgreementConsent).findOneBy({ applicationNo });
-                const reference = yield data_source_1.AppDataSource.getRepository(ReferenceEntity_1.Reference).findOneBy({ applicationNo });
+                const reference = yield data_source_1.AppDataSource.getRepository(ReferenceEntity_1.Reference).find({
+                    where: { applicationNo }
+                });
                 return {
                     user,
                     personalDetails,

@@ -389,7 +389,7 @@ router.put('/profile/:id',  authenticateToken, uploadDocumentsAndImages.single('
  *                   type: string
  *                   example: Internal Server Error
  */
-router.patch('/users/:id/role',  authenticateToken, authorizeRoles('admin'), UserController.changeUserRole);
+router.patch('/:id/role',  authenticateToken, authorizeRoles('admin'), UserController.changeUserRole);
 
 /**
  * @swagger
@@ -464,7 +464,7 @@ router.patch('/users/:id/role',  authenticateToken, authorizeRoles('admin'), Use
  *     security:
  *       - bearerAuth: []  # Apply bearerAuth security scheme
  */
-router.post('/admin/upload-users', authenticateToken, authorizeRoles('admin'), UserController.bulkUploadUsers);
+router.post('/upload-users', authenticateToken, authorizeRoles('admin'), UserController.bulkUploadUsers);
 
 
 

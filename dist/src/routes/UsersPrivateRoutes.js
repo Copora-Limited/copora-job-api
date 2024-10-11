@@ -394,7 +394,7 @@ router.put('/profile/:id', AuthMiddleware_1.authenticateToken, multerConfig_1.de
  *                   type: string
  *                   example: Internal Server Error
  */
-router.patch('/users/:id/role', AuthMiddleware_1.authenticateToken, (0, AuthMiddleware_1.authorizeRoles)('admin'), UserController_1.default.changeUserRole);
+router.patch('/:id/role', AuthMiddleware_1.authenticateToken, (0, AuthMiddleware_1.authorizeRoles)('admin'), UserController_1.default.changeUserRole);
 /**
  * @swagger
  * /auth/users/upload-users:
@@ -468,5 +468,5 @@ router.patch('/users/:id/role', AuthMiddleware_1.authenticateToken, (0, AuthMidd
  *     security:
  *       - bearerAuth: []  # Apply bearerAuth security scheme
  */
-router.post('/admin/upload-users', AuthMiddleware_1.authenticateToken, (0, AuthMiddleware_1.authorizeRoles)('admin'), UserController_1.default.bulkUploadUsers);
+router.post('/upload-users', AuthMiddleware_1.authenticateToken, (0, AuthMiddleware_1.authorizeRoles)('admin'), UserController_1.default.bulkUploadUsers);
 exports.default = router;

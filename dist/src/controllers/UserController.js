@@ -49,6 +49,7 @@ const config_1 = require("../config");
 const axios_1 = __importDefault(require("axios")); // Add axios for HTTP requests
 const XLSX = __importStar(require("xlsx"));
 const constants_1 = require("../constants");
+// import { format } from 'date-fns';
 const userService = new UserService_1.UserService();
 // Multer configuration for handling file uploads
 const storage = multer_1.default.memoryStorage(); // Store the file in memory
@@ -342,42 +343,68 @@ class UserController {
                     const sheetName = workbook.SheetNames[0]; // Assuming data is in the first sheet
                     const sheet = workbook.Sheets[sheetName];
                     const rows = XLSX.utils.sheet_to_json(sheet);
-                    // Process each row in the Excel file
-                    for (const row of rows) {
-                        // const { firstName, middleName, lastName, email, password, role, accountStatus, createdBy } = req.body;
-                        const { firstName, lastName, email, phoneNumber, role } = row;
-                        // Validate the required fields
-                        if (!firstName || !lastName || !email || !phoneNumber) {
-                            continue; // Skip rows with missing data
+                    // Define batch size
+                    const batchSize = 50; // Process 50 users at a time, adjust as needed
+                    const batches = [];
+                    // Split rows into batches
+                    for (let i = 0; i < rows.length; i += batchSize) {
+                        batches.push(rows.slice(i, i + batchSize));
+                    }
+                    // Process each batch
+                    for (const batch of batches) {
+                        // Create an array to store emails to be sent later
+                        const emailPromises = [];
+                        for (const row of batch) {
+                            const { firstName, lastName, email, phoneNumber, role, profilePicture, createdBy } = row;
+                            // Validate the required fields
+                            if (!firstName || !lastName || !email || !phoneNumber) {
+                                continue; // Skip rows with missing data
+                            }
+                            const normalizedEmail = email.trim().toLowerCase();
+                            // Check if user already exists
+                            const existingUser = yield userService.findByEmail(normalizedEmail);
+                            if (existingUser) {
+                                continue; // Skip existing users
+                            }
+                            // Generate application number and temporary password
+                            const applicationNo = yield this.generateApplicationNumber(role);
+                            const temporaryPassword = (0, uuid_1.v4)().slice(0, 8); // Generate a temporary password
+                            // Hash the temporary password
+                            const hashedPassword = yield bcrypt_1.default.hash(temporaryPassword, 10);
+                            // Get the current date
+                            const createdAt = new Date();
+                            // Create new user with hashed password and createdAt field
+                            yield userService.create({
+                                firstName,
+                                lastName,
+                                email: normalizedEmail,
+                                phoneNumber,
+                                password: hashedPassword, // Save the hashed password
+                                role: constants_1.UserRole.Applicant,
+                                profilePicture,
+                                createdBy,
+                                createdAt,
+                                applicationNo
+                            });
+                            // Add email sending promise to the array (for later execution)
+                            emailPromises.push((0, emailActions_1.sendInvitationToOnboard)({
+                                email: normalizedEmail,
+                                firstName,
+                                loginLink: `${config_1.FRONTEND_LOGIN}/login`,
+                                temporaryPassword
+                            }));
                         }
-                        const normalizedEmail = email.trim().toLowerCase();
-                        // Check if user already exists
-                        const existingUser = yield userService.findByEmail(normalizedEmail);
-                        if (existingUser) {
-                            continue; // Skip existing users
-                        }
-                        // Generate application number and temporary password
-                        // const applicationNo = this.generateApplicationNumber(role);
-                        const applicationNo = yield this.generateApplicationNumber(role);
-                        const temporaryPassword = (0, uuid_1.v4)().slice(0, 8); // Generate a temporary password
-                        // Create new user
-                        const newUser = yield userService.create({
-                            firstName,
-                            lastName,
-                            email: normalizedEmail,
-                            phoneNumber,
-                            password: temporaryPassword, // Save the temporary password
-                            applicationNo
-                        });
-                        // Send invitation email
-                        yield (0, emailActions_1.sendInvitationToOnboard)({
-                            email: normalizedEmail,
-                            firstName,
-                            loginLink: `${config_1.FRONTEND_LOGIN}/login`,
-                            temporaryPassword
+                        // Execute all email promises after processing the batch
+                        // Catch errors to prevent the process from stopping if email fails
+                        Promise.allSettled(emailPromises).then((results) => {
+                            results.forEach((result, index) => {
+                                if (result.status === 'rejected') {
+                                    console.error(`Failed to send email for batch ${index}:`, result.reason);
+                                }
+                            });
                         });
                     }
-                    return res.status(200).json({ message: 'Users uploaded and invitations sent' });
+                    return res.status(200).json({ message: 'Users uploaded and invitations queued for sending' });
                 }
                 catch (error) {
                     console.error('Error processing Excel file:', error);
