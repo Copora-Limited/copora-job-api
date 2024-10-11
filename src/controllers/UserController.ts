@@ -346,73 +346,99 @@ class UserController {
         const sheet = workbook.Sheets[sheetName];
         const rows = XLSX.utils.sheet_to_json(sheet);
   
-        // Process each row in the Excel file
-        for (const row of rows) {
-          const { 
-            firstName, 
-            lastName, 
-            email, 
-            phoneNumber, 
-            role, 
-            profilePicture, 
-            createdBy 
-          } = row as {
-            firstName: string;
-            lastName: string;
-            email: string;
-            phoneNumber: string;
-            role: string;
-            profilePicture: string;
-            createdBy: string;
-          };
+        // Define batch size
+        const batchSize = 50; // Process 50 users at a time, adjust as needed
+        const batches = [];
   
-          // Validate the required fields
-          if (!firstName || !lastName || !email || !phoneNumber) {
-            continue; // Skip rows with missing data
+        // Split rows into batches
+        for (let i = 0; i < rows.length; i += batchSize) {
+          batches.push(rows.slice(i, i + batchSize));
+        }
+  
+        // Process each batch
+        for (const batch of batches) {
+          // Create an array to store emails to be sent later
+          const emailPromises = [];
+  
+          for (const row of batch) {
+            const { 
+              firstName, 
+              lastName, 
+              email, 
+              phoneNumber, 
+              role, 
+              profilePicture, 
+              createdBy 
+            } = row as {
+              firstName: string;
+              lastName: string;
+              email: string;
+              phoneNumber: string;
+              role: string;
+              profilePicture: string;
+              createdBy: string;
+            };
+  
+            // Validate the required fields
+            if (!firstName || !lastName || !email || !phoneNumber) {
+              continue; // Skip rows with missing data
+            }
+  
+            const normalizedEmail = email.trim().toLowerCase();
+  
+            // Check if user already exists
+            const existingUser = await userService.findByEmail(normalizedEmail);
+            if (existingUser) {
+              continue; // Skip existing users
+            }
+  
+            // Generate application number and temporary password
+            const applicationNo = await this.generateApplicationNumber(role);
+            const temporaryPassword = uuidv4().slice(0, 8); // Generate a temporary password
+  
+            // Hash the temporary password
+            const hashedPassword = await bcrypt.hash(temporaryPassword, 10);
+  
+            // Get the current date
+            const createdAt = new Date();
+  
+            // Create new user with hashed password and createdAt field
+            await userService.create({
+              firstName,
+              lastName,
+              email: normalizedEmail,
+              phoneNumber,
+              password: hashedPassword, // Save the hashed password
+              role: UserRole.Applicant,
+              profilePicture,
+              createdBy,
+              createdAt,
+              applicationNo
+            });
+  
+            // Add email sending promise to the array (for later execution)
+            emailPromises.push(
+              sendInvitationToOnboard({
+                email: normalizedEmail,
+                firstName,
+                loginLink: `${FRONTEND_LOGIN}/login`,
+                temporaryPassword
+              })
+            );
           }
   
-          const normalizedEmail = email.trim().toLowerCase();
-  
-          // Check if user already exists
-          const existingUser = await userService.findByEmail(normalizedEmail);
-          if (existingUser) {
-            continue; // Skip existing users
-          }
-  
-          // Generate application number and temporary password
-          const applicationNo = await this.generateApplicationNumber(role);
-          const temporaryPassword = uuidv4().slice(0, 8); // Generate a temporary password
-  
-          // Hash the temporary password
-          const hashedPassword = await bcrypt.hash(temporaryPassword, 10);
-  
-          // Get the current date
-          const createdAt = new Date();
-  
-          // Create new user with hashed password and createdAt field
-          await userService.create({
-            firstName,
-            lastName,
-            email: normalizedEmail,
-            phoneNumber,
-            password: hashedPassword, // Save the hashed password
-            role: UserRole.Applicant,
-            profilePicture,
-            createdBy,
-            createdAt,
-            applicationNo
-          });
-  
-          // Send invitation email with the plain text password
-          await sendInvitationToOnboard({
-            email: normalizedEmail,
-            firstName,
-            loginLink: `${FRONTEND_LOGIN}/login`,
-            temporaryPassword
+          // Execute all email promises after processing the batch
+          // Catch errors to prevent the process from stopping if email fails
+          Promise.allSettled(emailPromises).then((results) => {
+            results.forEach((result, index) => {
+              if (result.status === 'rejected') {
+                console.error(`Failed to send email for batch ${index}:`, result.reason);
+              }
+            });
           });
         }
   
-        return res.status(200).json({ message: 'Users uploaded and invitations sent' });
+        return res.status(200).json({ message: 'Users uploaded and invitations queued for sending' });
   
       } catch (error) {
         console.error('Error processing Excel file:', error);
