@@ -58,8 +58,11 @@ export class ApplicationService {
       const foodSafetyQuestionnaire = await AppDataSource.getRepository(FoodSafetyQuestionnaire).findOneBy({ applicationNo });
       const bankDetails = await AppDataSource.getRepository(BankDetails).findOneBy({ applicationNo });
       const agreementConsent = await AppDataSource.getRepository(AgreementConsent).findOneBy({ applicationNo });
-      const reference = await AppDataSource.getRepository(Reference).findOneBy({ applicationNo });
-  
+
+      const reference = await AppDataSource.getRepository(Reference).find({
+        where: { applicationNo }
+      });
+
       return {
         user,
         personalDetails,
