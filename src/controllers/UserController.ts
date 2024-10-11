@@ -15,7 +15,8 @@ import { FRONTEND_LOGIN } from '../config';
 import axios from 'axios'; // Add axios for HTTP requests
 import pdfParse from 'pdf-parse';
 import * as XLSX from 'xlsx';
-import { OnboardingStatus } from '../constants';
+import { OnboardingStatus, UserRole } from '../constants';
+// import { format } from 'date-fns';
 
 const userService = new UserService();
 
@@ -333,59 +334,76 @@ class UserController {
       if (err) {
         return res.status(500).json({ message: 'Error uploading file', error: err.message });
       }
-
+  
       if (!req.file) {
         return res.status(400).json({ message: 'No file uploaded' });
       }
-
+  
       try {
         // Parse the uploaded Excel file
         const workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
         const sheetName = workbook.SheetNames[0]; // Assuming data is in the first sheet
         const sheet = workbook.Sheets[sheetName];
         const rows = XLSX.utils.sheet_to_json(sheet);
-
+  
         // Process each row in the Excel file
         for (const row of rows) {
-          // const { firstName, middleName, lastName, email, password, role, accountStatus, createdBy } = req.body;
-          const { firstName, lastName, email, phoneNumber, role } = row as {
+          const { 
+            firstName, 
+            lastName, 
+            email, 
+            phoneNumber, 
+            role, 
+            profilePicture, 
+            createdBy 
+          } = row as {
             firstName: string;
             lastName: string;
             email: string;
-            role: string;
             phoneNumber: string;
+            role: string;
+            profilePicture: string;
+            createdBy: string;
           };
-
+  
           // Validate the required fields
           if (!firstName || !lastName || !email || !phoneNumber) {
             continue; // Skip rows with missing data
           }
-
+  
           const normalizedEmail = email.trim().toLowerCase();
-
+  
           // Check if user already exists
           const existingUser = await userService.findByEmail(normalizedEmail);
           if (existingUser) {
             continue; // Skip existing users
           }
-
+  
           // Generate application number and temporary password
-          // const applicationNo = this.generateApplicationNumber(role);
           const applicationNo = await this.generateApplicationNumber(role);
-
           const temporaryPassword = uuidv4().slice(0, 8); // Generate a temporary password
-
-          // Create new user
-          const newUser = await userService.create({
+  
+          // Hash the temporary password
+          const hashedPassword = await bcrypt.hash(temporaryPassword, 10);
+  
+          // Get the current date
+          const createdAt = new Date();
+  
+          // Create new user with hashed password and createdAt field
+          await userService.create({
             firstName,
             lastName,
             email: normalizedEmail,
             phoneNumber,
-            password: temporaryPassword, // Save the temporary password
+            password: hashedPassword, // Save the hashed password
+            role: UserRole.Applicant,
+            profilePicture,
+            createdBy,
+            createdAt,
             applicationNo
           });
-
-          // Send invitation email
+  
+          // Send invitation email with the plain text password
           await sendInvitationToOnboard({
             email: normalizedEmail,
             firstName,
@@ -393,16 +411,15 @@ class UserController {
             temporaryPassword
           });
         }
-
+  
         return res.status(200).json({ message: 'Users uploaded and invitations sent' });
-
+  
       } catch (error) {
         console.error('Error processing Excel file:', error);
         return res.status(500).json({ message: 'Server error', error: error.message });
       }
     });
   }
-  
 
   async login(req: Request, res: Response) {
     try {
