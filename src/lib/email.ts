@@ -1,18 +1,25 @@
 import nodemailer from "nodemailer";
 
-// Create a transporter using your email service configuration
+// Create a transporter using SendLayer's SMTP configuration
 const transporter = nodemailer.createTransport({
-  service: "Gmail", // use your email service
+  host: process.env.SENDLAYER_HOST,   // e.g., smtp.sendlayer.com
+  port: 587,                          // Port for secure email (usually 587 or 465)
+  secure: false,                      // Set to true if using port 465
   auth: {
-    user: process.env.EMAIL_USER, // your email address
-    pass: process.env.EMAIL_PASS, // your email password
+    user: process.env.SENDLAYER_USER, // SMTP username provided by SendLayer
+    pass: process.env.SENDLAYER_PASS, // SMTP password provided by SendLayer
   },
 });
 
 // Function to send an email with optional attachments
-export async function sendEmail(to: string | string[], subject: string, html: string, attachments?: any[]) {
+export async function sendEmail(
+  to: string | string[], 
+  subject: string, 
+  html: string, 
+  attachments?: any[]
+) {
   const mailOptions = {
-    from: process.env.EMAIL_USER,
+    from: "info@copora.com",
     to,          // recipient(s)
     subject,     // email subject
     html,        // email body in HTML

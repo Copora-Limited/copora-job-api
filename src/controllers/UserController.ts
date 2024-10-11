@@ -9,7 +9,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import { v2 as cloudinary } from 'cloudinary';
-import { sendInvitationToOnboard, sendResetPasswordEmail, sendTwoFactorCodeEmail, sendVerificationEmail } from '../lib/emailActions';
+import { sendTestEmail, sendInvitationToOnboard, sendResetPasswordEmail, sendTwoFactorCodeEmail, sendVerificationEmail } from '../lib/emailActions';
 import { v4 as uuidv4 } from 'uuid'; // For generating verification tokens
 import { FRONTEND_LOGIN } from '../config';
 import axios from 'axios'; // Add axios for HTTP requests
@@ -40,7 +40,26 @@ class UserController {
   }
 
   
-
+  async testEmail(req: Request, res: Response): Promise<Response> {
+    try {
+      const { email } = req.body;
+  
+      // Validate the email field
+      if (!email) {
+        return res.status(400).json({ message: 'Email is required' });
+      }
+  
+      // Call the sendTestEmail function to send the email
+      await sendTestEmail(email);
+  
+      // Respond with a success message
+      return res.status(200).json({ message: 'Test email sent successfully' });
+    } catch (error) {
+      console.error('Error sending test email:', error);
+      return res.status(500).json({ message: 'Error sending test email', error: error.message });
+    }
+  }
+  
 
   async linkedinCallback(req: Request, res: Response): Promise<Response> {
     const authorizationCode = req.query.code as string;
@@ -149,6 +168,8 @@ class UserController {
         : undefined;
     }
   }
+
+  
 
   private async generateApplicationNumber(role: string): Promise<string> {
     const prefix = role === 'admin' ? 'ADM' : 'APP';
@@ -817,6 +838,8 @@ class UserController {
       return res.status(500).json({ message: 'Server error', error: error.message });
     }
   }
+
+  
 
 
 }

@@ -19,6 +19,40 @@ const multerConfig_1 = __importDefault(require("../multerConfig")); // Import mu
 const router = (0, express_1.Router)();
 /**
  * @swagger
+ * /users/test-email:
+ *   post:
+ *     summary: Send a test email
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 default: "test@example.com"
+ *                 description: Recipient email address
+ *     responses:
+ *       200:
+ *         description: Email sent successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Success message
+ *       500:
+ *         description: Server error
+ */
+router.post('/test-email', UserController_1.default.testEmail);
+/**
+ * @swagger
  * /users/login:
  *   post:
  *     summary: User login

@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.sendTestEmail = sendTestEmail;
 exports.sendSignupEmail = sendSignupEmail;
 exports.sendInvitationToOnboard = sendInvitationToOnboard;
 exports.sendVerificationEmail = sendVerificationEmail;
@@ -25,6 +26,7 @@ exports.sendBulkOnboardingCompletionEmails = sendBulkOnboardingCompletionEmails;
 exports.sendEmailsInBatches = sendEmailsInBatches;
 exports.sendAgreementEmail = sendAgreementEmail;
 // main.ts
+const testEmailTemplate_1 = __importDefault(require("../emails/testEmailTemplate"));
 const signupEmail_1 = __importDefault(require("../emails/signupEmail"));
 const resetPasswordEmail_1 = __importDefault(require("../emails/resetPasswordEmail"));
 const twoFactorEmail_1 = __importDefault(require("../emails/twoFactorEmail"));
@@ -38,6 +40,21 @@ const bulkEmailTemplate_1 = require("../emails/bulkEmailTemplate");
 const fs_1 = __importDefault(require("fs"));
 const agreementEmail_1 = __importDefault(require("../emails/agreementEmail")); // Import the email template function
 const email_1 = require("./email");
+function sendTestEmail(email) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            // Define the subject and the user details for the email
+            const subject = "Welcome to Our App!";
+            const user = { firstName: "Andrew", email };
+            const html = (0, testEmailTemplate_1.default)(user);
+            yield (0, email_1.sendEmail)(email, subject, html);
+        }
+        catch (error) {
+            console.error('Error sending test email:', error);
+            throw new Error('Failed to send test email');
+        }
+    });
+}
 // Function to send signup email
 function sendSignupEmail(user) {
     return __awaiter(this, void 0, void 0, function* () {

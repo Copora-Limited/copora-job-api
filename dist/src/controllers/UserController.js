@@ -65,6 +65,25 @@ class UserController {
         this.register = this.register.bind(this);
         this.bulkUploadUsers = this.bulkUploadUsers.bind(this);
     }
+    testEmail(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { email } = req.body;
+                // Validate the email field
+                if (!email) {
+                    return res.status(400).json({ message: 'Email is required' });
+                }
+                // Call the sendTestEmail function to send the email
+                yield (0, emailActions_1.sendTestEmail)(email);
+                // Respond with a success message
+                return res.status(200).json({ message: 'Test email sent successfully' });
+            }
+            catch (error) {
+                console.error('Error sending test email:', error);
+                return res.status(500).json({ message: 'Error sending test email', error: error.message });
+            }
+        });
+    }
     linkedinCallback(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const authorizationCode = req.query.code;

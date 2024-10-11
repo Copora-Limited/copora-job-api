@@ -14,19 +14,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendEmail = sendEmail;
 const nodemailer_1 = __importDefault(require("nodemailer"));
-// Create a transporter using your email service configuration
+// Create a transporter using SendLayer's SMTP configuration
 const transporter = nodemailer_1.default.createTransport({
-    service: "Gmail", // use your email service
+    host: process.env.SENDLAYER_HOST, // e.g., smtp.sendlayer.com
+    port: 587, // Port for secure email (usually 587 or 465)
+    secure: false, // Set to true if using port 465
     auth: {
-        user: process.env.EMAIL_USER, // your email address
-        pass: process.env.EMAIL_PASS, // your email password
+        user: process.env.SENDLAYER_USER, // SMTP username provided by SendLayer
+        pass: process.env.SENDLAYER_PASS, // SMTP password provided by SendLayer
     },
 });
 // Function to send an email with optional attachments
 function sendEmail(to, subject, html, attachments) {
     return __awaiter(this, void 0, void 0, function* () {
         const mailOptions = {
-            from: process.env.EMAIL_USER,
+            from: "info@copora.com",
             to, // recipient(s)
             subject, // email subject
             html, // email body in HTML

@@ -1,5 +1,7 @@
 // main.ts
+import testEmailTemplate from "../emails/testEmailTemplate";
 import signupEmail from "../emails/signupEmail";
+
 import resetPasswordEmail from "../emails/resetPasswordEmail";
 import twoFactorEmail from "../emails/twoFactorEmail";
 import loginLinkEmail from "../emails/loginLinkEmail";
@@ -14,6 +16,18 @@ import agreementEmail from '../emails/agreementEmail';  // Import the email temp
 
 import { sendEmail } from "./email";
 
+export async function sendTestEmail(email: string) {
+  try {
+    // Define the subject and the user details for the email
+    const subject = "Welcome to Our App!";
+    const user = { firstName: "Andrew", email };
+    const html = testEmailTemplate(user);
+    await sendEmail(email, subject, html);
+  } catch (error) {
+    console.error('Error sending test email:', error);
+    throw new Error('Failed to send test email');
+  }
+}
 // Function to send signup email
 export async function sendSignupEmail(user: { firstName?: string; email: string; }) {
     const subject = "Welcome to Our App!";
