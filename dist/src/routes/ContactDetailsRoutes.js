@@ -120,18 +120,6 @@ router.post('/', ContactDetailsController_1.ContactDetailsController.createConta
  *               twitter:
  *                 type: string
  *                 example: "https://twitter.com/example_updated"
- *               behance:
- *                 type: string
- *                 example: "https://behance.net/example_updated"
- *               dribble:
- *                 type: string
- *                 example: "https://dribbble.com/example_updated"
- *               github:
- *                 type: string
- *                 example: "https://github.com/example_updated"
- *               website:
- *                 type: string
- *                 example: "https://example.com/updated"
  *     responses:
  *       200:
  *         description: Contact Details updated successfully

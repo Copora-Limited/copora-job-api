@@ -54,22 +54,6 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], ContactDetails.prototype, "twitter", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], ContactDetails.prototype, "behance", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], ContactDetails.prototype, "dribble", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], ContactDetails.prototype, "github", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], ContactDetails.prototype, "website", void 0);
 exports.ContactDetails = ContactDetails = __decorate([
     (0, typeorm_1.Entity)()
 ], ContactDetails);

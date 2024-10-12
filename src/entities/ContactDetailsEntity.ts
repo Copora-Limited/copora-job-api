@@ -34,16 +34,4 @@ export class ContactDetails {
 
     @Column()
     twitter: string;
-
-    @Column()
-    behance: string;
-
-    @Column()
-    dribble: string;
-
-    @Column()
-    github: string;
-
-    @Column()
-    website: string;
 }
