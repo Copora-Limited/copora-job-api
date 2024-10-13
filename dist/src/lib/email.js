@@ -36,7 +36,7 @@ function sendEmail(to, subject, html, attachments) {
         };
         try {
             yield transporter.sendMail(mailOptions);
-            console.log("Email sent successfully");
+            console.log(`Email sent to ${to} successfully`);
         }
         catch (error) {
             console.error("Error sending email:", error);

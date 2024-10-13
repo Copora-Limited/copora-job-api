@@ -6,7 +6,7 @@ const emailFooter_1 = require("./emailFooter");
 function testEmailTemplate(user) {
     return `
     ${(0, emailHeader_1.emailHeader)('test')}
-    <div style="padding: 20px; font-family: Arial, sans-serif; line-height: 1.5;">
+    <div style="padding: 10px; font-family: Arial, sans-serif; line-height: 1.5;">
       <h3 style="color: #333;">Hello, ${user.firstName ? user.firstName : 'User'}!</h3>
       <p style="color: #555;">
         This is a test email sent from ${process.env.APP_COMPANY}. We're just testing our email sending service to make sure everything is working correctly.
