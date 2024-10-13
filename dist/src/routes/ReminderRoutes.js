@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const reminderController_1 = __importDefault(require("../controllers/reminderController"));
+const ReminderController_1 = __importDefault(require("../controllers/ReminderController"));
 const router = (0, express_1.Router)();
 /**
  * @swagger
@@ -29,5 +29,5 @@ const router = (0, express_1.Router)();
  *       500:
  *         description: Internal server error.
  */
-router.post('/onboarding', reminderController_1.default.sendOnboardingReminder);
+router.post('/onboarding', ReminderController_1.default.sendOnboardingReminder);
 exports.default = router;
