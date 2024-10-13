@@ -8,7 +8,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const data_source_1 = require("./data-source");
 const dotenv_1 = __importDefault(require("dotenv"));
-const rateLimiter_1 = __importDefault(require("./middlewares/rateLimiter")); // Import the rate limiter middleware
+const rateLimiter_1 = __importDefault(require("./middlewares/rateLimiter"));
 const UserRoutes_1 = __importDefault(require("./routes/UserRoutes"));
 const UsersPrivateRoutes_1 = __importDefault(require("./routes/UsersPrivateRoutes"));
 const BulkEmailRoutes_1 = __importDefault(require("./routes/BulkEmailRoutes"));
@@ -28,33 +28,40 @@ const ReferenceRoutes_1 = __importDefault(require("./routes/ReferenceRoutes"));
 const ReminderRoutes_1 = __importDefault(require("./routes/ReminderRoutes"));
 const AgreementDocRoutes_1 = __importDefault(require("./routes/AgreementDocRoutes"));
 const express_winston_1 = __importDefault(require("express-winston"));
-const logger_1 = __importDefault(require("./utils/logger")); // Corrected path
+const logger_1 = __importDefault(require("./utils/logger"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const swagger_1 = require("../swagger");
-// const Sentry = require("@sentry/node");
-// Sentry.init({
-// 	dsn: "https://34b0227e37c718d30bd3221515db17a7@o4507842016509952.ingest.de.sentry.io/4507842022801488",
-//   tracesSampleRate: 1.0,
-// });
 dotenv_1.default.config();
 data_source_1.AppDataSource.initialize()
     .then(() => {
     console.log('Database connection established successfully.');
     const app = (0, express_1.default)();
-    const isLocal = process.env.NODE_ENV === 'development'; // Check if running in development mode
+    const isLocal = process.env.NODE_ENV === 'development';
     const port = process.env.PORT || 4000;
     const url = isLocal ? process.env.LOCAL_URL : process.env.REMOTE_URL;
-    // Trust the proxy (important when running behind a load balancer or proxy)
-    // app.set('trust proxy', true);  // Add this line
-    app.set('trust proxy', 1); // Trust the first proxy (like Nginx)
+    // Trust the proxy
+    app.set('trust proxy', 1);
+    // CORS Configuration
     app.use((0, cors_1.default)({
         origin: [
             'http://localhost:3000', // React
             'http://localhost:8080', // Vue
             'http://localhost:4200', // Angular
             'http://localhost:5173', // Vite
+            'https://coporasystem-fe.vercel.app' // Deployed Frontend
+        ],
+        credentials: true, // Allow credentials
+    }));
+    // Handle OPTIONS preflight requests
+    app.options('*', (0, cors_1.default)({
+        origin: [
+            'http://localhost:3000',
+            'http://localhost:8080',
+            'http://localhost:4200',
+            'http://localhost:5173',
             'https://coporasystem-fe.vercel.app'
-        ]
+        ],
+        credentials: true,
     }));
     app.use(express_1.default.json());
     // Apply the rate limiter globally
@@ -62,10 +69,10 @@ data_source_1.AppDataSource.initialize()
     // Request logging with Winston
     app.use(express_winston_1.default.logger({
         winstonInstance: logger_1.default,
-        meta: true, // Add meta data about the request
-        msg: "HTTP {{req.method}} {{req.url}}", // Customize the logging message
+        meta: true,
+        msg: "HTTP {{req.method}} {{req.url}}",
         colorize: false,
-        ignoreRoute: function (req, res) { return false; } // Ignore logging some routes
+        ignoreRoute: function (req, res) { return false; }
     }));
     // API routes
     app.use(`/users`, UserRoutes_1.default);
@@ -92,8 +99,11 @@ data_source_1.AppDataSource.initialize()
     app.use(express_winston_1.default.errorLogger({
         winstonInstance: logger_1.default
     }));
-    // Global error handler (optional)
+    // Global error handler
     app.use((err, req, res, next) => {
+        res.header('Access-Control-Allow-Origin', 'https://coporasystem-fe.vercel.app');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
         console.error(err.stack);
         res.status(500).send('Something broke!');
     });

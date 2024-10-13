@@ -3,7 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import { AppDataSource } from './data-source';
 import dotenv from 'dotenv';
-import rateLimiter from './middlewares/rateLimiter'; // Import the rate limiter middleware
+import rateLimiter from './middlewares/rateLimiter';
 import userRoutes from './routes/UserRoutes';
 import userPrivateRoutes from './routes/UsersPrivateRoutes';
 import BulkEmailRoutes from './routes/BulkEmailRoutes';
@@ -21,19 +21,11 @@ import personalDetailsRoutes from './routes/personalDetailsRoutes';
 import ProfessionalDetailsRoutes from './routes/ProfessionalDetailsRoutes';
 import ReferenceRoutes from './routes/ReferenceRoutes';
 import ReminderRoutes from './routes/ReminderRoutes';
-
 import agreementRoutes from './routes/AgreementDocRoutes';
 import expressWinston from 'express-winston';
-import logger from './utils/logger'; // Corrected path
+import logger from './utils/logger';
 import swaggerUI from 'swagger-ui-express';
 import { swaggerSpec } from '../swagger';
-// const Sentry = require("@sentry/node");
-
-// Sentry.init({
-// 	dsn: "https://34b0227e37c718d30bd3221515db17a7@o4507842016509952.ingest.de.sentry.io/4507842022801488",
-//   tracesSampleRate: 1.0,
-// });
-
 dotenv.config();
 
 AppDataSource.initialize()
@@ -41,23 +33,35 @@ AppDataSource.initialize()
     console.log('Database connection established successfully.');
 
     const app = express();
-    const isLocal = process.env.NODE_ENV === 'development'; // Check if running in development mode
-
+    const isLocal = process.env.NODE_ENV === 'development';
     const port = process.env.PORT || 4000;
     const url = isLocal ? process.env.LOCAL_URL : process.env.REMOTE_URL;
 
-    // Trust the proxy (important when running behind a load balancer or proxy)
-    // app.set('trust proxy', true);  // Add this line
-    app.set('trust proxy', 1); // Trust the first proxy (like Nginx)
+    // Trust the proxy
+    app.set('trust proxy', 1);
 
+    // CORS Configuration
     app.use(cors({
       origin: [
         'http://localhost:3000', // React
         'http://localhost:8080', // Vue
         'http://localhost:4200', // Angular
         'http://localhost:5173',  // Vite
+        'https://coporasystem-fe.vercel.app' // Deployed Frontend
+      ],
+      credentials: true, // Allow credentials
+    }));
+
+    // Handle OPTIONS preflight requests
+    app.options('*', cors({
+      origin: [
+        'http://localhost:3000',
+        'http://localhost:8080',
+        'http://localhost:4200',
+        'http://localhost:5173',
         'https://coporasystem-fe.vercel.app'
-      ]
+      ],
+      credentials: true,
     }));
 
     app.use(express.json());
@@ -68,10 +72,10 @@ AppDataSource.initialize()
     // Request logging with Winston
     app.use(expressWinston.logger({
       winstonInstance: logger,
-      meta: true, // Add meta data about the request
-      msg: "HTTP {{req.method}} {{req.url}}", // Customize the logging message
+      meta: true,
+      msg: "HTTP {{req.method}} {{req.url}}",
       colorize: false,
-      ignoreRoute: function (req, res) { return false; } // Ignore logging some routes
+      ignoreRoute: function (req, res) { return false; }
     }));
 
     // API routes
@@ -102,8 +106,11 @@ AppDataSource.initialize()
       winstonInstance: logger
     }));
 
-    // Global error handler (optional)
+    // Global error handler
     app.use((err, req, res, next) => {
+      res.header('Access-Control-Allow-Origin', 'https://coporasystem-fe.vercel.app');
+      res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
       console.error(err.stack);
       res.status(500).send('Something broke!');
     });
