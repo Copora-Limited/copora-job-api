@@ -54,6 +54,6 @@ class Reminders {
             });
         }
     }
-}
+} 
 
 export default new Reminders();

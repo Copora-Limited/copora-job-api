@@ -401,6 +401,7 @@ class UserController {
                                 password: hashedPassword, // Save the hashed password
                                 role: constants_1.UserRole.Applicant,
                                 profilePicture,
+                                onboardingStatus: constants_1.OnboardingStatus.InvitationSent,
                                 createdBy,
                                 createdAt,
                                 applicationNo

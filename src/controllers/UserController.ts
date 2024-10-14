@@ -422,7 +422,6 @@ class UserController {
   
             // Get the current date
             const createdAt = new Date();
-  
             // Create new user with hashed password and createdAt field
             await userService.create({
               firstName,
@@ -432,6 +431,7 @@ class UserController {
               password: hashedPassword, // Save the hashed password
               role: UserRole.Applicant,
               profilePicture,
+              onboardingStatus: OnboardingStatus.InvitationSent,
               createdBy,
               createdAt,
               applicationNo
