@@ -15,25 +15,9 @@ class EmploymentTypeController {
     // Create or update employment type based on id
     static create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const employmentTypesData = req.body; // Expecting an array of employment type data
-                const newEmploymentTypes = [];
-                for (const employmentTypeData of employmentTypesData) {
-                    // Check if the employment type already exists by name (or any other criteria you prefer)
-                    const existingEmploymentType = yield EmploymentTypeService_1.EmploymentTypeService.getByName(employmentTypeData.name);
-                    if (existingEmploymentType) {
-                        // If it exists, throw an error
-                        throw new Error(`Record already exists for employment type: ${employmentTypeData.name}`);
-                    }
-                    // If it doesn't exist, create a new one
-                    const newEmploymentType = yield EmploymentTypeService_1.EmploymentTypeService.create(employmentTypeData);
-                    newEmploymentTypes.push(newEmploymentType);
-                }
-                res.status(201).json({ message: "Created Successfully", data: newEmploymentTypes });
-            }
-            catch (error) {
-                res.status(400).json({ message: 'Error creating employment types', error: error.message });
-            }
+            const Data = req.body;
+            const newEmploymentType = yield EmploymentTypeService_1.EmploymentTypeService.create(Data);
+            res.status(201).json(newEmploymentType);
         });
     }
     // Get all Employment Types

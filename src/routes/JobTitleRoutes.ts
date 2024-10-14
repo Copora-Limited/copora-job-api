@@ -86,14 +86,7 @@ router.get('/:id', JobTitleController.getById);
  *                   type: string
  *                   description: The name of the job title
  *               example:
- *                 - name: "Hotel Manager"
- *                 - name: "Assistant Hotel Manager"
- *                 - name: "Hotel Receptionist"
- *                 - name: "Concierge"
- *                 - name: "Reservation Agent"
- *                 - name: "Front of House Manager"
- *                 - name: "Hotel General Manager"
- *                 - name: "Operations Manager"
+ *                 name: "Software Engineer"
  *     responses:
  *       201:
  *         description: The created job titles
@@ -110,11 +103,10 @@ router.get('/:id', JobTitleController.getById);
  *                     type: string
  *                     description: The name of the job title
  *                 example:
- *                   name: "Hotel Manager"
+ *                   name: "Software Engineer"
  *       400:
  *         description: Invalid input
  */
-
 
 router.post('/', JobTitleController.create);
 

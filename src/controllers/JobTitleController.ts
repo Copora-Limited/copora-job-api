@@ -5,29 +5,13 @@ export class JobTitleController {
     // Create a new Job Title
     static async create(req: Request, res: Response) {
         try {
-            const jobTitlesData = req.body; // Expecting an array of job title data
-            const newJobTitles = [];
-    
-            for (const jobTitleData of jobTitlesData) {
-                // Check if the job title already exists by name
-                const existingJobTitle = await JobTitleService.getByName(jobTitleData.name);
-    
-                if (existingJobTitle) {
-                    // If it exists, throw an error
-                    throw new Error(`Record already exists for job title: ${jobTitleData.name}`);
-                }
-    
-                // If it doesn't exist, create a new one
-                const newJobTitle = await JobTitleService.create(jobTitleData);
-                newJobTitles.push(newJobTitle);
-            }
-    
-            res.status(201).json(newJobTitles); // Return the newly created job titles
+            const jobTitleData = req.body;
+            const newJobTitle = await JobTitleService.create(jobTitleData);
+            res.status(201).json(newJobTitle);
         } catch (error) {
-            res.status(400).send({ message: 'Error creating job titles', error: error.message });
+            res.status(400).send({ message: 'Error creating job title', error: error.message });
         }
     }
-    
 
     // Get all Job Titles
     static async getAll(req: Request, res: Response) {

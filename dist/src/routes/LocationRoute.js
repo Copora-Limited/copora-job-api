@@ -52,20 +52,22 @@ router.get('/', LocationController_1.LocationController.getAll);
 router.get('/:id', LocationController_1.LocationController.getById);
 /**
  * @swagger
- * /api/locations:
- *   get:
- *     summary: Get all locations
- *     tags: [Locations]
- *     responses:
- *       200:
- *         description: A list of locations
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Location'
+ * components:
+ *   schemas:
+ *     Location:
+ *       type: object
+ *       required:
+ *         - name
+ *         - address
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: The name of the location
+ *         address:
+ *           type: string
+ *           description: The address of the location
  *
+ * /api/locations:
  *   post:
  *     summary: Create a new location
  *     tags: [Locations]
@@ -74,39 +76,18 @@ router.get('/:id', LocationController_1.LocationController.getById);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - name
- *               - address
- *             properties:
- *               name:
- *                 type: string
- *                 description: The name of the location
- *               address:
- *                 type: string
- *                 description: The address of the location
+ *             $ref: '#/components/schemas/Location'
  *     responses:
  *       201:
  *         description: The created location
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               required:
- *                 - name
- *                 - address
- *               properties:
- *                 name:
- *                   type: string
- *                   description: The name of the location
- *                 address:
- *                   type: string
- *                   description: The address of the location
- *               example:
- *                 name: "Main Office"
- *                 address: "123 Main St, Cityville, State, 12345"
+ *               $ref: '#/components/schemas/Location'
  *       400:
- *         description: Invalid input
+ *         description: Invalid input data
+ *       409:
+ *         description: Location already exists
  */
 router.post('/', LocationController_1.LocationController.create);
 /**

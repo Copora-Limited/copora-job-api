@@ -35,29 +35,14 @@ export class GroupController {
     // Create a new group
     static async create(req: Request, res: Response) {
         try {
-            const groupsData = req.body; // Expecting an array of group data
-            const newGroups = [];
-    
-            for (const groupData of groupsData) {
-                // Check if the group already exists by name (or any other criteria you prefer)
-                const existingGroup = await GroupService.getByName(groupData.name);
-    
-                if (existingGroup) {
-                    // If it exists, throw an error
-                    throw new Error(`Record already exists for group: ${groupData.name}`);
-                }
-    
-                // If it doesn't exist, create a new one
-                const newGroup = await GroupService.create(groupData);
-                newGroups.push(newGroup);
-            }
-    
-            res.status(201).json({ message: "Created Successfully", data: newGroups });
+            const groupData = req.body;
+            const newGroup = await GroupService.create(groupData);
+            res.status(201).json(newGroup);
         } catch (error) {
-            res.status(400).json({ message: 'Error creating groups', error: error.message });
+            res.status(400).json({ message: 'Error creating group', error: error.message });
         }
     }
-    
+
     // Update group by ID
     static async update(req: Request, res: Response) {
         try {
