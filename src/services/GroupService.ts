@@ -4,6 +4,11 @@ import { Group } from '../entities/GroupEntity';
 const groupRepository = AppDataSource.getRepository(Group);
 
 export class GroupService {
+
+    static async getByName(name: string) {
+        return await groupRepository.findOneBy({ name });
+    }
+    
     static async getAll() {
         return await groupRepository.find();
     }

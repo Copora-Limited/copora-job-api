@@ -14,6 +14,11 @@ const data_source_1 = require("../data-source");
 const GroupEntity_1 = require("../entities/GroupEntity");
 const groupRepository = data_source_1.AppDataSource.getRepository(GroupEntity_1.Group);
 class GroupService {
+    static getByName(name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield groupRepository.findOneBy({ name });
+        });
+    }
     static getAll() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield groupRepository.find();

@@ -4,6 +4,9 @@ import { EmploymentType } from '../entities/EmploymentTypeEntity';
 const employmentTypeRepository = AppDataSource.getRepository(EmploymentType);
 export class EmploymentTypeService {
 
+    static async getByName(name: string) {
+        return await employmentTypeRepository.findOneBy({ name });
+    }
     static async getAll() {
         return await employmentTypeRepository.find();
     }

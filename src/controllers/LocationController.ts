@@ -36,31 +36,32 @@ export class LocationController {
     }
 
     // Create a new location
-    // static async create(req: Request, res: Response) {
-    //     try {
-    //         const locationData = req.body;
-    //         const newLocation = await LocationService.create(locationData);
-    //         res.status(201).json(newLocation);
-    //     } catch (error) {
-    //         res.status(400).send({ message: 'Error creating location', error: error.message });
-    //     }
-    // }
 
     static async create(req: Request, res: Response) {
         try {
             const locationsData = req.body; // Expecting an array of location data
             const newLocations = [];
-
+    
             for (const locationData of locationsData) {
+                // Check if the location already exists by name or address (you can choose your own criteria)
+                const existingLocation = await LocationService.getByName(locationData.name);
+    
+                if (existingLocation) {
+                    // If it exists, throw an error
+                    throw new Error(`Record already exists for location: ${locationData.name}`);
+                }
+    
+                // If it doesn't exist, create a new one
                 const newLocation = await LocationService.create(locationData);
                 newLocations.push(newLocation);
             }
-
-            res.status(201).json({message: "Created Successfully", data: newLocations});
+    
+            res.status(201).json({ message: "Created Successfully", data: newLocations });
         } catch (error) {
             res.status(400).send({ message: 'Error creating locations', error: error.message });
         }
     }
+    
 
     // Update location by ID
     static async update(req: Request, res: Response) {

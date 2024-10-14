@@ -14,6 +14,11 @@ const data_source_1 = require("../data-source");
 const EmploymentTypeEntity_1 = require("../entities/EmploymentTypeEntity");
 const employmentTypeRepository = data_source_1.AppDataSource.getRepository(EmploymentTypeEntity_1.EmploymentType);
 class EmploymentTypeService {
+    static getByName(name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield employmentTypeRepository.findOneBy({ name });
+        });
+    }
     static getAll() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield employmentTypeRepository.find();

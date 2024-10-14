@@ -4,6 +4,10 @@ import { Location } from '../entities/LocationEntity';
 const locationRepository = AppDataSource.getRepository(Location);
 
 export class LocationService {
+    static async getByName(name: string) {
+        return await locationRepository.findOneBy({ name });
+    }
+
     static async getAll() {
         return await locationRepository.find();
     }

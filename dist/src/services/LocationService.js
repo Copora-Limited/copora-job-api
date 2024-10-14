@@ -14,6 +14,11 @@ const data_source_1 = require("../data-source");
 const LocationEntity_1 = require("../entities/LocationEntity");
 const locationRepository = data_source_1.AppDataSource.getRepository(LocationEntity_1.Location);
 class LocationService {
+    static getByName(name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield locationRepository.findOneBy({ name });
+        });
+    }
     static getAll() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield locationRepository.find();
