@@ -12,35 +12,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GroupService = void 0;
 const data_source_1 = require("../data-source");
 const GroupEntity_1 = require("../entities/GroupEntity");
+const groupRepository = data_source_1.AppDataSource.getRepository(GroupEntity_1.Group);
 class GroupService {
-    constructor() {
-        this.groupRepository = data_source_1.AppDataSource.getRepository(GroupEntity_1.Group);
-    }
-    getAll() {
+    static getAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.groupRepository.find();
+            return yield groupRepository.find();
         });
     }
-    getById(id) {
+    static getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.groupRepository.findOneBy({ id });
+            return yield groupRepository.findOneBy({ id });
         });
     }
-    create(groupData) {
+    static create(groupData) {
         return __awaiter(this, void 0, void 0, function* () {
-            const group = this.groupRepository.create(groupData);
-            return yield this.groupRepository.save(group);
+            const group = groupRepository.create(groupData);
+            return yield groupRepository.save(group);
         });
     }
-    update(id, groupData) {
+    static update(id, groupData) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.groupRepository.update(id, groupData);
+            yield groupRepository.update(id, groupData);
             return this.getById(id);
         });
     }
-    delete(id) {
+    static delete(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.groupRepository.delete(id);
+            return yield groupRepository.delete(id);
         });
     }
 }

@@ -7,4 +7,7 @@ export class Location {
 
     @Column()
     name: string;
+
+    @Column()
+    address: string;
 }

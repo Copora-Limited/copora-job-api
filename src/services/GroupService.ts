@@ -1,28 +1,28 @@
 import { AppDataSource } from '../data-source';
 import { Group } from '../entities/GroupEntity';
 
+const groupRepository = AppDataSource.getRepository(Group);
+
 export class GroupService {
-    groupRepository = AppDataSource.getRepository(Group);
-
-    async getAll() {
-        return await this.groupRepository.find();
+    static async getAll() {
+        return await groupRepository.find();
     }
 
-    async getById(id: number) {
-        return await this.groupRepository.findOneBy({id});
+    static async getById(id: number) {
+        return await groupRepository.findOneBy({ id });
     }
 
-    async create(groupData: Partial<Group>) {
-        const group = this.groupRepository.create(groupData);
-        return await this.groupRepository.save(group);
+    static async create(groupData: Partial<Group>) {
+        const group = groupRepository.create(groupData);
+        return await groupRepository.save(group);
     }
 
-    async update(id: number, groupData: Partial<Group>) {
-        await this.groupRepository.update(id, groupData);
+    static async update(id: number, groupData: Partial<Group>) {
+        await groupRepository.update(id, groupData);
         return this.getById(id);
     }
 
-    async delete(id: number) {
-        return await this.groupRepository.delete(id);
+    static async delete(id: number) {
+        return await groupRepository.delete(id);
     }
 }

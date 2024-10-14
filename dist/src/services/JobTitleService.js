@@ -14,6 +14,11 @@ const data_source_1 = require("../data-source");
 const JobTitleEntity_1 = require("../entities/JobTitleEntity");
 const jobTitleRepository = data_source_1.AppDataSource.getRepository(JobTitleEntity_1.JobTitle);
 class JobTitleService {
+    static getByName(name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield jobTitleRepository.findOneBy({ name });
+        });
+    }
     static getAll() {
         return __awaiter(this, void 0, void 0, function* () {
             try {

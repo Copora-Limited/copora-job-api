@@ -9,10 +9,9 @@ const JobTitleController_1 = require("../controllers/JobTitleController");
  *   description: API for managing job titles
  */
 const router = (0, express_1.Router)();
-// const jobTitleController = new JobTitleController();
 /**
  * @swagger
- * /api/jobTitles:
+ * /api/job-titles:
  *   get:
  *     summary: Retrieve a list of job titles
  *     tags: [Job Titles]
@@ -29,7 +28,7 @@ const router = (0, express_1.Router)();
 router.get('/', JobTitleController_1.JobTitleController.getAll);
 /**
  * @swagger
- * /api/jobTitles/{id}:
+ * /api/job-titles/{id}:
  *   get:
  *     summary: Get a job title by ID
  *     tags: [Job Titles]
@@ -53,28 +52,70 @@ router.get('/', JobTitleController_1.JobTitleController.getAll);
 router.get('/:id', JobTitleController_1.JobTitleController.getById);
 /**
  * @swagger
- * /api/jobTitles:
+ * /api/job-titles:
+ *   get:
+ *     summary: Get all job titles
+ *     tags: [Job Titles]
+ *     responses:
+ *       200:
+ *         description: A list of job titles
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/JobTitle'
+ *
  *   post:
- *     summary: Create a new job title
+ *     summary: Create new job titles
  *     tags: [Job Titles]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/JobTitle'
+ *             type: array
+ *             items:
+ *               type: object
+ *               required:
+ *                 - name
+ *               properties:
+ *                 name:
+ *                   type: string
+ *                   description: The name of the job title
+ *               example:
+ *                 - name: "Hotel Manager"
+ *                 - name: "Assistant Hotel Manager"
+ *                 - name: "Hotel Receptionist"
+ *                 - name: "Concierge"
+ *                 - name: "Reservation Agent"
+ *                 - name: "Front of House Manager"
+ *                 - name: "Hotel General Manager"
+ *                 - name: "Operations Manager"
  *     responses:
  *       201:
- *         description: The created job title
+ *         description: The created job titles
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/JobTitle'
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 required:
+ *                   - name
+ *                 properties:
+ *                   name:
+ *                     type: string
+ *                     description: The name of the job title
+ *                 example:
+ *                   name: "Hotel Manager"
+ *       400:
+ *         description: Invalid input
  */
 router.post('/', JobTitleController_1.JobTitleController.create);
 /**
  * @swagger
- * /api/jobTitles/{id}:
+ * /api/job-titles/{id}:
  *   put:
  *     summary: Update a job title
  *     tags: [Job Titles]
@@ -104,7 +145,7 @@ router.post('/', JobTitleController_1.JobTitleController.create);
 router.put('/:id', JobTitleController_1.JobTitleController.update);
 /**
  * @swagger
- * /api/jobTitles/{id}:
+ * /api/job-titles/{id}:
  *   delete:
  *     summary: Delete a job title
  *     tags: [Job Titles]

@@ -12,35 +12,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LocationService = void 0;
 const data_source_1 = require("../data-source");
 const LocationEntity_1 = require("../entities/LocationEntity");
+const locationRepository = data_source_1.AppDataSource.getRepository(LocationEntity_1.Location);
 class LocationService {
-    constructor() {
-        this.locationRepository = data_source_1.AppDataSource.getRepository(LocationEntity_1.Location);
-    }
-    getAll() {
+    static getAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.locationRepository.find();
+            return yield locationRepository.find();
         });
     }
-    getById(id) {
+    static getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.locationRepository.findOneBy({ id });
+            return yield locationRepository.findOneBy({ id });
         });
     }
-    create(locationData) {
+    static create(locationData) {
         return __awaiter(this, void 0, void 0, function* () {
-            const location = this.locationRepository.create(locationData);
-            return yield this.locationRepository.save(location);
+            const location = locationRepository.create(locationData);
+            return yield locationRepository.save(location);
         });
     }
-    update(id, locationData) {
+    static update(id, locationData) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.locationRepository.update(id, locationData);
+            yield locationRepository.update(id, locationData);
             return this.getById(id);
         });
     }
-    delete(id) {
+    static delete(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.locationRepository.delete(id);
+            return yield locationRepository.delete(id);
         });
     }
 }

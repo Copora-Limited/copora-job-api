@@ -22,6 +22,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Location.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Location.prototype, "address", void 0);
 exports.Location = Location = __decorate([
     (0, typeorm_1.Entity)()
 ], Location);

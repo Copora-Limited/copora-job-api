@@ -9,7 +9,6 @@ const GroupController_1 = require("../controllers/GroupController");
  *   description: API for managing groups
  */
 const router = (0, express_1.Router)();
-const groupController = new GroupController_1.GroupController();
 /**
  * @swagger
  * /api/groups:
@@ -26,7 +25,7 @@ const groupController = new GroupController_1.GroupController();
  *               items:
  *                 $ref: '#/components/schemas/Group'
  */
-router.get('/', groupController.getAll.bind(groupController));
+router.get('/', GroupController_1.GroupController.getAll);
 /**
  * @swagger
  * /api/groups/{id}:
@@ -50,10 +49,23 @@ router.get('/', groupController.getAll.bind(groupController));
  *       404:
  *         description: Group not found
  */
-router.get('/:id', groupController.getById.bind(groupController));
+router.get('/:id', GroupController_1.GroupController.getById);
 /**
  * @swagger
  * /api/groups:
+ *   get:
+ *     summary: Get all groups
+ *     tags: [Groups]
+ *     responses:
+ *       200:
+ *         description: A list of groups
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Group'
+ *
  *   post:
  *     summary: Create a new group
  *     tags: [Groups]
@@ -62,16 +74,41 @@ router.get('/:id', groupController.getById.bind(groupController));
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Group'
+ *             type: object
+ *             required:
+ *               - name
+ *               - description
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: The name of the group
+ *               description:
+ *                 type: string
+ *                 description: A brief description of the group
  *     responses:
  *       201:
  *         description: The created group
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Group'
+ *               type: object
+ *               required:
+ *                 - name
+ *                 - description
+ *               properties:
+ *                 name:
+ *                   type: string
+ *                   description: The name of the group
+ *                 description:
+ *                   type: string
+ *                   description: A brief description of the group
+ *               example:
+ *                 name: "Developers"
+ *                 description: "A group for software developers"
+ *       400:
+ *         description: Invalid input
  */
-router.post('/', groupController.create.bind(groupController));
+router.post('/', GroupController_1.GroupController.create);
 /**
  * @swagger
  * /api/groups/{id}:
@@ -101,7 +138,7 @@ router.post('/', groupController.create.bind(groupController));
  *       404:
  *         description: Group not found
  */
-router.put('/:id', groupController.update.bind(groupController));
+router.put('/:id', GroupController_1.GroupController.update);
 /**
  * @swagger
  * /api/groups/{id}:
@@ -121,5 +158,5 @@ router.put('/:id', groupController.update.bind(groupController));
  *       404:
  *         description: Group not found
  */
-router.delete('/:id', groupController.delete.bind(groupController));
+router.delete('/:id', GroupController_1.GroupController.delete);
 exports.default = router;

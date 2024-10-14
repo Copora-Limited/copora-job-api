@@ -9,7 +9,6 @@ const LocationController_1 = require("../controllers/LocationController");
  *   description: API for managing locations
  */
 const router = (0, express_1.Router)();
-const locationController = new LocationController_1.LocationController();
 /**
  * @swagger
  * /api/locations:
@@ -26,7 +25,7 @@ const locationController = new LocationController_1.LocationController();
  *               items:
  *                 $ref: '#/components/schemas/Location'
  */
-router.get('/', locationController.getAll.bind(locationController));
+router.get('/', LocationController_1.LocationController.getAll);
 /**
  * @swagger
  * /api/locations/{id}:
@@ -50,10 +49,23 @@ router.get('/', locationController.getAll.bind(locationController));
  *       404:
  *         description: Location not found
  */
-router.get('/:id', locationController.getById.bind(locationController));
+router.get('/:id', LocationController_1.LocationController.getById);
 /**
  * @swagger
  * /api/locations:
+ *   get:
+ *     summary: Get all locations
+ *     tags: [Locations]
+ *     responses:
+ *       200:
+ *         description: A list of locations
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Location'
+ *
  *   post:
  *     summary: Create a new location
  *     tags: [Locations]
@@ -62,16 +74,41 @@ router.get('/:id', locationController.getById.bind(locationController));
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Location'
+ *             type: object
+ *             required:
+ *               - name
+ *               - address
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: The name of the location
+ *               address:
+ *                 type: string
+ *                 description: The address of the location
  *     responses:
  *       201:
  *         description: The created location
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Location'
+ *               type: object
+ *               required:
+ *                 - name
+ *                 - address
+ *               properties:
+ *                 name:
+ *                   type: string
+ *                   description: The name of the location
+ *                 address:
+ *                   type: string
+ *                   description: The address of the location
+ *               example:
+ *                 name: "Main Office"
+ *                 address: "123 Main St, Cityville, State, 12345"
+ *       400:
+ *         description: Invalid input
  */
-router.post('/', locationController.create.bind(locationController));
+router.post('/', LocationController_1.LocationController.create);
 /**
  * @swagger
  * /api/locations/{id}:
@@ -101,7 +138,7 @@ router.post('/', locationController.create.bind(locationController));
  *       404:
  *         description: Location not found
  */
-router.put('/:id', locationController.update.bind(locationController));
+router.put('/:id', LocationController_1.LocationController.update);
 /**
  * @swagger
  * /api/locations/{id}:
@@ -121,5 +158,5 @@ router.put('/:id', locationController.update.bind(locationController));
  *       404:
  *         description: Location not found
  */
-router.delete('/:id', locationController.delete.bind(locationController));
+router.delete('/:id', LocationController_1.LocationController.delete);
 exports.default = router;

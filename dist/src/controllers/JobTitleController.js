@@ -16,12 +16,26 @@ class JobTitleController {
     static create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const jobTitleData = req.body;
-                const newJobTitle = yield JobTitleService_1.JobTitleService.create(jobTitleData);
-                res.status(201).json(newJobTitle);
+                const jobTitlesData = req.body; // Expecting an array of job title data
+                const updatedJobTitles = [];
+                for (const jobTitleData of jobTitlesData) {
+                    // Check if the job title already exists by name
+                    const existingJobTitle = yield JobTitleService_1.JobTitleService.getByName(jobTitleData.name);
+                    if (existingJobTitle) {
+                        // If it exists, update it
+                        const updatedJobTitle = yield JobTitleService_1.JobTitleService.update(existingJobTitle.id, jobTitleData);
+                        updatedJobTitles.push(updatedJobTitle);
+                    }
+                    else {
+                        // If it doesn't exist, create a new one
+                        const newJobTitle = yield JobTitleService_1.JobTitleService.create(jobTitleData);
+                        updatedJobTitles.push(newJobTitle);
+                    }
+                }
+                res.status(200).json(updatedJobTitles); // Return the updated or newly created job titles
             }
             catch (error) {
-                res.status(400).send({ message: 'Error creating job title', error: error.message });
+                res.status(400).send({ message: 'Error creating or updating job titles', error: error.message });
             }
         });
     }

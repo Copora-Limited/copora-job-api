@@ -5,6 +5,10 @@ const jobTitleRepository = AppDataSource.getRepository(JobTitle);
 
 export class JobTitleService {
 
+    static async getByName(name: string) {
+        return await jobTitleRepository.findOneBy({ name });
+    }
+
     static async getAll() {
         try {
             return await jobTitleRepository.find();

@@ -53,19 +53,6 @@ router.get('/', EmploymentTypeController_1.EmploymentTypeController.getAll);
 router.get('/:id', EmploymentTypeController_1.EmploymentTypeController.getById);
 /**
  * @swagger
- * components:
- *   schemas:
- *     EmploymentType:
- *       type: object
- *       required:
- *         - name
- *       properties:
- *         name:
- *           type: string
- *           description: The name of the employment type
- *       example:
- *         name: "Full-time"
- *
  * /api/employment-types:
  *   get:
  *     summary: Get all employment types
