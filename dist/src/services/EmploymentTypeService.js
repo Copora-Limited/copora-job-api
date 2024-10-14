@@ -12,35 +12,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmploymentTypeService = void 0;
 const data_source_1 = require("../data-source");
 const EmploymentTypeEntity_1 = require("../entities/EmploymentTypeEntity");
+const employmentTypeRepository = data_source_1.AppDataSource.getRepository(EmploymentTypeEntity_1.EmploymentType);
 class EmploymentTypeService {
-    constructor() {
-        this.employmentTypeRepository = data_source_1.AppDataSource.getRepository(EmploymentTypeEntity_1.EmploymentType);
-    }
-    getAll() {
+    static getAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.employmentTypeRepository.find();
+            return yield employmentTypeRepository.find();
         });
     }
-    getById(id) {
+    static getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.employmentTypeRepository.findOneBy({ id });
+            return yield employmentTypeRepository.findOneBy({ id });
         });
     }
-    create(employmentTypeData) {
+    static create(employmentTypeData) {
         return __awaiter(this, void 0, void 0, function* () {
-            const employmentType = this.employmentTypeRepository.create(employmentTypeData);
-            return yield this.employmentTypeRepository.save(employmentType);
+            const employmentType = employmentTypeRepository.create(employmentTypeData);
+            return yield employmentTypeRepository.save(employmentType);
         });
     }
-    update(id, employmentTypeData) {
+    static update(id, employmentTypeData) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.employmentTypeRepository.update(id, employmentTypeData);
+            yield employmentTypeRepository.update(id, employmentTypeData);
             return this.getById(id);
         });
     }
-    delete(id) {
+    static delete(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.employmentTypeRepository.delete(id);
+            return yield employmentTypeRepository.delete(id);
         });
     }
 }

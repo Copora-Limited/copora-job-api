@@ -1,28 +1,28 @@
 import { AppDataSource } from '../data-source';
 import { EmploymentType } from '../entities/EmploymentTypeEntity';
 
+const employmentTypeRepository = AppDataSource.getRepository(EmploymentType);
 export class EmploymentTypeService {
-    employmentTypeRepository = AppDataSource.getRepository(EmploymentType);
 
-    async getAll() {
-        return await this.employmentTypeRepository.find();
+    static async getAll() {
+        return await employmentTypeRepository.find();
     }
 
-    async getById(id: number) {
-        return await this.employmentTypeRepository.findOneBy({id});
+    static async getById(id: number) {
+        return await employmentTypeRepository.findOneBy({id});
     }
 
-    async create(employmentTypeData: Partial<EmploymentType>) {
-        const employmentType = this.employmentTypeRepository.create(employmentTypeData);
-        return await this.employmentTypeRepository.save(employmentType);
+    static async create(employmentTypeData: Partial<EmploymentType>) {
+        const employmentType = employmentTypeRepository.create(employmentTypeData);
+        return await employmentTypeRepository.save(employmentType);
     }
 
-    async update(id: number, employmentTypeData: Partial<EmploymentType>) {
-        await this.employmentTypeRepository.update(id, employmentTypeData);
+    static async update(id: number, employmentTypeData: Partial<EmploymentType>) {
+        await employmentTypeRepository.update(id, employmentTypeData);
         return this.getById(id);
     }
 
-    async delete(id: number) {
-        return await this.employmentTypeRepository.delete(id);
+    static async delete(id: number) {
+        return await employmentTypeRepository.delete(id);
     }
 }

@@ -61,3 +61,56 @@
 2024-10-11T18:03:38.729Z [[32minfo[39m]: HTTP GET /api-docs/favicon-32x32.png
 2024-10-11T18:03:58.826Z [[32minfo[39m]: HTTP POST /users/login
 2024-10-11T18:05:00.573Z [[32minfo[39m]: HTTP POST /auth/users/upload-users
+2024-10-14T16:52:56.089Z [[32minfo[39m]: HTTP GET /api-docs
+2024-10-14T16:52:56.283Z [[32minfo[39m]: HTTP GET /api-docs/
+2024-10-14T16:52:56.442Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui.css
+2024-10-14T16:52:56.509Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-10-14T16:52:56.662Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-10-14T16:52:56.845Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-10-14T16:59:22.156Z [[32minfo[39m]: HTTP GET /api/employment-types
+2024-10-14T17:03:48.102Z [[32minfo[39m]: HTTP GET /api-docs/
+2024-10-14T17:03:48.191Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui.css
+2024-10-14T17:03:48.194Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-10-14T17:03:48.202Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-10-14T17:03:48.207Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-10-14T17:03:48.236Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-10-14T17:03:48.253Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-10-14T17:03:48.292Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-10-14T17:03:52.181Z [[32minfo[39m]: HTTP GET /api-docs/favicon-32x32.png
+2024-10-14T17:05:51.160Z [[31merror[39m]: middlewareError
+2024-10-14T17:06:22.344Z [[31merror[39m]: middlewareError
+2024-10-14T17:14:14.917Z [[31merror[39m]: middlewareError
+2024-10-14T17:20:46.092Z [[32minfo[39m]: HTTP GET /api-docs/
+2024-10-14T17:20:46.176Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-10-14T17:20:46.181Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui.css
+2024-10-14T17:20:46.184Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-10-14T17:20:46.187Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-10-14T17:20:46.222Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-10-14T17:20:46.230Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-10-14T17:20:46.234Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-10-14T17:20:48.774Z [[32minfo[39m]: HTTP GET /api-docs/favicon-32x32.png
+2024-10-14T17:40:54.455Z [[32minfo[39m]: HTTP GET /api-docs/
+2024-10-14T17:40:54.544Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui.css
+2024-10-14T17:40:54.560Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-10-14T17:40:54.570Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-10-14T17:40:54.573Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-10-14T17:40:55.712Z [[32minfo[39m]: HTTP GET /api-docs/favicon-32x32.png
+2024-10-14T17:41:03.384Z [[32minfo[39m]: HTTP POST /api/employment-types
+2024-10-14T17:42:53.955Z [[32minfo[39m]: HTTP GET /api/employment-types
+2024-10-14T17:44:05.467Z [[31merror[39m]: middlewareError
+2024-10-14T17:46:25.380Z [[32minfo[39m]: HTTP GET /api-docs/
+2024-10-14T17:46:25.467Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-10-14T17:46:25.483Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui.css
+2024-10-14T17:46:25.496Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-10-14T17:46:25.500Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-10-14T17:46:25.539Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-10-14T17:46:25.560Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-10-14T17:46:25.572Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-10-14T17:46:29.112Z [[32minfo[39m]: HTTP GET /api-docs/favicon-32x32.png
+2024-10-14T17:46:43.516Z [[32minfo[39m]: HTTP POST /api/employment-types
+2024-10-14T17:47:09.735Z [[32minfo[39m]: HTTP POST /api/employment-types
+2024-10-14T17:47:23.456Z [[32minfo[39m]: HTTP POST /api/employment-types
+2024-10-14T17:47:32.775Z [[32minfo[39m]: HTTP POST /api/employment-types
+2024-10-14T17:47:46.206Z [[32minfo[39m]: HTTP GET /api/employment-types
+2024-10-14T17:48:55.009Z [[32minfo[39m]: HTTP GET /api/employment-types
+2024-10-14T17:51:42.885Z [[32minfo[39m]: HTTP GET /applicant/onboarding-status

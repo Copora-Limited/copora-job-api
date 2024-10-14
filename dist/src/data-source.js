@@ -22,6 +22,10 @@ const FoodSafetyQuestionnaireEntity_1 = require("./entities/FoodSafetyQuestionna
 const BankDetailsEntity_1 = require("./entities/BankDetailsEntity");
 const AgreementConsentEntity_1 = require("./entities/AgreementConsentEntity");
 const ReferenceEntity_1 = require("./entities/ReferenceEntity");
+const LocationEntity_1 = require("./entities/LocationEntity"); // New entity
+const JobTitleEntity_1 = require("./entities/JobTitleEntity"); // New entity
+const EmploymentTypeEntity_1 = require("./entities/EmploymentTypeEntity"); // New entity
+const GroupEntity_1 = require("./entities/GroupEntity"); // New entity
 exports.AppDataSource = new typeorm_1.DataSource({
     type: 'postgres', // PostgreSQL database type
     host: process.env.DB_HOST || 'localhost',
@@ -42,14 +46,18 @@ exports.AppDataSource = new typeorm_1.DataSource({
         FoodSafetyQuestionnaireEntity_1.FoodSafetyQuestionnaire,
         BankDetailsEntity_1.BankDetails,
         AgreementConsentEntity_1.AgreementConsent,
-        ReferenceEntity_1.Reference
+        ReferenceEntity_1.Reference,
+        LocationEntity_1.Location, // New entity
+        JobTitleEntity_1.JobTitle, // New entity
+        EmploymentTypeEntity_1.EmploymentType, // New entity
+        GroupEntity_1.Group // New entity
     ],
-    synchronize: false, // Set to true in production
+    synchronize: false, // Set to true in development, false in production
     logging: false,
     migrations: [],
     subscribers: [],
     ssl: {
-        rejectUnauthorized: false, // This is necessary if you don't have the SSL certificate; set to true if you have it.
+        rejectUnauthorized: false, // Necessary if you don't have the SSL certificate; set to true if you have it.
     },
 });
 exports.AppDataSource.initialize()

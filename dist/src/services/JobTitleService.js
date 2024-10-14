@@ -12,35 +12,62 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.JobTitleService = void 0;
 const data_source_1 = require("../data-source");
 const JobTitleEntity_1 = require("../entities/JobTitleEntity");
+const jobTitleRepository = data_source_1.AppDataSource.getRepository(JobTitleEntity_1.JobTitle);
 class JobTitleService {
-    constructor() {
-        this.jobTitleRepository = data_source_1.AppDataSource.getRepository(JobTitleEntity_1.JobTitle);
-    }
-    getAll() {
+    static getAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.jobTitleRepository.find();
+            try {
+                return yield jobTitleRepository.find();
+            }
+            catch (error) {
+                throw new Error(`Error fetching job titles: ${error.message}`);
+            }
         });
     }
-    getById(id) {
+    static getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.jobTitleRepository.findOneBy({ id });
+            try {
+                return yield jobTitleRepository.findOneBy({ id });
+            }
+            catch (error) {
+                throw new Error(`Error fetching job title with ID ${id}: ${error.message}`);
+            }
         });
     }
-    create(jobTitleData) {
+    static create(jobTitleData) {
         return __awaiter(this, void 0, void 0, function* () {
-            const jobTitle = this.jobTitleRepository.create(jobTitleData);
-            return yield this.jobTitleRepository.save(jobTitle);
+            try {
+                const jobTitle = jobTitleRepository.create(jobTitleData);
+                return yield jobTitleRepository.save(jobTitle);
+            }
+            catch (error) {
+                throw new Error(`Error creating job title: ${error.message}`);
+            }
         });
     }
-    update(id, jobTitleData) {
+    static update(id, jobTitleData) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.jobTitleRepository.update(id, jobTitleData);
-            return this.getById(id);
+            try {
+                yield jobTitleRepository.update(id, jobTitleData);
+                return yield this.getById(id);
+            }
+            catch (error) {
+                throw new Error(`Error updating job title with ID ${id}: ${error.message}`);
+            }
         });
     }
-    delete(id) {
+    static delete(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.jobTitleRepository.delete(id);
+            try {
+                const result = yield jobTitleRepository.delete(id);
+                if (result.affected === 0) {
+                    throw new Error(`Job title with ID ${id} not found`);
+                }
+                return { message: 'Job title deleted successfully' };
+            }
+            catch (error) {
+                throw new Error(`Error deleting job title with ID ${id}: ${error.message}`);
+            }
         });
     }
 }

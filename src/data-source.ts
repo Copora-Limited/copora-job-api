@@ -18,6 +18,10 @@ import { FoodSafetyQuestionnaire } from './entities/FoodSafetyQuestionnaireEntit
 import { BankDetails } from './entities/BankDetailsEntity';
 import { AgreementConsent } from './entities/AgreementConsentEntity';
 import { Reference } from './entities/ReferenceEntity';
+import { Location } from './entities/LocationEntity'; // New entity
+import { JobTitle } from './entities/JobTitleEntity'; // New entity
+import { EmploymentType } from './entities/EmploymentTypeEntity'; // New entity
+import { Group } from './entities/GroupEntity'; // New entity
 
 export const AppDataSource = new DataSource({
   type: 'postgres', // PostgreSQL database type
@@ -39,14 +43,18 @@ export const AppDataSource = new DataSource({
     FoodSafetyQuestionnaire,
     BankDetails,
     AgreementConsent,
-    Reference
+    Reference,
+    Location,       // New entity
+    JobTitle,       // New entity
+    EmploymentType, // New entity
+    Group           // New entity
   ],
-  synchronize: false, // Set to true in production
+  synchronize: false, // Set to true in development, false in production
   logging: false,
   migrations: [],
   subscribers: [],
   ssl: {
-    rejectUnauthorized: false, // This is necessary if you don't have the SSL certificate; set to true if you have it.
+    rejectUnauthorized: false, // Necessary if you don't have the SSL certificate; set to true if you have it.
   },
 });
 

@@ -1,28 +1,53 @@
 import { AppDataSource } from '../data-source';
 import { JobTitle } from '../entities/JobTitleEntity';
 
+const jobTitleRepository = AppDataSource.getRepository(JobTitle);
+
 export class JobTitleService {
-    jobTitleRepository = AppDataSource.getRepository(JobTitle);
 
-    async getAll() {
-        return await this.jobTitleRepository.find();
+    static async getAll() {
+        try {
+            return await jobTitleRepository.find();
+        } catch (error) {
+            throw new Error(`Error fetching job titles: ${error.message}`);
+        }
     }
 
-    async getById(id: number) {
-        return await this.jobTitleRepository.findOneBy({id});
+    static async getById(id: number) {
+        try {
+            return await jobTitleRepository.findOneBy({ id });
+        } catch (error) {
+            throw new Error(`Error fetching job title with ID ${id}: ${error.message}`);
+        }
     }
 
-    async create(jobTitleData: Partial<JobTitle>) {
-        const jobTitle = this.jobTitleRepository.create(jobTitleData);
-        return await this.jobTitleRepository.save(jobTitle);
+    static async create(jobTitleData: Partial<JobTitle>) {
+        try {
+            const jobTitle = jobTitleRepository.create(jobTitleData);
+            return await jobTitleRepository.save(jobTitle);
+        } catch (error) {
+            throw new Error(`Error creating job title: ${error.message}`);
+        }
     }
 
-    async update(id: number, jobTitleData: Partial<JobTitle>) {
-        await this.jobTitleRepository.update(id, jobTitleData);
-        return this.getById(id);
+    static async update(id: number, jobTitleData: Partial<JobTitle>) {
+        try {
+            await jobTitleRepository.update(id, jobTitleData);
+            return await this.getById(id);
+        } catch (error) {
+            throw new Error(`Error updating job title with ID ${id}: ${error.message}`);
+        }
     }
 
-    async delete(id: number) {
-        return await this.jobTitleRepository.delete(id);
+    static async delete(id: number) {
+        try {
+            const result = await jobTitleRepository.delete(id);
+            if (result.affected === 0) {
+                throw new Error(`Job title with ID ${id} not found`);
+            }
+            return { message: 'Job title deleted successfully' };
+        } catch (error) {
+            throw new Error(`Error deleting job title with ID ${id}: ${error.message}`);
+        }
     }
 }

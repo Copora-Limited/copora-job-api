@@ -11,51 +11,90 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JobTitleController = void 0;
 const JobTitleService_1 = require("../services/JobTitleService");
-const jobTitleService = new JobTitleService_1.JobTitleService();
 class JobTitleController {
-    getAll(req, res) {
+    // Create a new Job Title
+    static create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const jobTitles = yield jobTitleService.getAll();
-            res.json(jobTitles);
-        });
-    }
-    getById(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const id = parseInt(req.params.id);
-            const jobTitle = yield jobTitleService.getById(id);
-            if (jobTitle) {
-                res.json(jobTitle);
+            try {
+                const jobTitleData = req.body;
+                const newJobTitle = yield JobTitleService_1.JobTitleService.create(jobTitleData);
+                res.status(201).json(newJobTitle);
             }
-            else {
-                res.status(404).json({ message: 'Job Title not found' });
+            catch (error) {
+                res.status(400).send({ message: 'Error creating job title', error: error.message });
             }
         });
     }
-    create(req, res) {
+    // Get all Job Titles
+    static getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const jobTitleData = req.body;
-            const newJobTitle = yield jobTitleService.create(jobTitleData);
-            res.status(201).json(newJobTitle);
-        });
-    }
-    update(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const id = parseInt(req.params.id);
-            const jobTitleData = req.body;
-            const updatedJobTitle = yield jobTitleService.update(id, jobTitleData);
-            if (updatedJobTitle) {
-                res.json(updatedJobTitle);
+            try {
+                const jobTitles = yield JobTitleService_1.JobTitleService.getAll();
+                res.status(200).json(jobTitles);
             }
-            else {
-                res.status(404).json({ message: 'Job Title not found' });
+            catch (error) {
+                res.status(500).send({ message: 'Error fetching job titles', error: error.message });
             }
         });
     }
-    delete(req, res) {
+    // Get Job Title by ID
+    static getById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const id = parseInt(req.params.id);
-            yield jobTitleService.delete(id);
-            res.status(204).send();
+            try {
+                const { id } = req.params;
+                const numericId = parseInt(id, 10);
+                // Check if the id is a valid number
+                if (isNaN(numericId)) {
+                    return res.status(400).json({ message: 'Invalid ID format' });
+                }
+                const jobTitle = yield JobTitleService_1.JobTitleService.getById(numericId);
+                if (!jobTitle) {
+                    return res.status(404).send({ message: 'Job Title not found' });
+                }
+                res.status(200).send(jobTitle);
+            }
+            catch (error) {
+                res.status(500).send({ message: 'Error fetching job title', error: error.message });
+            }
+        });
+    }
+    // Update Job Title by ID
+    static update(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.params;
+                const numericId = parseInt(id, 10);
+                // Check if the id is a valid number
+                if (isNaN(numericId)) {
+                    return res.status(400).json({ message: 'Invalid ID format' });
+                }
+                const updatedJobTitle = yield JobTitleService_1.JobTitleService.update(numericId, req.body);
+                if (!updatedJobTitle) {
+                    return res.status(404).send({ message: 'Job Title not found' });
+                }
+                res.status(200).send(updatedJobTitle);
+            }
+            catch (error) {
+                res.status(400).send({ message: 'Error updating job title', error: error.message });
+            }
+        });
+    }
+    // Delete Job Title by ID
+    static delete(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.params;
+                const numericId = parseInt(id, 10);
+                // Check if the id is a valid number
+                if (isNaN(numericId)) {
+                    return res.status(400).json({ message: 'Invalid ID format' });
+                }
+                yield JobTitleService_1.JobTitleService.delete(numericId);
+                res.status(204).send(); // No content
+            }
+            catch (error) {
+                res.status(404).send({ message: 'Job Title not found', error: error.message });
+            }
         });
     }
 }

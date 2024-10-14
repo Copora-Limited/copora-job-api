@@ -1,44 +1,86 @@
 import { Request, Response } from 'express';
 import { JobTitleService } from '../services/JobTitleService';
 
-const jobTitleService = new JobTitleService();
-
 export class JobTitleController {
-    async getAll(req: Request, res: Response) {
-        const jobTitles = await jobTitleService.getAll();
-        res.json(jobTitles);
-    }
-
-    async getById(req: Request, res: Response) {
-        const id = parseInt(req.params.id);
-        const jobTitle = await jobTitleService.getById(id);
-        if (jobTitle) {
-            res.json(jobTitle);
-        } else {
-            res.status(404).json({ message: 'Job Title not found' });
+    // Create a new Job Title
+    static async create(req: Request, res: Response) {
+        try {
+            const jobTitleData = req.body;
+            const newJobTitle = await JobTitleService.create(jobTitleData);
+            res.status(201).json(newJobTitle);
+        } catch (error) {
+            res.status(400).send({ message: 'Error creating job title', error: error.message });
         }
     }
 
-    async create(req: Request, res: Response) {
-        const jobTitleData = req.body;
-        const newJobTitle = await jobTitleService.create(jobTitleData);
-        res.status(201).json(newJobTitle);
-    }
-
-    async update(req: Request, res: Response) {
-        const id = parseInt(req.params.id);
-        const jobTitleData = req.body;
-        const updatedJobTitle = await jobTitleService.update(id, jobTitleData);
-        if (updatedJobTitle) {
-            res.json(updatedJobTitle);
-        } else {
-            res.status(404).json({ message: 'Job Title not found' });
+    // Get all Job Titles
+    static async getAll(req: Request, res: Response) {
+        try {
+            const jobTitles = await JobTitleService.getAll();
+            res.status(200).json(jobTitles);
+        } catch (error) {
+            res.status(500).send({ message: 'Error fetching job titles', error: error.message });
         }
     }
 
-    async delete(req: Request, res: Response) {
-        const id = parseInt(req.params.id);
-        await jobTitleService.delete(id);
-        res.status(204).send();
+    // Get Job Title by ID
+    static async getById(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+            const numericId = parseInt(id, 10);
+
+            // Check if the id is a valid number
+            if (isNaN(numericId)) {
+                return res.status(400).json({ message: 'Invalid ID format' });
+            }
+
+            const jobTitle = await JobTitleService.getById(numericId);
+            if (!jobTitle) {
+                return res.status(404).send({ message: 'Job Title not found' });
+            }
+            res.status(200).send(jobTitle);
+        } catch (error) {
+            res.status(500).send({ message: 'Error fetching job title', error: error.message });
+        }
+    }
+
+    // Update Job Title by ID
+    static async update(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+            const numericId = parseInt(id, 10);
+
+            // Check if the id is a valid number
+            if (isNaN(numericId)) {
+                return res.status(400).json({ message: 'Invalid ID format' });
+            }
+
+            const updatedJobTitle = await JobTitleService.update(numericId, req.body);
+            if (!updatedJobTitle) {
+                return res.status(404).send({ message: 'Job Title not found' });
+            }
+
+            res.status(200).send(updatedJobTitle);
+        } catch (error) {
+            res.status(400).send({ message: 'Error updating job title', error: error.message });
+        }
+    }
+
+    // Delete Job Title by ID
+    static async delete(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+            const numericId = parseInt(id, 10);
+
+            // Check if the id is a valid number
+            if (isNaN(numericId)) {
+                return res.status(400).json({ message: 'Invalid ID format' });
+            }
+
+            await JobTitleService.delete(numericId);
+            res.status(204).send(); // No content
+        } catch (error) {
+            res.status(404).send({ message: 'Job Title not found', error: error.message });
+        }
     }
 }

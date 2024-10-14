@@ -11,51 +11,88 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmploymentTypeController = void 0;
 const EmploymentTypeService_1 = require("../services/EmploymentTypeService");
-const employmentTypeService = new EmploymentTypeService_1.EmploymentTypeService();
 class EmploymentTypeController {
-    getAll(req, res) {
+    // Create or update employment type based on id
+    static create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const employmentTypes = yield employmentTypeService.getAll();
-            res.json(employmentTypes);
-        });
-    }
-    getById(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const id = parseInt(req.params.id);
-            const employmentType = yield employmentTypeService.getById(id);
-            if (employmentType) {
-                res.json(employmentType);
-            }
-            else {
-                res.status(404).json({ message: 'Employment Type not found' });
-            }
-        });
-    }
-    create(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const employmentTypeData = req.body;
-            const newEmploymentType = yield employmentTypeService.create(employmentTypeData);
+            const Data = req.body;
+            const newEmploymentType = yield EmploymentTypeService_1.EmploymentTypeService.create(Data);
             res.status(201).json(newEmploymentType);
         });
     }
-    update(req, res) {
+    // Get all Employment Types
+    static getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const id = parseInt(req.params.id);
-            const employmentTypeData = req.body;
-            const updatedEmploymentType = yield employmentTypeService.update(id, employmentTypeData);
-            if (updatedEmploymentType) {
-                res.json(updatedEmploymentType);
+            try {
+                const employmentTypes = yield EmploymentTypeService_1.EmploymentTypeService.getAll();
+                res.status(200).json(employmentTypes);
             }
-            else {
-                res.status(404).json({ message: 'Employment Type not found' });
+            catch (error) {
+                res.status(500).send({ message: 'Error fetching employment types', error: error.message });
             }
         });
     }
-    delete(req, res) {
+    // Get Employment Type by ID
+    static getById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const id = parseInt(req.params.id);
-            yield employmentTypeService.delete(id);
-            res.status(204).send();
+            try {
+                const { id } = req.params;
+                // Convert id to a number
+                const numericId = parseInt(id, 10);
+                // Check if the id is a valid number
+                if (isNaN(numericId)) {
+                    return res.status(400).json({ message: 'Invalid ID format' });
+                }
+                const employmentType = yield EmploymentTypeService_1.EmploymentTypeService.getById(numericId);
+                if (!employmentType) {
+                    return res.status(404).send({ message: 'Employment Type not found' });
+                }
+                res.status(200).send(employmentType);
+            }
+            catch (error) {
+                res.status(500).send({ message: 'Error fetching employment type', error: error.message });
+            }
+        });
+    }
+    // Update Employment Type by ID
+    static update(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.params;
+                // Convert id to a number
+                const numericId = parseInt(id, 10);
+                // Check if the id is a valid number
+                if (isNaN(numericId)) {
+                    return res.status(400).json({ message: 'Invalid ID format' });
+                }
+                const updatedEmploymentType = yield EmploymentTypeService_1.EmploymentTypeService.update(numericId, req.body);
+                if (!updatedEmploymentType) {
+                    return res.status(404).send({ message: 'Employment Type not found' });
+                }
+                res.status(200).send(updatedEmploymentType);
+            }
+            catch (error) {
+                res.status(400).send({ message: 'Error updating employment type', error: error.message });
+            }
+        });
+    }
+    // Delete Employment Type by ID
+    static delete(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.params;
+                // Convert id to a number
+                const numericId = parseInt(id, 10);
+                // Check if the id is a valid number
+                if (isNaN(numericId)) {
+                    return res.status(400).json({ message: 'Invalid ID format' });
+                }
+                const message = yield EmploymentTypeService_1.EmploymentTypeService.delete(numericId);
+                res.status(200).send({ message });
+            }
+            catch (error) {
+                res.status(404).send({ message: error.message });
+            }
         });
     }
 }
