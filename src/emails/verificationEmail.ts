@@ -11,7 +11,7 @@ export default function verificationEmail(user: { firstName?: string; email: str
         <div>
           <h2 style="text-align: center;">Verify and sign in</h2>
           <p>Hello ${user.firstName || 'User'},</p>
-          <p>Verify yourself below to sign in to your ${process.env.APP_COMPANY} account for <strong>${user.email}</strong>.</p>
+          <p>An admin account account has been  ${process.env.APP_COMPANY} account for <strong>${user.email}</strong>.</p>
           <p>Your password is: <strong>${user.temporaryPassword}</strong></p>
           <p>The link can only be used once and expires in 10 minutes if you don’t use it.</p>
           <a href="${verificationUrl}" style="display: inline-block; background-color: #211c1c; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Verify me</a>

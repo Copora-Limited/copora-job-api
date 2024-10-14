@@ -27,6 +27,10 @@ const ProfessionalDetailsRoutes_1 = __importDefault(require("./routes/Profession
 const ReferenceRoutes_1 = __importDefault(require("./routes/ReferenceRoutes"));
 const ReminderRoutes_1 = __importDefault(require("./routes/ReminderRoutes"));
 const AgreementDocRoutes_1 = __importDefault(require("./routes/AgreementDocRoutes"));
+const LocationRoute_1 = __importDefault(require("./routes/LocationRoute"));
+const JobTitleRoutes_1 = __importDefault(require("./routes/JobTitleRoutes"));
+const EmploymentTypeRoutes_1 = __importDefault(require("./routes/EmploymentTypeRoutes"));
+const GroupRoutes_1 = __importDefault(require("./routes/GroupRoutes"));
 const express_winston_1 = __importDefault(require("express-winston"));
 const logger_1 = __importDefault(require("./utils/logger"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
@@ -93,6 +97,10 @@ data_source_1.AppDataSource.initialize()
     app.use(`/reference`, ReferenceRoutes_1.default);
     app.use(`/reminders`, ReminderRoutes_1.default);
     app.use('/agreements', AgreementDocRoutes_1.default);
+    app.use('/api/locations', LocationRoute_1.default);
+    app.use('/api/job-titles', JobTitleRoutes_1.default);
+    app.use('/api/employment-types', EmploymentTypeRoutes_1.default);
+    app.use('/api/groups', GroupRoutes_1.default);
     // Swagger setup
     app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.swaggerSpec));
     // Error logging with Winston

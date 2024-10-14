@@ -22,6 +22,12 @@ import ProfessionalDetailsRoutes from './routes/ProfessionalDetailsRoutes';
 import ReferenceRoutes from './routes/ReferenceRoutes';
 import ReminderRoutes from './routes/ReminderRoutes';
 import agreementRoutes from './routes/AgreementDocRoutes';
+import locationRoutes from './routes/LocationRoute';
+import jobTitleRoutes from './routes/JobTitleRoutes';
+import employmentTypeRoutes from './routes/EmploymentTypeRoutes';
+import groupRoutes from './routes/GroupRoutes';
+
+
 import expressWinston from 'express-winston';
 import logger from './utils/logger';
 import swaggerUI from 'swagger-ui-express';
@@ -97,6 +103,10 @@ AppDataSource.initialize()
     app.use(`/reference`, ReferenceRoutes);
     app.use(`/reminders`, ReminderRoutes);
     app.use('/agreements', agreementRoutes);
+    app.use('/api/locations', locationRoutes);
+    app.use('/api/job-titles', jobTitleRoutes);
+    app.use('/api/employment-types', employmentTypeRoutes);
+    app.use('/api/groups', groupRoutes);
     
     // Swagger setup
     app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
