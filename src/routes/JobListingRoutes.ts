@@ -17,7 +17,7 @@ const router = Router();
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/JobListing'
+ *                 
  */
 router.get('/', JobListingController.getAll);
 
@@ -40,7 +40,7 @@ router.get('/', JobListingController.getAll);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/JobListing'
+ *               
  *       404:
  *         description: Job listing not found
  */
@@ -57,7 +57,7 @@ router.get('/:id', JobListingController.getById);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/JobListing'
+ *             
  *     responses:
  *       201:
  *         description: The job listing was successfully created
@@ -84,7 +84,7 @@ router.post('/', JobListingController.create);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/JobListing'
+ *             
  *     responses:
  *       200:
  *         description: The updated job listing

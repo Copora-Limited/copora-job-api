@@ -17,7 +17,7 @@ const router = (0, express_1.Router)();
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/JobListing'
+ *
  */
 router.get('/', JobListingController_1.JobListingController.getAll);
 /**
@@ -39,7 +39,7 @@ router.get('/', JobListingController_1.JobListingController.getAll);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/JobListing'
+ *
  *       404:
  *         description: Job listing not found
  */
@@ -55,7 +55,7 @@ router.get('/:id', JobListingController_1.JobListingController.getById);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/JobListing'
+ *
  *     responses:
  *       201:
  *         description: The job listing was successfully created
@@ -81,7 +81,7 @@ router.post('/', JobListingController_1.JobListingController.create);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/JobListing'
+ *
  *     responses:
  *       200:
  *         description: The updated job listing
