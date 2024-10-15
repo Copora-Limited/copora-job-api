@@ -574,3 +574,9 @@
 2024-10-15T06:55:45.195Z [[32minfo[39m]: HTTP GET /api/job-listings
 2024-10-15T06:57:32.264Z [[32minfo[39m]: HTTP GET /api/job-listings
 2024-10-15T07:01:48.197Z [[32minfo[39m]: HTTP GET /api/job-listings
+2024-10-15T07:06:12.756Z [[32minfo[39m]: HTTP GET /api-docs/
+2024-10-15T07:06:12.924Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-10-15T07:06:12.930Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui.css
+2024-10-15T07:06:12.933Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-10-15T07:06:12.938Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-10-15T07:06:15.611Z [[32minfo[39m]: HTTP GET /api-docs/favicon-32x32.png
