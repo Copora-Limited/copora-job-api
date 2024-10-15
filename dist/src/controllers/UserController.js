@@ -663,6 +663,44 @@ class UserController {
         });
     }
     ;
+    updateOnboardingStatus(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { applicationNo, onboardingStatus } = req.body;
+            const userRepository = data_source_1.AppDataSource.getRepository(UserEntity_1.User);
+            try {
+                // Validate input
+                if (!applicationNo || onboardingStatus === undefined) {
+                    return res.status(400).json({
+                        message: "Application number and onboarding status are required",
+                    });
+                }
+                // Find the user by application number
+                const user = yield UserService_1.UserService.findApplicationNo(applicationNo);
+                if (!user) {
+                    return res.status(404).json({
+                        message: "User not found",
+                    });
+                }
+                // Update the onboarding status
+                user.onboardingStatus = onboardingStatus;
+                // Save the updated user
+                const updatedUser = yield userRepository.save(user);
+                return res.status(200).json({
+                    statusCode: 200,
+                    message: "Onboarding status updated successfully",
+                    onboardingStatus: updatedUser.onboardingStatus,
+                });
+            }
+            catch (error) {
+                console.error("Error updating onboarding status:", error);
+                return res.status(500).json({
+                    message: "Server error",
+                    error: error.message,
+                });
+            }
+        });
+    }
+    ;
     // Get all users
     getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {

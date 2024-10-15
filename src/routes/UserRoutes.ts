@@ -439,74 +439,7 @@ const router = Router();
    */
   router.post('/verify-two-factor', UserController.verifyTwoFactorCode);
   
-  /**
-   * @swagger
-   * /users/update-onboarding-step:
-   *   patch:
-   *     summary: Update the onboarding step for a user.
-   *     description: This endpoint allows updating the onboarding step for a user based on their application number.
-   *     tags: [Authentication]
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema:
-   *             type: object
-   *             required:
-   *               - applicationNo
-   *               - onboardingStep
-   *             properties:
-   *               applicationNo:
-   *                 type: string
-   *                 description: The application number of the user.
-   *                 example: "APP123456"
-   *               onboardingStep:
-   *                 type: integer
-   *                 description: The onboarding step number to be updated.
-   *                 example: 2
-   *     responses:
-   *       200:
-   *         description: Successfully updated the onboarding step.
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               properties:
-   *                 message:
-   *                   type: string
-   *                   example: "Onboarding step updated successfully"
-   *       400:
-   *         description: Missing required parameters (applicationNo or onboardingStep).
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               properties:
-   *                 message:
-   *                   type: string
-   *                   example: "Application number and onboarding step are required"
-   *       404:
-   *         description: User not found.
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               properties:
-   *                 message:
-   *                   type: string
-   *                   example: "User not found"
-   *       500:
-   *         description: Server error.
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               properties:
-   *                 message:
-   *                   type: string
-   *                   example: "Server error"
-   */
-  router.patch('/update-onboarding-step', UserController.updateOnboardingStep);
+  
 
 
   /**

@@ -494,4 +494,145 @@ router.patch('/:id/role', AuthMiddleware_1.authenticateToken, (0, AuthMiddleware
  *       - bearerAuth: []  # Apply bearerAuth security scheme
  */
 router.post('/upload-users', AuthMiddleware_1.authenticateToken, (0, AuthMiddleware_1.authorizeRoles)('admin'), UserController_1.default.bulkUploadUsers);
+/**
+ * @swagger
+ * /users/update-onboarding-step:
+ *   patch:
+ *     summary: Update the onboarding step for a user.
+ *     description: This endpoint allows updating the onboarding step for a user based on their application number.
+ *     tags: [Admin - Private Endpoints]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - applicationNo
+ *               - onboardingStep
+ *             properties:
+ *               applicationNo:
+ *                 type: string
+ *                 description: The application number of the user.
+ *                 example: "APP123456"
+ *               onboardingStep:
+ *                 type: integer
+ *                 description: The onboarding step number to be updated.
+ *                 example: 2
+ *     responses:
+ *       200:
+ *         description: Successfully updated the onboarding step.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Onboarding step updated successfully"
+ *       400:
+ *         description: Missing required parameters (applicationNo or onboardingStep).
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Application number and onboarding step are required"
+ *       404:
+ *         description: User not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User not found"
+ *       500:
+ *         description: Server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Server error"
+ */
+router.patch('/update-onboarding-step', UserController_1.default.updateOnboardingStep);
+/**
+* @swagger
+* /users/update-onboarding-status:
+*   patch:
+*     summary: Update the onboarding status for a user.
+*     description: This endpoint allows updating the onboarding status for a user based on their application number.
+*     tags: [Admin - Private Endpoints]
+*     requestBody:
+*       required: true
+*       content:
+*         application/json:
+*           schema:
+*             type: object
+*             required:
+*               - applicationNo
+*               - onboardingStatus
+*             properties:
+*               applicationNo:
+*                 type: string
+*                 description: The application number of the user.
+*                 example: "APP123456"
+*               onboardingStatus:
+*                 type: string
+*                 description: The onboarding status to be updated.
+*                 enum:
+*                   - Invitation Sent
+*                   - Onboarding not Completed
+*                   - Onboarding Completed
+*                   - Approved
+*                 example: "Onboarding Completed"
+*     responses:
+*       200:
+*         description: Successfully updated the onboarding status.
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 message:
+*                   type: string
+*                   example: "Onboarding status updated successfully"
+*       400:
+*         description: Missing required parameters (applicationNo or onboardingStatus).
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 message:
+*                   type: string
+*                   example: "Application number and onboarding status are required"
+*       404:
+*         description: User not found.
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 message:
+*                   type: string
+*                   example: "User not found"
+*       500:
+*         description: Server error.
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 message:
+*                   type: string
+*                   example: "Server error"
+*/
+router.patch('/update-onboarding-status', UserController_1.default.updateOnboardingStatus);
 exports.default = router;
