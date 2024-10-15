@@ -726,6 +726,96 @@ class UserController {
     }
   }
 
+  // async getAllByStatus(req: Request, res: Response): Promise<Response> { // Change the return type here
+  //     try {
+  //         // Retrieve the onboarding status from the query parameters
+  //         const { status } = req.query;
+
+  //         // Define allowed statuses
+  //         const allowedStatuses = [
+  //             "Invitation Sent",
+  //             "Onboarding not Completed",
+  //             "Onboarding Completed",
+  //             "Approved"
+  //         ];
+
+  //         // Validate the incoming status
+  //         if (!status || !allowedStatuses.includes(status as string)) {
+  //             return res.status(400).json({ 
+  //                 message: 'Invalid onboarding status. Allowed statuses are: ' + allowedStatuses.join(', ') 
+  //             });
+  //         }
+
+  //         // Fetch users filtered by onboarding status
+  //         const users = await userService.getAllByStatus(status as OnboardingStatus);
+  //         return res.status(200).json(users); // Return the response here
+  //     } catch (error) {
+  //         console.error('Error fetching users:', error);
+  //         return res.status(500).json({ message: 'Server error', error: error.message }); // Return the response here
+  //     }
+  // }
+
+  
+
+  // async getAllByStatus(req: Request, res: Response): Promise<Response> {
+  //   try {
+  //       // Retrieve the onboarding status from the query parameters
+  //       const { status } = req.query;
+        
+  //       // Check if status is a valid number and is one of the allowed statuses
+  //       const allowedStatuses = Object.values(OnboardingStatus);
+  //       const parsedStatus = parseInt(status as string, 10);
+
+  //       if (!Number.isNaN(parsedStatus) && allowedStatuses.includes(parsedStatus as unknown as OnboardingStatus)) {
+  //           // Fetch users filtered by onboarding status
+  //           const users = await userService.getAllByStatus(parsedStatus as unknown as OnboardingStatus);
+  //           return res.status(200).json(users);
+  //       } else {
+  //           // Invalid status provided
+  //           return res.status(400).json({
+  //               message: 'Invalid onboarding status provided. Allowed statuses are: ' + allowedStatuses.join(', ')
+  //           });
+  //       }
+  //   } catch (error) {
+  //       console.error('Error fetching users:', error);
+  //       return res.status(500).json({ message: 'Server error', error: error.message });
+  //   }
+  // }
+
+
+  async getUsersByStatus(req: Request, res: Response) {
+    try {
+        // Extract the onboarding status from the request parameters
+        const statusParam = req.params.status;
+
+        // Validate the status against the OnboardingStatus enum
+        if (!Object.values(OnboardingStatus).includes(statusParam as OnboardingStatus)) {
+            return res.status(400).json({ message: 'Invalid status provided.' });
+        }
+
+        // Cast the parameter to the OnboardingStatus enum
+        const onboardingStatus = statusParam as OnboardingStatus;
+
+        console.log("onboardingStatus:", onboardingStatus);
+
+        // Fetch users by status
+        const users = await userService.findByStatus(onboardingStatus);
+
+        // Check if users were found
+        if (users.length === 0) {
+            return res.status(404).json({ message: 'No users found with the specified status.' });
+        }
+
+        res.status(200).json(users); // Return the users found
+    } catch (error) {
+        res.status(400).send({ message: 'Error fetching users', error: error.message });
+    }
+}
+
+  
+
+
+
   // Get user by ID
   async getById(req: Request, res: Response): Promise<Response> {
     try {

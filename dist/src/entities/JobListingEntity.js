@@ -9,23 +9,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Location = void 0;
+exports.JobListing = void 0;
 const typeorm_1 = require("typeorm");
-let Location = class Location {
+let JobListing = class JobListing {
 };
-exports.Location = Location;
+exports.JobListing = JobListing;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Location.prototype, "id", void 0);
+], JobListing.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'varchar', nullable: true }),
     __metadata("design:type", String)
-], Location.prototype, "name", void 0);
+], JobListing.prototype, "applicationNo", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'varchar', nullable: true }),
     __metadata("design:type", String)
-], Location.prototype, "address", void 0);
-exports.Location = Location = __decorate([
+], JobListing.prototype, "jobTitle", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'varchar', nullable: true }),
+    __metadata("design:type", String)
+], JobListing.prototype, "employmentType", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'varchar', nullable: true }),
+    __metadata("design:type", String)
+], JobListing.prototype, "location", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'varchar', nullable: true }),
+    __metadata("design:type", String)
+], JobListing.prototype, "group", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'varchar', nullable: true }),
+    __metadata("design:type", String)
+], JobListing.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, type: 'timestamp' }),
+    __metadata("design:type", Date)
+], JobListing.prototype, "createdAt", void 0);
+exports.JobListing = JobListing = __decorate([
     (0, typeorm_1.Entity)()
-], Location);
+], JobListing);

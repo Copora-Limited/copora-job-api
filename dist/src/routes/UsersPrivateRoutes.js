@@ -57,6 +57,31 @@ router.get('/:id', AuthMiddleware_1.authenticateToken, UserController_1.default.
 router.get('/', AuthMiddleware_1.authenticateToken, (0, AuthMiddleware_1.authorizeRoles)('admin'), UserController_1.default.getAll);
 /**
  * @swagger
+ * /auth/users/status/{status}:
+ *   get:
+ *     summary: Retrieve users with optional onboarding status filter
+ *     tags: [Admin - Private Endpoints]
+ *     parameters:
+ *       - in: path
+ *         name: status
+ *         required: true
+ *         description: Filter users by onboarding status
+ *         schema:
+ *           type: string
+ *           enum: [Invitation Sent, Onboarding not Completed, Onboarding Completed, Approved]
+ *     responses:
+ *       200:
+ *         description: A list of users
+ *       400:
+ *         description: Invalid status provided
+ *       404:
+ *         description: No users found with the specified status
+ *     security:
+ *       - bearerAuth: []  # Apply bearerAuth security scheme
+ */
+router.get('/status/:status', AuthMiddleware_1.authenticateToken, (0, AuthMiddleware_1.authorizeRoles)('admin'), UserController_1.default.getUsersByStatus);
+/**
+ * @swagger
  * /auth/users/register:
  *   post:
  *     summary: Create a new user

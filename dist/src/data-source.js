@@ -26,6 +26,7 @@ const LocationEntity_1 = require("./entities/LocationEntity"); // New entity
 const JobTitleEntity_1 = require("./entities/JobTitleEntity"); // New entity
 const EmploymentTypeEntity_1 = require("./entities/EmploymentTypeEntity"); // New entity
 const GroupEntity_1 = require("./entities/GroupEntity"); // New entity
+const JobListingEntity_1 = require("./entities/JobListingEntity");
 exports.AppDataSource = new typeorm_1.DataSource({
     type: 'postgres', // PostgreSQL database type
     host: process.env.DB_HOST || 'localhost',
@@ -50,7 +51,8 @@ exports.AppDataSource = new typeorm_1.DataSource({
         LocationEntity_1.Location, // New entity
         JobTitleEntity_1.JobTitle, // New entity
         EmploymentTypeEntity_1.EmploymentType, // New entity
-        GroupEntity_1.Group // New entity
+        GroupEntity_1.Group, // New entity
+        JobListingEntity_1.JobListing // New entity
     ],
     synchronize: false, // Set to true in development, false in production
     logging: false,

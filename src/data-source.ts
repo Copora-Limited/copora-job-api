@@ -22,6 +22,7 @@ import { Location } from './entities/LocationEntity'; // New entity
 import { JobTitle } from './entities/JobTitleEntity'; // New entity
 import { EmploymentType } from './entities/EmploymentTypeEntity'; // New entity
 import { Group } from './entities/GroupEntity'; // New entity
+import { JobListing } from './entities/JobListingEntity';
 
 export const AppDataSource = new DataSource({
   type: 'postgres', // PostgreSQL database type
@@ -47,7 +48,8 @@ export const AppDataSource = new DataSource({
     Location,       // New entity
     JobTitle,       // New entity
     EmploymentType, // New entity
-    Group           // New entity
+    Group,           // New entity
+    JobListing           // New entity
   ],
   synchronize: false, // Set to true in development, false in production
   logging: false,

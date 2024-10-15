@@ -145,6 +145,23 @@ class UserService {
             return exports.userRepository.find();
         });
     }
+    // async getAllByStatus(status?: OnboardingStatus): Promise<User[]> {
+    //   return userRepository.createQueryBuilder('user')
+    //       .where('user.onboardingStatus = :status', { status })
+    //       .getMany();
+    // }
+    getAllByStatus(status) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return exports.userRepository.createQueryBuilder('user')
+                .where('user.onboardingStatus = :status', { status })
+                .getMany();
+        });
+    }
+    findByStatus(onboardingStatus) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield exports.userRepository.find({ where: { onboardingStatus } }); // Adjust based on your ORM/DB library
+        });
+    }
     // Get user by ID
     getById(id) {
         return __awaiter(this, void 0, void 0, function* () {

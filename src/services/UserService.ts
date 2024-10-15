@@ -12,6 +12,7 @@ import { OnboardingStatus } from '../constants';
 export const userRepository = AppDataSource.getRepository(User);
 
 export class UserService {
+  
 
   static register(arg0: { firstName: any; otherName: any; surname: any; country: any; stateOfOrigin: any; LGA: any; maritalStatus: any; employmentStatus: any; email: any; telephone: any; profilePicture: string; role: any; password: any; accountStatus: any; createdAt: any; updatedAt: any; }) {
     throw new Error('Method not implemented.');
@@ -144,6 +145,22 @@ export class UserService {
   // Get all users
   async getAll(): Promise<User[]> {
     return userRepository.find();
+  }
+
+  // async getAllByStatus(status?: OnboardingStatus): Promise<User[]> {
+  //   return userRepository.createQueryBuilder('user')
+  //       .where('user.onboardingStatus = :status', { status })
+  //       .getMany();
+  // }
+
+  async getAllByStatus(status?: OnboardingStatus): Promise<User[]> {
+    return userRepository.createQueryBuilder('user')
+        .where('user.onboardingStatus = :status', { status })
+        .getMany();
+  }
+
+  async findByStatus(onboardingStatus?: OnboardingStatus) {
+      return await userRepository.find({ where: { onboardingStatus } }); // Adjust based on your ORM/DB library
   }
 
   // Get user by ID

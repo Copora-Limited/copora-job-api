@@ -31,6 +31,7 @@ const LocationRoute_1 = __importDefault(require("./routes/LocationRoute"));
 const JobTitleRoutes_1 = __importDefault(require("./routes/JobTitleRoutes"));
 const EmploymentTypeRoutes_1 = __importDefault(require("./routes/EmploymentTypeRoutes"));
 const GroupRoutes_1 = __importDefault(require("./routes/GroupRoutes"));
+const JobListingRoutes_1 = __importDefault(require("./routes/JobListingRoutes"));
 const express_winston_1 = __importDefault(require("express-winston"));
 const logger_1 = __importDefault(require("./utils/logger"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
@@ -101,6 +102,7 @@ data_source_1.AppDataSource.initialize()
     app.use('/api/job-titles', JobTitleRoutes_1.default);
     app.use('/api/employment-types', EmploymentTypeRoutes_1.default);
     app.use('/api/groups', GroupRoutes_1.default);
+    app.use('/api/job-listings', JobListingRoutes_1.default);
     // Swagger setup
     app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.swaggerSpec));
     // Error logging with Winston

@@ -5,9 +5,9 @@ export class Location {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({type: 'varchar', nullable: true})
     name: string;
 
-    @Column()
+    @Column({type: 'varchar', nullable: true})
     address: string;
 }

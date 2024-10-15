@@ -26,6 +26,7 @@ import locationRoutes from './routes/LocationRoute';
 import jobTitleRoutes from './routes/JobTitleRoutes';
 import employmentTypeRoutes from './routes/EmploymentTypeRoutes';
 import groupRoutes from './routes/GroupRoutes';
+import jobListingRoutes from './routes/JobListingRoutes';
 
 
 import expressWinston from 'express-winston';
@@ -107,6 +108,8 @@ AppDataSource.initialize()
     app.use('/api/job-titles', jobTitleRoutes);
     app.use('/api/employment-types', employmentTypeRoutes);
     app.use('/api/groups', groupRoutes);
+    app.use('/api/job-listings', jobListingRoutes);
+    
     
     // Swagger setup
     app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
