@@ -496,7 +496,7 @@ router.patch('/:id/role', AuthMiddleware_1.authenticateToken, (0, AuthMiddleware
 router.post('/upload-users', AuthMiddleware_1.authenticateToken, (0, AuthMiddleware_1.authorizeRoles)('admin'), UserController_1.default.bulkUploadUsers);
 /**
  * @swagger
- * /users/update-onboarding-step:
+ * /auth/users/update-onboarding-step:
  *   patch:
  *     summary: Update the onboarding step for a user.
  *     description: This endpoint allows updating the onboarding step for a user based on their application number.
@@ -564,7 +564,7 @@ router.post('/upload-users', AuthMiddleware_1.authenticateToken, (0, AuthMiddlew
 router.patch('/update-onboarding-step', UserController_1.default.updateOnboardingStep);
 /**
 * @swagger
-* /users/update-onboarding-status:
+* /auth/users/update-onboarding-status:
 *   patch:
 *     summary: Update the onboarding status for a user.
 *     description: This endpoint allows updating the onboarding status for a user based on their application number.
