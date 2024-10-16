@@ -28,11 +28,11 @@ __decorate([
 ], FoodSafetyQuestionnaire.prototype, "cleaningRawMeatUtensilsRequired", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
+    __metadata("design:type", Boolean)
 ], FoodSafetyQuestionnaire.prototype, "foodSafetyAct1990Description", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
+    __metadata("design:type", Boolean)
 ], FoodSafetyQuestionnaire.prototype, "cleaningRequirement", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
@@ -51,8 +51,8 @@ __decorate([
     __metadata("design:type", String)
 ], FoodSafetyQuestionnaire.prototype, "temperatureDangerZone", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
+    (0, typeorm_1.Column)("simple-array"),
+    __metadata("design:type", Array)
 ], FoodSafetyQuestionnaire.prototype, "handWashingScenarios", void 0);
 __decorate([
     (0, typeorm_1.Column)(),

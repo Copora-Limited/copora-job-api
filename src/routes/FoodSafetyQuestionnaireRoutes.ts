@@ -33,32 +33,34 @@ const router = Router();
  *                 type: boolean
  *                 example: true
  *               cleaningRequirement:
- *                 type: string
- *                 example: "Clean surfaces after preparing raw meat."
+ *                 type: boolean
+ *                 example: false
  *               contaminatedFoodCharacteristics:
  *                 type: string
- *                 example: "Visible mold, bad smell, off taste."
+ *                 example: "Look and taste normal."
  *               bacteriaFactTrue:
  *                 type: string
- *                 example: "Bacteria multiply rapidly at room temperature."
+ *                 example: "Bacteria grow fastest when they are warm."
  *               highRiskFoodStoragePosition:
  *                 type: string
- *                 example: "Store at the top of the fridge."
+ *                 example: "Above raw food."
  *               temperatureDangerZone:
  *                 type: string
- *                 example: "5°C to 60°C"
+ *                 example: "5°C to 63°C"
  *               handWashingScenarios:
- *                 type: string
- *                 example: "Before eating, after handling raw meat."
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: ["After touching raw meat", "Before preparing food", "After sneezing"]
  *               allergenDefinition:
  *                 type: string
- *                 example: "Substances that can cause allergic reactions."
+ *                 example: "A food or ingredient that causes an allergic reaction."
  *               highRiskFoodsExamples:
  *                 type: string
- *                 example: "Eggs, dairy, seafood."
+ *                 example: "Cooked meat, fish, shellfish."
  *               foodSafetyActOffense:
  *                 type: string
- *                 example: "Selling contaminated food."
+ *                 example: "Selling food unfit for consumption."
  *               licensingRegulationAgreement:
  *                 type: boolean
  *                 example: true
