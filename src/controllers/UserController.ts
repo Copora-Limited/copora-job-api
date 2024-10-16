@@ -836,33 +836,30 @@ class UserController {
 
 
   async getUsersByStatus(req: Request, res: Response) {
-    try {
-        // Extract the onboarding status from the request parameters
-        const statusParam = req.params.status;
+      try {
+          // Extract the onboarding status from the request parameters
+          const statusParam = req.params.status;
 
-        // Validate the status against the OnboardingStatus enum
-        if (!Object.values(OnboardingStatus).includes(statusParam as OnboardingStatus)) {
-            return res.status(400).json({ message: 'Invalid status provided.' });
-        }
+          // Validate the status against the OnboardingStatus enum
+          if (!Object.values(OnboardingStatus).includes(statusParam as OnboardingStatus)) {
+              return res.status(400).json({ message: 'Invalid status provided.' });
+          }
 
-        // Cast the parameter to the OnboardingStatus enum
-        const onboardingStatus = statusParam as OnboardingStatus;
+          // Cast the parameter to the OnboardingStatus enum
+          const onboardingStatus = statusParam as OnboardingStatus;
 
-        console.log("onboardingStatus:", onboardingStatus);
+          console.log("onboardingStatus:", onboardingStatus);
 
-        // Fetch users by status
-        const users = await userService.findByStatus(onboardingStatus);
+          // Fetch users by status
+          const users = await userService.findByStatus(onboardingStatus);
 
-        // Check if users were found
-        if (users.length === 0) {
-            return res.status(404).json({ message: 'No users found with the specified status.' });
-        }
+          // Return an empty array if no users are found
+          res.status(200).json(users.length > 0 ? users : []); 
+      } catch (error) {
+          res.status(400).send({ message: 'Error fetching users', error: error.message });
+      }
+  }
 
-        res.status(200).json(users); // Return the users found
-    } catch (error) {
-        res.status(400).send({ message: 'Error fetching users', error: error.message });
-    }
-}
 
   
 

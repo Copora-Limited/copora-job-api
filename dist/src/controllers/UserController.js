@@ -785,11 +785,8 @@ class UserController {
                 console.log("onboardingStatus:", onboardingStatus);
                 // Fetch users by status
                 const users = yield userService.findByStatus(onboardingStatus);
-                // Check if users were found
-                if (users.length === 0) {
-                    return res.status(404).json({ message: 'No users found with the specified status.' });
-                }
-                res.status(200).json(users); // Return the users found
+                // Return an empty array if no users are found
+                res.status(200).json(users.length > 0 ? users : []);
             }
             catch (error) {
                 res.status(400).send({ message: 'Error fetching users', error: error.message });
