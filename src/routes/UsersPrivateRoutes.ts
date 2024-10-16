@@ -496,7 +496,7 @@ router.post('/upload-users', authenticateToken, authorizeRoles('admin'), UserCon
 
 /**
  * @swagger
- * /users/update-onboarding-step:
+ * /auth/users/update-onboarding-step:
  *   patch:
  *     summary: Update the onboarding step for a user.
  *     description: This endpoint allows updating the onboarding step for a user based on their application number.
@@ -565,7 +565,7 @@ router.patch('/update-onboarding-step', UserController.updateOnboardingStep);
 
  /**
  * @swagger
- * /users/update-onboarding-status:
+ * /auth/users/update-onboarding-status:
  *   patch:
  *     summary: Update the onboarding status for a user.
  *     description: This endpoint allows updating the onboarding status for a user based on their application number.
