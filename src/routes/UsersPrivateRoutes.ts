@@ -638,5 +638,57 @@ router.patch('/update-onboarding-step', UserController.updateOnboardingStep);
 router.patch('/update-onboarding-status', UserController.updateOnboardingStatus);
 
 
+/**
+ * @swagger
+ * /auth/users/onboarding-step/{applicationNoe}:
+ *   get:
+ *     summary: Get the onboarding step for a specific application
+ *     tags: [Admin - Private Endpoints]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The application number
+ *         example: "APP12345"
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the onboarding step
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 onboardingStep:
+ *                   type: string
+ *                   example: "Step 3"
+ *       404:
+ *         description: Application not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Application not found"
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Error fetching onboarding step"
+ *                 error:
+ *                   type: string
+ *                   example: "Error details"
+ */
+
+router.get('/onboarding-step/:applicationNo', UserController.getOnboardingStepByApplicationNo);
+
 
 export default router;

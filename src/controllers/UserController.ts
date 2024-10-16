@@ -860,6 +860,25 @@ class UserController {
       }
   }
 
+  async getOnboardingStepByApplicationNo(req: Request, res: Response) {
+    try {
+        const { applicationNo } = req.params;
+        
+        // Find the application by applicationNo
+        const application = await UserService.findApplicationNo(applicationNo);
+
+        if (!application) {
+            return res.status(404).json({ message: 'Application not found' });
+        }
+
+        // Assuming `onboardingStep` is a field on the Application entity
+        res.status(200).json({ onboardingStep: application.onboardingStep });
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching onboarding step', error: error.message });
+    }
+}
+
+
 
   
 
