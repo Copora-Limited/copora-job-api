@@ -637,7 +637,7 @@ router.patch('/update-onboarding-step', UserController_1.default.updateOnboardin
 router.patch('/update-onboarding-status', UserController_1.default.updateOnboardingStatus);
 /**
  * @swagger
- * /auth/users/onboarding-step/{applicationNoe}:
+ * /auth/users/onboarding-step/{applicationNo}:
  *   get:
  *     summary: Get the onboarding step for a specific application
  *     tags: [Admin - Private Endpoints]
