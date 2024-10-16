@@ -14,31 +14,31 @@ export class FoodSafetyQuestionnaire {
     applicationNo: string;
 
     // Question 1: Cleaning chopping boards/utensils after using them for raw meat
-    @Column()
+    @Column({nullable: true})
     cleaningRawMeatUtensilsRequired: boolean;
 
     // Question 2: The Food Safety Act 1990 description
-    @Column()
+    @Column({nullable: true})
     foodSafetyAct1990Description: boolean;
 
     // Question 3: When to clean hands and kitchen surfaces
-    @Column()
+    @Column({nullable: true})
     cleaningRequirement: boolean;
 
     // Question 4: Characteristics of food contaminated with bacteria
-    @Column()
+    @Column({nullable: true})
     contaminatedFoodCharacteristics: string;
 
     // Question 5: Facts about bacteria growth and freezing
-    @Column()
+    @Column({nullable: true})
     bacteriaFactTrue: string;
 
     // Question 6: Where high-risk food should be stored in a refrigerator
-    @Column()
+    @Column({nullable: true})
     highRiskFoodStoragePosition: string;
 
     // Question 7: Temperature danger zone for food safety
-    @Column()
+    @Column({nullable: true})
     temperatureDangerZone: string;
 
     // Question 8: Scenarios for when to wash hands at work
@@ -46,18 +46,18 @@ export class FoodSafetyQuestionnaire {
     handWashingScenarios: string[];
 
     // Question 9: What is an allergen?
-    @Column()
+    @Column({nullable: true})
     allergenDefinition: string;
 
     // Question 10: Examples of high-risk foods
-    @Column()
+    @Column({nullable: true})
     highRiskFoodsExamples: string;
 
     // Question 11: Offense under the Food Safety Act 1990
-    @Column()
+    @Column({nullable: true})
     foodSafetyActOffense: string;
 
     // Additional column: Agreement to licensing regulations
-    @Column()
+    @Column({nullable: true})
     licensingRegulationAgreement: boolean;
 }

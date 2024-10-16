@@ -23,31 +23,31 @@ __decorate([
     __metadata("design:type", String)
 ], FoodSafetyQuestionnaire.prototype, "applicationNo", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Boolean)
 ], FoodSafetyQuestionnaire.prototype, "cleaningRawMeatUtensilsRequired", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Boolean)
 ], FoodSafetyQuestionnaire.prototype, "foodSafetyAct1990Description", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Boolean)
 ], FoodSafetyQuestionnaire.prototype, "cleaningRequirement", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], FoodSafetyQuestionnaire.prototype, "contaminatedFoodCharacteristics", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], FoodSafetyQuestionnaire.prototype, "bacteriaFactTrue", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], FoodSafetyQuestionnaire.prototype, "highRiskFoodStoragePosition", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], FoodSafetyQuestionnaire.prototype, "temperatureDangerZone", void 0);
 __decorate([
@@ -55,19 +55,19 @@ __decorate([
     __metadata("design:type", Array)
 ], FoodSafetyQuestionnaire.prototype, "handWashingScenarios", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], FoodSafetyQuestionnaire.prototype, "allergenDefinition", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], FoodSafetyQuestionnaire.prototype, "highRiskFoodsExamples", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], FoodSafetyQuestionnaire.prototype, "foodSafetyActOffense", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Boolean)
 ], FoodSafetyQuestionnaire.prototype, "licensingRegulationAgreement", void 0);
 exports.FoodSafetyQuestionnaire = FoodSafetyQuestionnaire = __decorate([
