@@ -1,5 +1,4 @@
 "use strict";
-// emailHeader.js
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.emailHeader = emailHeader;
 const HEADER_IMAGES = {
@@ -18,47 +17,41 @@ function emailHeader(headerType) {
     return `
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap" rel="stylesheet">
-    <title>Copora</title>
-  </head>
-
-  <body style="
-      font-family: Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      font-size: 14px;
-      line-height: 1.6;
-      margin: 0;
-      padding: 0;
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap" rel="stylesheet">
+  <title>Copora</title>
+</head>
+<body style="
+    font-family: Arial, sans-serif;
+    background-color: #EAF0F3;
+    margin: 0;
+    padding: 0;
+    color: #000;
+">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="
+      width: 100%;
       background-color: #EAF0F3;
-      color: #000000;
-    ">
-    <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="
-        border-collapse: collapse;
-        width: 100%;
-        background-color: #EAF0F3;
-      ">
-      <tr>
-        <td style="padding: 1px 0;">
-          <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="
-              border-collapse: collapse;
-              max-width: 600px;
-              margin: 0 auto;
-              background-color: #ffffff;
-              border-radius: 6px;
-            ">
-            <tr>
-              <td style="padding: 20px;">
-                <img src="${imageUrl}" alt="Header Image" style="
-                    width: 100%;
-                    border: none;
-                    display: block;
-                    margin-bottom: 20px;
-                  ">
-              </td>
-            </tr>
+  ">
+    <tr>
+      <td>
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 6px;
+            overflow: hidden;
+        ">
+          <tr>
+            <td style="padding: 20px;">
+              <img src="${imageUrl}" alt="Header Image" style="
+                  width: 100%;
+                  border: none;
+                  display: block;
+                  margin-bottom: 20px;
+              ">
+            </td>
+          </tr>
   `;
 }
