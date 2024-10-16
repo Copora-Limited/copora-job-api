@@ -86,7 +86,7 @@ ${emailHeader('others')}
         line-height: 18px;
         margin: 0;
       ">
-      Best regards,<br>
+      Best regards,<br><br>
       <strong>The ${process.env.APP_COMPANY} Team</strong>
     </p>
   </div>
