@@ -51,7 +51,7 @@ class UserController {
   
       // Call the sendTestEmail function to send the email
       // await sendTestEmail(email);
-      
+
       const firstName =  "Shafi";
       const password = "Test@123";
       await sendInvitationToOnboard({
@@ -209,7 +209,7 @@ class UserController {
         await sendInvitationToOnboard({
           email,
           firstName,
-          loginLink: `${FRONTEND_LOGIN}/login`,
+          loginLink: `${FRONTEND_LOGIN}`,
           temporaryPassword: password
         });
         

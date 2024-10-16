@@ -217,7 +217,7 @@ class UserController {
                     yield (0, emailActions_1.sendInvitationToOnboard)({
                         email,
                         firstName,
-                        loginLink: `${config_1.FRONTEND_LOGIN}/login`,
+                        loginLink: `${config_1.FRONTEND_LOGIN}`,
                         temporaryPassword: password
                     });
                 }
