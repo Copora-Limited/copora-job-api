@@ -57,7 +57,7 @@ class UserController {
       await sendInvitationToOnboard({
         email,
         firstName,
-        loginLink: `${FRONTEND_LOGIN}/login`,
+        loginLink: `${FRONTEND_LOGIN}`,
         temporaryPassword: password
       });
   
@@ -454,7 +454,7 @@ class UserController {
               sendInvitationToOnboard({
                 email: normalizedEmail,
                 firstName,
-                loginLink: `${FRONTEND_LOGIN}/login`,
+                loginLink: `${FRONTEND_LOGIN}`,
                 temporaryPassword
               })
             );
