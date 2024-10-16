@@ -1,12 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class BankDetails {
     @PrimaryGeneratedColumn()
     id: number;
 
-    // @ManyToOne(() => Application)
-    // applicationNo: Application;
     @Column({ unique: true })
     applicationNo: string;
 
@@ -22,6 +20,15 @@ export class BankDetails {
     @Column()
     accountName: string;
 
+    // Field for employment status declaration
     @Column()
     employmentStatusDeclaration: string;
+
+    // Field for student loan status
+    @Column({ nullable: true })
+    studentLoanStatus: string;
+
+    // Field for indicating whether P45 is attached
+    @Column({ default: false })
+    p45Attached: boolean;
 }

@@ -40,7 +40,13 @@ const router = Router();
  *                 example: "John Doe"
  *               employmentStatusDeclaration:
  *                 type: string
- *                 example: "Employed"
+ *                 example: "This is my first job since last 6 April and I have not been receiving taxable Jobseeker's Allowance, Employment and Support Allowance, taxable Incapacity Benefit, State or Occupational Pension."
+ *               studentLoanStatus:
+ *                 type: string
+ *                 example: "I have a student loan and another job."
+ *               p45Attached:
+ *                 type: boolean
+ *                 example: true
  *     responses:
  *       201:
  *         description: Bank Details record created successfully

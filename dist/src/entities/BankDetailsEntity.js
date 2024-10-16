@@ -42,6 +42,14 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], BankDetails.prototype, "employmentStatusDeclaration", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], BankDetails.prototype, "studentLoanStatus", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    __metadata("design:type", Boolean)
+], BankDetails.prototype, "p45Attached", void 0);
 exports.BankDetails = BankDetails = __decorate([
     (0, typeorm_1.Entity)()
 ], BankDetails);
