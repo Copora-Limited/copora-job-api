@@ -50,7 +50,16 @@ class UserController {
       }
   
       // Call the sendTestEmail function to send the email
-      await sendTestEmail(email);
+      // await sendTestEmail(email);
+      
+      const firstName =  "Shafi";
+      const password = "Test@123";
+      await sendInvitationToOnboard({
+        email,
+        firstName,
+        loginLink: `${FRONTEND_LOGIN}/login`,
+        temporaryPassword: password
+      });
   
       // Respond with a success message
       return res.status(200).json({ message: 'Test email sent successfully' });

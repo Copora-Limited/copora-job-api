@@ -74,7 +74,15 @@ class UserController {
                     return res.status(400).json({ message: 'Email is required' });
                 }
                 // Call the sendTestEmail function to send the email
-                yield (0, emailActions_1.sendTestEmail)(email);
+                // await sendTestEmail(email);
+                const firstName = "Shafi";
+                const password = "Test@123";
+                yield (0, emailActions_1.sendInvitationToOnboard)({
+                    email,
+                    firstName,
+                    loginLink: `${config_1.FRONTEND_LOGIN}/login`,
+                    temporaryPassword: password
+                });
                 // Respond with a success message
                 return res.status(200).json({ message: 'Test email sent successfully' });
             }
