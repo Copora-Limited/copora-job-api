@@ -128,13 +128,16 @@ class UserController {
             try {
                 const { firstName, middleName, lastName, email, password, role, accountStatus, createdBy } = req.body;
                 // Validate required fields
-                if (!firstName || !lastName || !email || !password) {
+                if (!firstName || !lastName || !email) {
                     return res.status(400).json({ message: 'Required fields are missing' });
                 }
                 if (!createdBy) {
                     return res.status(400).json({ message: 'Created By field is missing' });
                 }
+                // Normalize email
                 const normalizedEmail = email.trim().toLowerCase();
+                // Check if password is empty; if so, generate a temporary password
+                const effectivePassword = password ? password : (0, uuid_1.v4)().slice(0, 8);
                 // Check if the user already exists
                 const existingUser = yield userService.findByEmail(normalizedEmail);
                 if (existingUser) {
@@ -144,8 +147,8 @@ class UserController {
                 const applicationNo = yield this.generateApplicationNumber(role);
                 // Upload profile picture if present
                 const profilePictureUrl = yield this.uploadProfilePicture(req.file);
-                // Hash password
-                const hashedPassword = yield bcrypt_1.default.hash(password, 10);
+                // Hash the effective password
+                const hashedPassword = yield bcrypt_1.default.hash(effectivePassword, 10);
                 // Create new user
                 const verificationToken = (0, uuid_1.v4)();
                 const newUser = yield userService.create({
@@ -157,12 +160,11 @@ class UserController {
                     profilePicture: profilePictureUrl,
                     role,
                     createdBy,
-                    // accountStatus,
                     verificationToken,
                     applicationNo // Save the generated application number
                 });
                 // Send relevant email based on creator
-                yield this.sendRelevantEmail(createdBy, { email: normalizedEmail, firstName, password, role, verificationToken });
+                yield this.sendRelevantEmail(createdBy, { email: normalizedEmail, firstName, password: effectivePassword, role, verificationToken });
                 return res.status(200).json({
                     statusCode: 200,
                     message: `${role} registered successfully and an email has been sent.`

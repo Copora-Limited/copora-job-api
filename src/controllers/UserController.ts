@@ -110,33 +110,37 @@ class UserController {
   async register(req: Request, res: Response): Promise<Response> {
     try {
       const { firstName, middleName, lastName, email, password, role, accountStatus, createdBy } = req.body;
-
+  
       // Validate required fields
-      if (!firstName || !lastName || !email || !password) {
+      if (!firstName || !lastName || !email) {
         return res.status(400).json({ message: 'Required fields are missing' });
       }
-
+  
       if (!createdBy) {
         return res.status(400).json({ message: 'Created By field is missing' });
       }
-
+  
+      // Normalize email
       const normalizedEmail = email.trim().toLowerCase();
-
+  
+      // Check if password is empty; if so, generate a temporary password
+      const effectivePassword = password ? password : uuidv4().slice(0, 8);
+  
       // Check if the user already exists
       const existingUser = await userService.findByEmail(normalizedEmail);
       if (existingUser) {
         return res.status(400).json({ message: 'User with this email already exists' });
       }
-
+  
       // Generate application number
       const applicationNo = await this.generateApplicationNumber(role);
-
+  
       // Upload profile picture if present
       const profilePictureUrl = await this.uploadProfilePicture(req.file);
-
-      // Hash password
-      const hashedPassword = await bcrypt.hash(password, 10);
-
+  
+      // Hash the effective password
+      const hashedPassword = await bcrypt.hash(effectivePassword, 10);
+  
       // Create new user
       const verificationToken = uuidv4();
       const newUser = await userService.create({
@@ -148,19 +152,18 @@ class UserController {
         profilePicture: profilePictureUrl,
         role,
         createdBy,
-        // accountStatus,
         verificationToken,
         applicationNo // Save the generated application number
       });
-
+  
       // Send relevant email based on creator
-      await this.sendRelevantEmail(createdBy, { email: normalizedEmail, firstName, password, role, verificationToken });
-
-      return res.status(200).json({ 
+      await this.sendRelevantEmail(createdBy, { email: normalizedEmail, firstName, password: effectivePassword, role, verificationToken });
+  
+      return res.status(200).json({
         statusCode: 200,
         message: `${role} registered successfully and an email has been sent.`
       });
-
+  
     } catch (error) {
       console.error('Error during registration:', error);
       return !res.headersSent
