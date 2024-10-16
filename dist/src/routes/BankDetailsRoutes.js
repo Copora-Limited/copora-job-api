@@ -53,26 +53,26 @@ const router = (0, express_1.Router)();
  *         description: Bad request
  */
 router.post('/', BankDetailsController_1.BankDetailsController.createBankDetails);
-// /**
-//  * @swagger
-//  * /bank-details/{applicationNo}:
-//  *   get:
-//  *     summary: Get Bank Details by Application Number
-//  *     tags: [BankDetails]
-//  *     parameters:
-//  *       - in: path
-//  *         name: applicationNo
-//  *         schema:
-//  *           type: string
-//  *         required: true
-//  *         description: The application number
-//  *     responses:
-//  *       200:
-//  *         description: Bank Details retrieved successfully
-//  *       404:
-//  *         description: Bank Details not found
-//  */
-// router.get('/:applicationNo', BankDetailsController.getBankDetailsByNo);
+/**
+ * @swagger
+ * /bank-details/{applicationNo}:
+ *   get:
+ *     summary: Get Bank Details by Application Number
+ *     tags: [BankDetails]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The application number
+ *     responses:
+ *       200:
+ *         description: Bank Details retrieved successfully
+ *       404:
+ *         description: Bank Details not found
+ */
+router.get('/:applicationNo', BankDetailsController_1.BankDetailsController.getBankDetailsByNo);
 /**
  * @swagger
  * /bank-details/{applicationNo}:
