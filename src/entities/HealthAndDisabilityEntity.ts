@@ -12,60 +12,60 @@ export class HealthAndDisability {
     @Column({ unique: true })
     applicationNo: string;
 
-    @Column()
+    @Column({nullable: true})
     gpName: string;
 
-    @Column()
+    @Column({nullable: true})
     gpAddress: string;
 
-    @Column()
+    @Column({nullable: true})
     relevantHealthIssues: boolean;
 
-    @Column()
+    @Column({nullable: true})
     relevantHealthIssuesDetails: string;
 
-    @Column()
+    @Column({nullable: true})
     majorIllnessTreatment: boolean;
 
-    @Column()
+    @Column({nullable: true})
     majorIllnessDetails: string;
 
-    @Column()
+    @Column({nullable: true})
     suddenLossOfConsciousness: boolean;
 
-    @Column()
+    @Column({nullable: true})
     consciousnessLossDetails: string;
 
-    @Column()
+    @Column({nullable: true})
     healthRelatedAbsences: boolean;
 
-    @Column()
+    @Column({nullable: true})
     healthRelatedAbsencesDetails: string;
 
-    @Column()
+    @Column({nullable: true})
     currentMedications: boolean;
 
-    @Column()
+    @Column({nullable: true})
     medicationDetails: string;
 
-    @Column()
+    @Column({nullable: true})
     physicalLimitations: boolean;
 
-    @Column()
+    @Column({nullable: true})
     limitationsDetails: string;
 
-    @Column()
+    @Column({nullable: true})
     colorVisionDefects: boolean;
 
-    @Column()
+    @Column({nullable: true})
     colorVisionDefectsDetails: string;
 
-    @Column()
+    @Column({nullable: true})
     disabilityAdjustmentNeeds: string;
 
-    @Column()
+    @Column({nullable: true})
     agreementCertification: boolean;
 
-    @Column()
+    @Column({nullable: true})
     agreementToReportInfection: boolean;
 }
