@@ -43,12 +43,6 @@ const router = (0, express_1.Router)();
  *               postcode:
  *                 type: string
  *                 example: "12345"
- *               linkedin:
- *                 type: string
- *                 example: "https://linkedin.com/in/example"
- *               twitter:
- *                 type: string
- *                 example: "https://twitter.com/example"
  *     responses:
  *       201:
  *         description: Contact Details record created successfully
@@ -114,12 +108,6 @@ router.post('/', ContactDetailsController_1.ContactDetailsController.createConta
  *               postcode:
  *                 type: string
  *                 example: "54321"
- *               linkedin:
- *                 type: string
- *                 example: "https://linkedin.com/in/example_updated"
- *               twitter:
- *                 type: string
- *                 example: "https://twitter.com/example_updated"
  *     responses:
  *       200:
  *         description: Contact Details updated successfully

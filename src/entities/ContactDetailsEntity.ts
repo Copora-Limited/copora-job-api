@@ -26,12 +26,12 @@ export class ContactDetails {
     @Column()
     town: string;
 
-    @Column()
+    @Column({nullable: true})
     postcode: string;
 
-    @Column()
+    @Column({nullable: true})
     linkedin: string;
 
-    @Column()
+    @Column({nullable: true})
     twitter: string;
 }

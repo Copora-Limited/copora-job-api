@@ -43,15 +43,15 @@ __decorate([
     __metadata("design:type", String)
 ], ContactDetails.prototype, "town", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], ContactDetails.prototype, "postcode", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], ContactDetails.prototype, "linkedin", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], ContactDetails.prototype, "twitter", void 0);
 exports.ContactDetails = ContactDetails = __decorate([
