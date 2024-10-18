@@ -50,21 +50,34 @@ router.get('/:id', JobListingController.getById);
  * @swagger
  * /api/job-listings:
  *   post:
- *     summary: Create a new job listing
+ *     summary: Create a job listing
  *     tags: [Job Listings]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             
+ *             type: object
+ *             properties:
+ *               applicationNo:
+ *                 type: string
+ *               jobTitle:
+ *                 type: string
+ *               employmentType:
+ *                 type: string
+ *               location:
+ *                 type: string
+ *               group:
+ *                 type: string
  *     responses:
  *       201:
- *         description: The job listing was successfully created
- *       500:
- *         description: Server error
+ *         description: Job listing created
+ *       400:
+ *         description: Invalid input
  */
 router.post('/', JobListingController.create);
+
+
 
 /**
  * @swagger
