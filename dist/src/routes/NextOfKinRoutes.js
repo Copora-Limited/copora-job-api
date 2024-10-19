@@ -21,7 +21,9 @@ const nextOfKinController = new NextOfKinController_1.NextOfKinController();
  *               applicationNo:
  *                 type: string
  *                 description: The application number of the applicant
- *               name:
+ *               firstName:
+ *                 type: string
+ *               lastName:
  *                 type: string
  *                 description: FirstName of the Next of Kin
  *               relationship:
