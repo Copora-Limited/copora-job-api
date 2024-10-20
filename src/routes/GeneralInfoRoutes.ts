@@ -8,7 +8,7 @@ const generalInfoController = new GeneralInfoController();
 
 /**
  * @swagger
- * /general-info:
+ * /general-information:
  *   post:
  *     summary: Create a new General Info entry
  *     tags: [GeneralInfo]
@@ -141,18 +141,16 @@ const generalInfoController = new GeneralInfoController();
  *       500:
  *         description: Server error
  */
-router.post('/', (req, res) => generalInfoController.create(req, res));
+router.post('/', GeneralInfoController.createOrUpdateGeneralInfo);
 
-// Route to get all GeneralInfo entries
-router.get('/', (req, res) => generalInfoController.getAll(req, res));
 
 // Route to get a specific GeneralInfo entry by ID
-router.get('/:id', (req, res) => generalInfoController.getById(req, res));
+router.get('/:id', GeneralInfoController.getGeneralInfoByNo);
 
 // Route to update a GeneralInfo entry by ID
-router.put('/:id', (req, res) => generalInfoController.update(req, res));
+router.put('/:id', GeneralInfoController.updateGeneralInfoByNo);
 
 // Route to delete a GeneralInfo entry by ID
-router.delete('/:id', (req, res) => generalInfoController.delete(req, res));
+router.delete('/:id', GeneralInfoController.deleteGeneralInfoByNo);
 
 export default router;

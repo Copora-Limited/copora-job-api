@@ -12,10 +12,10 @@ export class NextOfKin {
     @Column({ unique: true })
     applicationNo: string;
 
-    @Column()
+    @Column({nullable: true })
     firstName: string;
 
-    @Column()
+    @Column({nullable: true })
     lastname: string;
 
     @Column({nullable: true })

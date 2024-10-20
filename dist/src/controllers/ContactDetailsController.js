@@ -17,6 +17,7 @@ class ContactDetailsController {
     static createContactDetails(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                console.log("Data:", req.body);
                 const { applicationNo } = req.body;
                 // Check if the ContactDetails with the given applicationNo exists
                 const existingContactDetails = yield ContactDetailsService_1.ContactDetailsService.getContactDetailsByApplicationNo(applicationNo);

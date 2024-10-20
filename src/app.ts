@@ -95,7 +95,7 @@ AppDataSource.initialize()
     app.use(`/bank-details`, BankDetailsRoutes);
     app.use(`/contact-details`, ContactDetailsRoutes);
     app.use(`/next-of-kin`, NextOfKinRoutes);
-    app.use(`/general-info`, GeneralInfoRoutes);
+    app.use(`/general-information`, GeneralInfoRoutes);
     app.use(`/educational-details`, EducationalDetailsRoutes);
     app.use(`/food-safety-questionnaire`, FoodSafetyQuestionnaireRoutes);
     app.use(`/health-and-disability`, HealthAndDisabilityRoutes);

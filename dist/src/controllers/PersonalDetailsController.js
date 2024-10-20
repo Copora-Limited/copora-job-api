@@ -49,12 +49,12 @@ class PersonalDetailsController {
                 }
                 // Check if the PersonalDetails with the given applicationNo exists
                 const existingEntry = yield PersonalDetailsService_1.PersonalDetailsService.getByApplicationNo(applicationNo);
-                let passportPhoto = '';
+                let passportPhoto = (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.passportPhoto) || ''; // Preserve existing passport photo if no new file is uploaded
                 if (file) {
                     passportPhoto = yield PersonalDetailsController.uploadPassportPhoto(file);
                 }
-                // Include the passportPhoto in the body data if it's available
-                const dataToSave = Object.assign(Object.assign({}, req.body), { passportPhoto: passportPhoto });
+                // Merge the new data with the existing data, only updating fields that are provided
+                const dataToSave = Object.assign(Object.assign(Object.assign({}, existingEntry), req.body), { passportPhoto: passportPhoto || (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.passportPhoto) });
                 console.log("dataToSave", dataToSave);
                 if (existingEntry) {
                     // Update the existing record

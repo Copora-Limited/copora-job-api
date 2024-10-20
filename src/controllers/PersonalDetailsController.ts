@@ -26,44 +26,52 @@ export class PersonalDetailsController {
 
   // Create or update PersonalDetails
   static async createOrUpdatePersonalDetails(req: Request, res: Response): Promise<void> {
-    try {
-      const { applicationNo } = req.body;
-      const file = req.file;
-      console.log("req.body", req.body);
-      const existingApplicant = await UserService.findApplicationNo(applicationNo);
+      try {
+          const { applicationNo } = req.body;
+          const file = req.file;
+          console.log("req.body", req.body);
 
-      if (!existingApplicant) {
-        res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
-        return; // Ensure to return here to avoid further execution
+          const existingApplicant = await UserService.findApplicationNo(applicationNo);
+
+          if (!existingApplicant) {
+              res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
+              return; // Ensure to return here to avoid further execution
+          }
+
+          // Check if the PersonalDetails with the given applicationNo exists
+          const existingEntry = await PersonalDetailsService.getByApplicationNo(applicationNo);
+
+          let passportPhoto = existingEntry?.passportPhoto || ''; // Preserve existing passport photo if no new file is uploaded
+
+          if (file) {
+              passportPhoto = await PersonalDetailsController.uploadPassportPhoto(file);
+          }
+
+          // Merge the new data with the existing data, only updating fields that are provided
+          const dataToSave = {
+              ...existingEntry, // Spread the existing entry fields to retain their values
+              ...req.body,      // Override fields with the new values from req.body
+              passportPhoto: passportPhoto || existingEntry?.passportPhoto, // Only override if a new passport photo is available
+          };
+
+          console.log("dataToSave", dataToSave);
+
+          if (existingEntry) {
+              // Update the existing record
+              const updatedEntry = await PersonalDetailsService.updateByApplicationNo(applicationNo, dataToSave);
+              res.status(200).json({ message: 'Personal details updated', data: updatedEntry });
+          } else {
+              // Create a new record
+              const newEntry = await PersonalDetailsService.create(dataToSave);
+              res.status(201).json({ message: 'Personal details created', data: newEntry });
+          }
+      } catch (error) {
+          console.error('Error creating or updating personal details:', error);
+          res.status(500).json({ message: 'Error creating or updating personal details', error: error.message });
       }
-
-      // Check if the PersonalDetails with the given applicationNo exists
-      const existingEntry = await PersonalDetailsService.getByApplicationNo(applicationNo);
-
-      let passportPhoto = '';
-
-      if (file) {
-        passportPhoto = await PersonalDetailsController.uploadPassportPhoto(file);
-      }
-
-      // Include the passportPhoto in the body data if it's available
-      const dataToSave = { ...req.body, passportPhoto: passportPhoto };
-      console.log("dataToSave", dataToSave);
-
-      if (existingEntry) {
-        // Update the existing record
-        const updatedEntry = await PersonalDetailsService.updateByApplicationNo(applicationNo, dataToSave);
-        res.status(200).json({ message: 'Personal details updated', data: updatedEntry });
-      } else {
-        // Create a new record
-        const newEntry = await PersonalDetailsService.create(dataToSave);
-        res.status(201).json({ message: 'Personal details created', data: newEntry });
-      }
-    } catch (error) {
-      console.error('Error creating or updating personal details:', error);
-      res.status(500).json({ message: 'Error creating or updating personal details', error: error.message });
-    }
   }
+
+  
 
 
 

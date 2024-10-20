@@ -8,93 +8,110 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GeneralInfoController = void 0;
-const data_source_1 = require("../data-source");
-const GeneralInfoEntity_1 = require("../entities/GeneralInfoEntity");
 const GeneralInfoService_1 = require("../services/GeneralInfoService");
 const UserService_1 = require("../services/UserService");
-const multerConfig_1 = __importDefault(require("../multerConfig")); // Import multer config
+const cloudinary_1 = require("cloudinary");
+// Configure Cloudinary
+cloudinary_1.v2.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 class GeneralInfoController {
-    constructor() {
-        this.generalInfoRepository = data_source_1.AppDataSource.getRepository(GeneralInfoEntity_1.GeneralInfo);
-    }
-    create(req, res) {
+    // private generalInfoRepository = AppDataSource.getRepository(GeneralInfo);
+    // Helper function to upload files to Cloudinary
+    static uploadFile(file) {
         return __awaiter(this, void 0, void 0, function* () {
-            // Use Multer middleware to handle file uploads
-            multerConfig_1.default.fields([
-                { name: 'level2FoodHygieneCertificateUpload', maxCount: 1 },
-                { name: 'personalLicenseCertificateUpload', maxCount: 1 },
-                { name: 'dbsCertificateUpload', maxCount: 1 }
-            ])(req, res, (err) => __awaiter(this, void 0, void 0, function* () {
-                var _a, _b, _c, _d, _e, _f, _g, _h, _j;
-                if (err) {
-                    return res.status(400).json({ statusCode: 400, message: 'File upload error', error: err.message });
-                }
-                const { applicationNo } = req.body;
-                // Check if applicant exists
-                const existingApplicant = yield UserService_1.UserService.findApplicationNo(applicationNo);
-                if (!existingApplicant) {
-                    return res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
-                }
-                // Check if general info for the application already exists
-                const existingEntry = yield GeneralInfoService_1.GeneralInfoService.getByApplicationNo(applicationNo);
-                // Prepare file paths if files are uploaded
-                const level2FoodHygieneCertificateUpload = ((_c = (_b = (_a = req.files) === null || _a === void 0 ? void 0 : _a['level2FoodHygieneCertificateUpload']) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.path) || null;
-                const personalLicenseCertificateUpload = ((_f = (_e = (_d = req.files) === null || _d === void 0 ? void 0 : _d['personalLicenseCertificateUpload']) === null || _e === void 0 ? void 0 : _e[0]) === null || _f === void 0 ? void 0 : _f.path) || null;
-                const dbsCertificateUpload = ((_j = (_h = (_g = req.files) === null || _g === void 0 ? void 0 : _g['dbsCertificateUpload']) === null || _h === void 0 ? void 0 : _h[0]) === null || _j === void 0 ? void 0 : _j.path) || null;
-                const generalInfoData = Object.assign(Object.assign({}, req.body), { level2FoodHygieneCertificateUpload,
-                    personalLicenseCertificateUpload,
-                    dbsCertificateUpload });
-                // Update existing entry or create a new one
-                if (existingEntry) {
-                    const updatedEntry = yield GeneralInfoService_1.GeneralInfoService.updateByApplicationNo(applicationNo, generalInfoData);
-                    return res.status(200).json({ message: 'General Info updated', data: updatedEntry });
-                }
-                else {
-                    const newEntry = this.generalInfoRepository.create(generalInfoData);
-                    const savedEntry = yield this.generalInfoRepository.save(newEntry);
-                    return res.status(201).json({ message: 'General Info created', data: savedEntry });
-                }
-            }));
-        });
-    }
-    getAll(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const generalInfo = yield this.generalInfoRepository.find();
-            res.status(200).send(generalInfo);
-        });
-    }
-    getById(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const generalInfo = yield this.generalInfoRepository.findOneBy({ id: parseInt(req.params.id) });
-            if (!generalInfo) {
-                return res.status(404).send('General Info not found');
+            if (!file)
+                return '';
+            try {
+                const result = yield cloudinary_1.v2.uploader.upload(file.path);
+                return result.secure_url; // Return the secure URL of the uploaded file
             }
-            res.status(200).send(generalInfo);
+            catch (error) {
+                console.error('Error uploading file:', error);
+                throw new Error('Failed to upload file');
+            }
         });
     }
-    update(req, res) {
+    // Create or update General Info
+    static createOrUpdateGeneralInfo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const generalInfo = yield this.generalInfoRepository.findOneBy({ id: parseInt(req.params.id) });
-            if (!generalInfo) {
-                return res.status(404).send('General Info not found');
+            const { generalInfo } = req.body; // Extract generalInfo from request body
+            console.log(generalInfo);
+            const { applicationNo, level2FoodHygieneCertificateUpload, personalLicenseCertificateUpload, dbsCertificateUpload } = generalInfo;
+            // Check if applicant exists
+            const existingApplicant = yield UserService_1.UserService.findApplicationNo(applicationNo);
+            if (!existingApplicant) {
+                return res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
             }
-            Object.assign(generalInfo, req.body);
-            yield this.generalInfoRepository.save(generalInfo);
-            res.status(200).send(generalInfo);
+            // Check if general info for the application already exists
+            const existingEntry = yield GeneralInfoService_1.GeneralInfoService.getByApplicationNo(applicationNo);
+            // Upload files if they are provided and set their URLs
+            const level2FoodHygieneCertificateUrl = yield GeneralInfoController.uploadFile(level2FoodHygieneCertificateUpload === null || level2FoodHygieneCertificateUpload === void 0 ? void 0 : level2FoodHygieneCertificateUpload[0]);
+            const personalLicenseCertificateUrl = yield GeneralInfoController.uploadFile(personalLicenseCertificateUpload === null || personalLicenseCertificateUpload === void 0 ? void 0 : personalLicenseCertificateUpload[0]);
+            const dbsCertificateUrl = yield GeneralInfoController.uploadFile(dbsCertificateUpload === null || dbsCertificateUpload === void 0 ? void 0 : dbsCertificateUpload[0]);
+            // Merge the new data with existing data, only updating fields that are provided
+            const dataToSave = Object.assign(Object.assign(Object.assign({}, existingEntry), generalInfo), { level2FoodHygieneCertificateUpload: level2FoodHygieneCertificateUrl || (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.level2FoodHygieneCertificateUpload), personalLicenseCertificateUpload: personalLicenseCertificateUrl || (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.personalLicenseCertificateUpload), dbsCertificateUpload: dbsCertificateUrl || (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.dbsCertificateUpload) });
+            if (existingEntry) {
+                // Update the existing record
+                const updatedEntry = yield GeneralInfoService_1.GeneralInfoService.updateByApplicationNo(applicationNo, dataToSave);
+                res.status(200).json({ message: 'General Info details updated', data: updatedEntry });
+            }
+            else {
+                // Create a new record
+                const newEntry = yield GeneralInfoService_1.GeneralInfoService.create(dataToSave);
+                res.status(201).json({ message: 'General Info details created', data: newEntry });
+            }
         });
     }
-    delete(req, res) {
+    // Get GeneralInfo by applicationNo
+    static getGeneralInfoByNo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.generalInfoRepository.delete({ id: parseInt(req.params.id) });
-            if (result.affected === 0) {
-                return res.status(404).send('General Info not found');
+            console.log("req:", req.params);
+            try {
+                const { applicationNo } = req.params;
+                const entry = yield GeneralInfoService_1.GeneralInfoService.getByApplicationNo(applicationNo);
+                console.log("entry:", entry);
+                if (!entry) {
+                    return res.status(404).send({ message: 'Personal details not found' });
+                }
+                res.status(200).send(entry);
             }
-            res.status(200).send('General Info deleted');
+            catch (error) {
+                res.status(500).send({ message: 'Error fetching personal details', error: error.message });
+            }
+        });
+    }
+    // Update GeneralInfo by applicationNo
+    static updateGeneralInfoByNo(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { applicationNo } = req.params;
+                const updatedEntry = yield GeneralInfoService_1.GeneralInfoService.updateByApplicationNo(applicationNo, req.body);
+                if (!updatedEntry) {
+                    return res.status(404).send({ message: 'Personal details not found' });
+                }
+                res.status(200).send(updatedEntry);
+            }
+            catch (error) {
+                res.status(400).send({ message: 'Error updating personal details', error: error.message });
+            }
+        });
+    }
+    // Delete GeneralInfo by applicationNo
+    static deleteGeneralInfoByNo(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { applicationNo } = req.params;
+                const message = yield GeneralInfoService_1.GeneralInfoService.deleteByApplicationNo(applicationNo);
+                res.status(200).send({ message });
+            }
+            catch (error) {
+                res.status(404).send({ message: error.message });
+            }
         });
     }
 }

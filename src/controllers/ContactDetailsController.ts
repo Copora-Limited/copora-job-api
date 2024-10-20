@@ -7,6 +7,7 @@ export class ContactDetailsController {
     // Create or update ContactDetails based on applicationNo
     static async createContactDetails(req: Request, res: Response) {
         try {
+            console.log("Data:", req.body);
             const { applicationNo } = req.body;
 
             // Check if the ContactDetails with the given applicationNo exists
