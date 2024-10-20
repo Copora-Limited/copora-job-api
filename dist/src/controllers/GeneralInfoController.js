@@ -40,7 +40,9 @@ class GeneralInfoController {
     static createOrUpdateGeneralInfo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { generalInfo } = req.body; // Extract generalInfo from request body
-            console.log(generalInfo);
+            if (!generalInfo) {
+                return res.status(400).json({ statusCode: 400, message: 'Missing required data' });
+            }
             const { applicationNo, level2FoodHygieneCertificateUpload, personalLicenseCertificateUpload, dbsCertificateUpload } = generalInfo;
             // Check if applicant exists
             const existingApplicant = yield UserService_1.UserService.findApplicationNo(applicationNo);

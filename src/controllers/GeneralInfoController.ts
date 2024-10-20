@@ -34,7 +34,11 @@ export class GeneralInfoController {
     // Create or update General Info
     static async createOrUpdateGeneralInfo(req: Request, res: Response) {
         const { generalInfo } = req.body; // Extract generalInfo from request body
-        console.log(generalInfo);
+
+        if(!generalInfo){
+            return res.status(400).json({ statusCode: 400, message: 'Missing required data' });
+        }
+
         const { applicationNo, level2FoodHygieneCertificateUpload, personalLicenseCertificateUpload, dbsCertificateUpload } = generalInfo;
 
         // Check if applicant exists
