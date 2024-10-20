@@ -7,7 +7,7 @@ const generalInfoController = new GeneralInfoController_1.GeneralInfoController(
 // Route to create a new GeneralInfo entry
 /**
  * @swagger
- * /general-information:
+ * /general-info:
  *   post:
  *     summary: Create a new General Info entry
  *     tags: [GeneralInfo]

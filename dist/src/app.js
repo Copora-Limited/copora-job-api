@@ -89,7 +89,7 @@ data_source_1.AppDataSource.initialize()
     app.use(`/bank-details`, BankDetailsRoutes_1.default);
     app.use(`/contact-details`, ContactDetailsRoutes_1.default);
     app.use(`/next-of-kin`, NextOfKinRoutes_1.default);
-    app.use(`/general-information`, GeneralInfoRoutes_1.default);
+    app.use(`/general-info`, GeneralInfoRoutes_1.default);
     app.use(`/educational-details`, EducationalDetailsRoutes_1.default);
     app.use(`/food-safety-questionnaire`, FoodSafetyQuestionnaireRoutes_1.default);
     app.use(`/health-and-disability`, HealthAndDisabilityRoutes_1.default);

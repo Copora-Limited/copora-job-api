@@ -8,7 +8,7 @@ const generalInfoController = new GeneralInfoController();
 
 /**
  * @swagger
- * /general-information:
+ * /general-info:
  *   post:
  *     summary: Create a new General Info entry
  *     tags: [GeneralInfo]
