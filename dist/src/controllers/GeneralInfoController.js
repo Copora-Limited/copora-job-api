@@ -51,26 +51,36 @@ class GeneralInfoController {
     static createOrUpdateGeneralInfo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log("Request Body:", req.body); // Log the entire request body to check its structure
-                // Access the fields directly from req.body instead of req.body.generalInfo
-                const _a = req.body, { applicationNo, level2FoodHygieneCertificateUpload, personalLicenseCertificateUpload, dbsCertificateUpload } = _a, otherFields = __rest(_a, ["applicationNo", "level2FoodHygieneCertificateUpload", "personalLicenseCertificateUpload", "dbsCertificateUpload"]);
+                const _a = req.body, { applicationNo } = _a, otherFields = __rest(_a, ["applicationNo"]);
                 if (!applicationNo) {
-                    return res.status(400).json({ statusCode: 400, message: 'Application number is required' });
+                    res.status(400).json({ statusCode: 400, message: 'Application number is required' });
+                    return;
                 }
                 // Check if applicant exists
                 const existingApplicant = yield UserService_1.UserService.findApplicationNo(applicationNo);
                 if (!existingApplicant) {
-                    return res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
+                    res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
+                    return;
                 }
                 // Check if general info for the application already exists
                 const existingEntry = yield GeneralInfoService_1.GeneralInfoService.getByApplicationNo(applicationNo);
-                // Upload files if they are provided and set their URLs
-                const level2FoodHygieneCertificateUrl = yield GeneralInfoController.uploadFile(level2FoodHygieneCertificateUpload === null || level2FoodHygieneCertificateUpload === void 0 ? void 0 : level2FoodHygieneCertificateUpload[0]);
-                const personalLicenseCertificateUrl = yield GeneralInfoController.uploadFile(personalLicenseCertificateUpload === null || personalLicenseCertificateUpload === void 0 ? void 0 : personalLicenseCertificateUpload[0]);
-                const dbsCertificateUrl = yield GeneralInfoController.uploadFile(dbsCertificateUpload === null || dbsCertificateUpload === void 0 ? void 0 : dbsCertificateUpload[0]);
-                // Merge the new data with existing data, only updating fields that are provided
+                // Files from the request (Assuming files are being uploaded correctly in middleware)
+                const { level2FoodHygieneCertificateUpload, personalLicenseCertificateUpload, dbsCertificateUpload } = req.files;
+                // Upload files if they are provided and get their URLs
+                const level2FoodHygieneCertificateUrl = (level2FoodHygieneCertificateUpload === null || level2FoodHygieneCertificateUpload === void 0 ? void 0 : level2FoodHygieneCertificateUpload[0])
+                    ? yield GeneralInfoController.uploadFile(level2FoodHygieneCertificateUpload[0])
+                    : existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.level2FoodHygieneCertificateUpload;
+                const personalLicenseCertificateUrl = (personalLicenseCertificateUpload === null || personalLicenseCertificateUpload === void 0 ? void 0 : personalLicenseCertificateUpload[0])
+                    ? yield GeneralInfoController.uploadFile(personalLicenseCertificateUpload[0])
+                    : existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.personalLicenseCertificateUpload;
+                const dbsCertificateUrl = (dbsCertificateUpload === null || dbsCertificateUpload === void 0 ? void 0 : dbsCertificateUpload[0])
+                    ? yield GeneralInfoController.uploadFile(dbsCertificateUpload[0])
+                    : existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.dbsCertificateUpload;
+                // Merge the new data with the existing data, only updating fields that are provided
                 const dataToSave = Object.assign(Object.assign(Object.assign(Object.assign({}, existingEntry), { // Retain existing fields
-                    applicationNo }), otherFields), { level2FoodHygieneCertificateUpload: level2FoodHygieneCertificateUrl || (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.level2FoodHygieneCertificateUpload), personalLicenseCertificateUpload: personalLicenseCertificateUrl || (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.personalLicenseCertificateUpload), dbsCertificateUpload: dbsCertificateUrl || (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.dbsCertificateUpload) });
+                    applicationNo }), otherFields), { level2FoodHygieneCertificateUpload: level2FoodHygieneCertificateUrl, personalLicenseCertificateUpload: personalLicenseCertificateUrl, dbsCertificateUpload: dbsCertificateUrl });
+                console.log("dataToSave:", dataToSave);
+                // Save or update the record based on whether it exists
                 if (existingEntry) {
                     // Update the existing record
                     const updatedEntry = yield GeneralInfoService_1.GeneralInfoService.updateByApplicationNo(applicationNo, dataToSave);
@@ -83,8 +93,8 @@ class GeneralInfoController {
                 }
             }
             catch (error) {
-                console.error('Error creating or updating personal details:', error);
-                res.status(500).json({ message: 'Error creating or updating personal details', error: error.message });
+                console.error('Error creating or updating general info:', error);
+                res.status(500).json({ message: 'Error creating or updating general info', error: error.message });
             }
         });
     }

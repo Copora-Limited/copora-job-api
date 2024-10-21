@@ -29,43 +29,59 @@ export class GeneralInfoController {
             throw new Error('Failed to upload file');
         }
     }
+    
 
     // Create or update General Info
-    static async createOrUpdateGeneralInfo(req: Request, res: Response) {
+    static async createOrUpdateGeneralInfo(req: Request, res: Response): Promise<void> {
         try {
-            console.log("Request Body:", req.body); // Log the entire request body to check its structure
-
-            // Access the fields directly from req.body instead of req.body.generalInfo
-            const { applicationNo, level2FoodHygieneCertificateUpload, personalLicenseCertificateUpload, dbsCertificateUpload, ...otherFields } = req.body;
-
+            const { applicationNo, ...otherFields } = req.body;
+    
             if (!applicationNo) {
-                return res.status(400).json({ statusCode: 400, message: 'Application number is required' });
+                res.status(400).json({ statusCode: 400, message: 'Application number is required' });
+                return;
             }
-
+    
             // Check if applicant exists
             const existingApplicant = await UserService.findApplicationNo(applicationNo);
             if (!existingApplicant) {
-                return res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
+                res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
+                return;
             }
-
+    
             // Check if general info for the application already exists
             const existingEntry = await GeneralInfoService.getByApplicationNo(applicationNo);
-
-            // Upload files if they are provided and set their URLs
-            const level2FoodHygieneCertificateUrl = await GeneralInfoController.uploadFile(level2FoodHygieneCertificateUpload?.[0]);
-            const personalLicenseCertificateUrl = await GeneralInfoController.uploadFile(personalLicenseCertificateUpload?.[0]);
-            const dbsCertificateUrl = await GeneralInfoController.uploadFile(dbsCertificateUpload?.[0]);
-
-            // Merge the new data with existing data, only updating fields that are provided
+    
+            // Files from the request (Assuming files are being uploaded correctly in middleware)
+            const { level2FoodHygieneCertificateUpload, personalLicenseCertificateUpload, dbsCertificateUpload } = req.files as {
+                [fieldname: string]: Express.Multer.File[];
+            };
+    
+            // Upload files if they are provided and get their URLs
+            const level2FoodHygieneCertificateUrl = level2FoodHygieneCertificateUpload?.[0]
+                ? await GeneralInfoController.uploadFile(level2FoodHygieneCertificateUpload[0])
+                : existingEntry?.level2FoodHygieneCertificateUpload;
+    
+            const personalLicenseCertificateUrl = personalLicenseCertificateUpload?.[0]
+                ? await GeneralInfoController.uploadFile(personalLicenseCertificateUpload[0])
+                : existingEntry?.personalLicenseCertificateUpload;
+    
+            const dbsCertificateUrl = dbsCertificateUpload?.[0]
+                ? await GeneralInfoController.uploadFile(dbsCertificateUpload[0])
+                : existingEntry?.dbsCertificateUpload;
+    
+            // Merge the new data with the existing data, only updating fields that are provided
             const dataToSave = {
                 ...existingEntry, // Retain existing fields
                 applicationNo,
                 ...otherFields, // Override fields with the new values from req.body
-                level2FoodHygieneCertificateUpload: level2FoodHygieneCertificateUrl || existingEntry?.level2FoodHygieneCertificateUpload,
-                personalLicenseCertificateUpload: personalLicenseCertificateUrl || existingEntry?.personalLicenseCertificateUpload,
-                dbsCertificateUpload: dbsCertificateUrl || existingEntry?.dbsCertificateUpload,
+                level2FoodHygieneCertificateUpload: level2FoodHygieneCertificateUrl,
+                personalLicenseCertificateUpload: personalLicenseCertificateUrl,
+                dbsCertificateUpload: dbsCertificateUrl,
             };
-
+    
+            console.log("dataToSave:", dataToSave);
+    
+            // Save or update the record based on whether it exists
             if (existingEntry) {
                 // Update the existing record
                 const updatedEntry = await GeneralInfoService.updateByApplicationNo(applicationNo, dataToSave);
@@ -76,10 +92,11 @@ export class GeneralInfoController {
                 res.status(201).json({ message: 'General Info details created', data: newEntry });
             }
         } catch (error) {
-            console.error('Error creating or updating personal details:', error);
-            res.status(500).json({ message: 'Error creating or updating personal details', error: error.message });
+            console.error('Error creating or updating general info:', error);
+            res.status(500).json({ message: 'Error creating or updating general info', error: error.message });
         }
     }
+    
 
 
     // Get GeneralInfo by applicationNo

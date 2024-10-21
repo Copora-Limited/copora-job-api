@@ -17,3 +17,7 @@ node_modules
 
 combined.log
 
+uploads/dbsCertificateUpload-1729482437287-146720800.jpg
+*.jpg
+*.log
+*.log

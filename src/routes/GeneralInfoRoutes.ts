@@ -93,7 +93,42 @@ router.post('/', uploadDocumentsAndImages.fields([
 
 
 
-// Route to get a specific GeneralInfo entry by ID
+/**
+ * @swagger
+ * /general-info/{applicationNo}:
+ *   get:
+ *     summary: Retrieve general information by applicationNo
+ *     description: Fetches general information associated with a given ID.
+ *     tags: [GeneralInfo]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The applicationNo of the general information record to retrieve
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the general information.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The applicationNo of the record.
+ *                 name:
+ *                   type: string
+ *                   description: The name of the entity.
+ *                 description:
+ *       400:
+ *         description: Bad request. Invalid ID parameter.
+ *       404:
+ *         description: General information not found.
+ *       500:
+ *         description: Internal server error.
+ */
 router.get('/:id', GeneralInfoController.getGeneralInfoByNo);
 
 // Route to update a GeneralInfo entry by ID
