@@ -115,9 +115,9 @@ AppDataSource.initialize()
     app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
     // Error logging with Winston
-    app.use(expressWinston.errorLogger({
-      winstonInstance: logger
-    }));
+    // app.use(expressWinston.errorLogger({
+    //   winstonInstance: logger
+    // }));
 
     // Global error handler
     app.use((err, req, res, next) => {

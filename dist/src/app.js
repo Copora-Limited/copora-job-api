@@ -106,9 +106,9 @@ data_source_1.AppDataSource.initialize()
     // Swagger setup
     app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.swaggerSpec));
     // Error logging with Winston
-    app.use(express_winston_1.default.errorLogger({
-        winstonInstance: logger_1.default
-    }));
+    // app.use(expressWinston.errorLogger({
+    //   winstonInstance: logger
+    // }));
     // Global error handler
     app.use((err, req, res, next) => {
         res.header('Access-Control-Allow-Origin', 'https://coporasystem-fe.vercel.app');
