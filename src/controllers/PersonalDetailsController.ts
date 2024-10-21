@@ -54,7 +54,7 @@ export class PersonalDetailsController {
               passportPhoto: passportPhoto || existingEntry?.passportPhoto, // Only override if a new passport photo is available
           };
 
-          console.log("dataToSave", dataToSave);
+          // console.log("dataToSave", dataToSave);
 
           if (existingEntry) {
               // Update the existing record

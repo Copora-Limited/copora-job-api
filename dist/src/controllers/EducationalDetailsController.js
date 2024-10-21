@@ -26,6 +26,54 @@ const UserService_1 = require("../services/UserService");
 class EducationalDetailsController {
     // private static educationalDetailsService = new EducationalDetailsService();
     // Create or update educational details based on applicationNo
+    // static async createEducationalDetails(req: Request, res: Response) {
+    //     try {
+    //         const { applicationNo, ...educationalDetails } = req.body;
+    //         // Validate applicationNo
+    //         if (!applicationNo) {
+    //             return res.status(400).json({ statusCode: 400, message: 'Application number is required' });
+    //         }
+    //         const existingApplicant = await UserService.findApplicationNo(applicationNo);
+    //         if (!existingApplicant) {
+    //             return res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
+    //         }
+    //         // Process each entry
+    //         const updatedEntries = [];
+    //         const newEntries = [];
+    //         for (const key in educationalDetails) {
+    //             const entry = educationalDetails[key];
+    //             if (entry && typeof entry === 'object') {
+    //                 const { courseOfStudy, ...restOfEntry } = entry;
+    //                 if (!courseOfStudy) {
+    //                     return res.status(400).json({ statusCode: 400, message: 'Course of study is required' });
+    //                 }
+    //                 const existingEntry = await EducationalDetailsService.findByApplicationNoAndCourseOfStudy(applicationNo, courseOfStudy);
+    //                 if (existingEntry) {
+    //                     // Update existing entry
+    //                     await EducationalDetailsService.update(existingEntry.id, {
+    //                         ...restOfEntry,
+    //                         applicationNo
+    //                     });
+    //                     updatedEntries.push({ ...existingEntry, ...restOfEntry });
+    //                 } else {
+    //                     // Create new entry
+    //                     const newEntry = await EducationalDetailsService.create({
+    //                         applicationNo,
+    //                         ...entry
+    //                     });
+    //                     newEntries.push(newEntry);
+    //                 }
+    //             }
+    //         }
+    //         return res.status(201).json({
+    //             message: 'Educational details processed',
+    //             data: { updatedEntries, newEntries }
+    //         });
+    //     } catch (error) {
+    //         console.error('Error creating or updating educational details:', error);
+    //         return res.status(500).json({ message: 'Error creating or updating educational details', error: error.message });
+    //     }
+    // }
     static createEducationalDetails(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -34,15 +82,23 @@ class EducationalDetailsController {
                 if (!applicationNo) {
                     return res.status(400).json({ statusCode: 400, message: 'Application number is required' });
                 }
+                // Check if the applicant exists
                 const existingApplicant = yield UserService_1.UserService.findApplicationNo(applicationNo);
                 if (!existingApplicant) {
                     return res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
                 }
-                // Process each entry
+                // Ensure educationalDetails are in the correct format
+                if (typeof educationalDetails !== 'object' || Array.isArray(educationalDetails)) {
+                    return res.status(400).json({ statusCode: 400, message: 'Invalid educationalDetails format' });
+                }
+                // Process and save each reference entry
+                const entries = Object.values(educationalDetails).filter(value => typeof value === 'object' && value !== null);
+                if (entries.length === 0) {
+                    return res.status(400).json({ statusCode: 400, message: 'No valid reference entries provided' });
+                }
                 const updatedEntries = [];
                 const newEntries = [];
-                for (const key in educationalDetails) {
-                    const entry = educationalDetails[key];
+                for (const entry of entries) {
                     if (entry && typeof entry === 'object') {
                         const { courseOfStudy } = entry, restOfEntry = __rest(entry, ["courseOfStudy"]);
                         if (!courseOfStudy) {
@@ -50,25 +106,25 @@ class EducationalDetailsController {
                         }
                         const existingEntry = yield EducationalDetailsService_1.EducationalDetailsService.findByApplicationNoAndCourseOfStudy(applicationNo, courseOfStudy);
                         if (existingEntry) {
-                            // Update existing entry
+                            // Update existing reference
                             yield EducationalDetailsService_1.EducationalDetailsService.update(existingEntry.id, Object.assign(Object.assign({}, restOfEntry), { applicationNo }));
                             updatedEntries.push(Object.assign(Object.assign({}, existingEntry), restOfEntry));
                         }
                         else {
-                            // Create new entry
-                            const newEntry = yield EducationalDetailsService_1.EducationalDetailsService.create(Object.assign({ applicationNo }, entry));
-                            newEntries.push(newEntry);
+                            // Create new reference
+                            const newReference = yield EducationalDetailsService_1.EducationalDetailsService.create(Object.assign({ applicationNo }, entry));
+                            newEntries.push(newReference);
                         }
                     }
                 }
                 return res.status(201).json({
-                    message: 'Educational details processed',
+                    message: 'Educational details processed successfully',
                     data: { updatedEntries, newEntries }
                 });
             }
             catch (error) {
-                console.error('Error creating or updating educational details:', error);
-                return res.status(500).json({ message: 'Error creating or updating educational details', error: error.message });
+                console.error('Error creating or updating Educational details:', error);
+                res.status(500).json({ message: 'Error creating or updating Educational details', error: error.message });
             }
         });
     }
