@@ -23,32 +23,32 @@ __decorate([
     __metadata("design:type", String)
 ], GeneralInfo.prototype, "applicationNo", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Boolean)
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
 ], GeneralInfo.prototype, "plateWaiting", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Boolean)
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
 ], GeneralInfo.prototype, "retailCashier", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Boolean)
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
 ], GeneralInfo.prototype, "barWork", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Boolean)
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
 ], GeneralInfo.prototype, "hospitality", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Boolean)
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
 ], GeneralInfo.prototype, "foodService", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Boolean)
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
 ], GeneralInfo.prototype, "barista", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Boolean)
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
 ], GeneralInfo.prototype, "supervising", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
@@ -59,16 +59,16 @@ __decorate([
     __metadata("design:type", String)
 ], GeneralInfo.prototype, "level2FoodHygieneCertificateUpload", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Boolean)
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
 ], GeneralInfo.prototype, "personalLicenseHolder", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], GeneralInfo.prototype, "personalLicenseCertificateUpload", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Boolean)
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
 ], GeneralInfo.prototype, "dbsDisclosureAndBarringService", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),

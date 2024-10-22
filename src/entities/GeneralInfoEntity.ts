@@ -8,26 +8,26 @@ export class GeneralInfo {
     @Column({ unique: true, nullable: true })
     applicationNo: string;
 
-    @Column()
-    plateWaiting: boolean;
+    @Column({ nullable: true })
+    plateWaiting: string;
 
-    @Column()
-    retailCashier: boolean;
+    @Column({ nullable: true })
+    retailCashier: string;
 
-    @Column()
-    barWork: boolean;
+    @Column({ nullable: true })
+    barWork: string;
 
-    @Column()
-    hospitality: boolean;
+    @Column({ nullable: true })
+    hospitality: string;
 
-    @Column()
-    foodService: boolean;
+    @Column({ nullable: true })
+    foodService: string;
 
-    @Column()
-    barista: boolean;
+    @Column({ nullable: true })
+    barista: string;
 
-    @Column()
-    supervising: boolean;
+    @Column({ nullable: true })
+    supervising: string;
 
     @Column({ nullable: true })
     level2FoodHygieneCertificate: string;
@@ -35,14 +35,14 @@ export class GeneralInfo {
     @Column({ nullable: true })
     level2FoodHygieneCertificateUpload: string;
 
-    @Column()
-    personalLicenseHolder: boolean;
+    @Column({ nullable: true })
+    personalLicenseHolder: string;
 
     @Column({ nullable: true })
     personalLicenseCertificateUpload: string;
 
-    @Column()
-    dbsDisclosureAndBarringService: boolean;
+    @Column({ nullable: true })
+    dbsDisclosureAndBarringService: string;
 
     @Column({ nullable: true })
     dbsCertificateUpload: string;

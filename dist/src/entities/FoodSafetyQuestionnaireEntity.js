@@ -32,7 +32,7 @@ __decorate([
 ], FoodSafetyQuestionnaire.prototype, "foodSafetyAct1990Description", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", Boolean)
+    __metadata("design:type", String)
 ], FoodSafetyQuestionnaire.prototype, "cleaningRequirement", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
@@ -51,7 +51,7 @@ __decorate([
     __metadata("design:type", String)
 ], FoodSafetyQuestionnaire.prototype, "temperatureDangerZone", void 0);
 __decorate([
-    (0, typeorm_1.Column)("simple-array"),
+    (0, typeorm_1.Column)("simple-array", { nullable: true }),
     __metadata("design:type", Array)
 ], FoodSafetyQuestionnaire.prototype, "handWashingScenarios", void 0);
 __decorate([
