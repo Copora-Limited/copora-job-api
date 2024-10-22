@@ -724,6 +724,25 @@ class UserController {
             }
         });
     }
+    // async getUsersByStatus(req: Request, res: Response) {
+    //     try {
+    //         // Extract the onboarding status from the request parameters
+    //         const statusParam = req.params.status;
+    //         // Validate the status against the OnboardingStatus enum
+    //         if (!Object.values(OnboardingStatus).includes(statusParam as OnboardingStatus)) {
+    //             return res.status(400).json({ message: 'Invalid status provided.' });
+    //         }
+    //         // Cast the parameter to the OnboardingStatus enum
+    //         const onboardingStatus = statusParam as OnboardingStatus;
+    //         console.log("onboardingStatus:", onboardingStatus);
+    //         // Fetch users by status and role "applicant"
+    //         const users = await userService.findByStatusAndRole(onboardingStatus, UserRole.Applicant);
+    //         // Return an empty array if no users are found
+    //         res.status(200).json(users.length > 0 ? users : []); 
+    //     } catch (error) {
+    //         res.status(400).send({ message: 'Error fetching users', error: error.message });
+    //     }
+    // }
     getUsersByStatus(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -736,8 +755,11 @@ class UserController {
                 // Cast the parameter to the OnboardingStatus enum
                 const onboardingStatus = statusParam;
                 console.log("onboardingStatus:", onboardingStatus);
-                // Fetch users by status and role "applicant"
-                const users = yield userService.findByStatusAndRole(onboardingStatus, constants_1.UserRole.Applicant);
+                // Extract role from the request body or set default to 'applicant'
+                const role = req.body.role || "applicant";
+                console.log("role:", role);
+                // Fetch users by status and role
+                const users = yield userService.findByStatusAndRole(onboardingStatus, role);
                 // Return an empty array if no users are found
                 res.status(200).json(users.length > 0 ? users : []);
             }
