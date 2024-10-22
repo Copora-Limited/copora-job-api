@@ -831,7 +831,7 @@ class UserController {
     } catch (error) {
         res.status(400).send({ message: 'Error fetching users', error: error.message });
     }
-}
+  }
 
   async getOnboardingStepByApplicationNo(req: Request, res: Response) {
     try {

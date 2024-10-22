@@ -50,8 +50,8 @@ router.get('/', authenticateToken, authorizeRoles('admin'), UserController.getAl
 /**
  * @swagger
  * /auth/users/status/{status}:
- *   get:
- *     summary: Retrieve users with optional onboarding status filter
+ *   post:  # Change to POST method since you're passing role in the request body
+ *     summary: Retrieve users with optional onboarding status and role filter
  *     tags: [Admin - Private Endpoints]
  *     parameters:
  *       - in: path
@@ -61,9 +61,26 @@ router.get('/', authenticateToken, authorizeRoles('admin'), UserController.getAl
  *         schema:
  *           type: string
  *           enum: [Invitation Sent, Onboarding not Completed, Onboarding Completed, Approved]
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               role:
+ *                 type: string
+ *                 description: Filter users by role (default is 'applicant')
+ *                 example: admin
  *     responses:
  *       200:
  *         description: A list of users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
  *       400:
  *         description: Invalid status provided
  *       404:
