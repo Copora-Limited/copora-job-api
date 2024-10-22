@@ -162,6 +162,19 @@ class UserService {
             return yield exports.userRepository.find({ where: { onboardingStatus } }); // Adjust based on your ORM/DB library
         });
     }
+    findByStatusAndRole(status, role) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // const userRepository = getRepository(User);
+            // Find users by onboarding status and role
+            const users = yield exports.userRepository.find({
+                where: {
+                    onboardingStatus: status,
+                    role: role,
+                },
+            });
+            return users;
+        });
+    }
     // Get user by ID
     getById(id) {
         return __awaiter(this, void 0, void 0, function* () {

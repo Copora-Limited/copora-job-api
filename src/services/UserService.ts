@@ -163,6 +163,20 @@ export class UserService {
       return await userRepository.find({ where: { onboardingStatus } }); // Adjust based on your ORM/DB library
   }
 
+  async findByStatusAndRole(status: OnboardingStatus, role: UserRole) {
+      // const userRepository = getRepository(User);
+
+      // Find users by onboarding status and role
+      const users = await userRepository.find({
+          where: {
+              onboardingStatus: status,
+              role: role,
+          },
+      });
+
+      return users;
+  }
+
   // Get user by ID
   async getById(id: number): Promise<User | null> {
     return userRepository.findOneBy({ id });

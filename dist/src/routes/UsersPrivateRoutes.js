@@ -1,47 +1,19 @@
 "use strict";
-var __awaiter =
-  (this && this.__awaiter) ||
-  function (thisArg, _arguments, P, generator) {
-    function adopt(value) {
-      return value instanceof P
-        ? value
-        : new P(function (resolve) {
-            resolve(value);
-          });
-    }
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
-      function fulfilled(value) {
-        try {
-          step(generator.next(value));
-        } catch (e) {
-          reject(e);
-        }
-      }
-      function rejected(value) {
-        try {
-          step(generator["throw"](value));
-        } catch (e) {
-          reject(e);
-        }
-      }
-      function step(result) {
-        result.done
-          ? resolve(result.value)
-          : adopt(result.value).then(fulfilled, rejected);
-      }
-      step((generator = generator.apply(thisArg, _arguments || [])).next());
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
-  };
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod };
-  };
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const UserController_1 = __importDefault(
-  require("../controllers/UserController")
-);
+const UserController_1 = __importDefault(require("../controllers/UserController"));
 // import multer from '../multerConfig'; // Import multer configuration
 const multerConfig_1 = __importDefault(require("../multerConfig")); // Import multer configuration
 const AuthMiddleware_1 = require("../middlewares/AuthMiddleware"); // Import the authentication middleware
@@ -68,11 +40,7 @@ const router = (0, express_1.Router)();
  *     security:
  *       - bearerAuth: []  # Apply bearerAuth security scheme
  */
-router.get(
-  "/:id",
-  AuthMiddleware_1.authenticateToken,
-  UserController_1.default.getById
-);
+router.get('/:id', AuthMiddleware_1.authenticateToken, UserController_1.default.getById);
 /**
  * @swagger
  * /auth/users:
@@ -86,12 +54,7 @@ router.get(
  *     security:
  *       - bearerAuth: []  # Apply bearerAuth security scheme
  */
-router.get(
-  "/",
-  AuthMiddleware_1.authenticateToken,
-  (0, AuthMiddleware_1.authorizeRoles)("admin"),
-  UserController_1.default.getAll
-);
+router.get('/', AuthMiddleware_1.authenticateToken, (0, AuthMiddleware_1.authorizeRoles)('admin'), UserController_1.default.getAll);
 /**
  * @swagger
  * /auth/users/status/{status}:
@@ -116,12 +79,7 @@ router.get(
  *     security:
  *       - bearerAuth: []  # Apply bearerAuth security scheme
  */
-router.get(
-  "/status/:status",
-  AuthMiddleware_1.authenticateToken,
-  (0, AuthMiddleware_1.authorizeRoles)("admin"),
-  UserController_1.default.getUsersByStatus
-);
+router.get('/status/:status', AuthMiddleware_1.authenticateToken, (0, AuthMiddleware_1.authorizeRoles)('admin'), UserController_1.default.getUsersByStatus);
 /**
  * @swagger
  * /auth/users/register:
@@ -187,7 +145,7 @@ router.get(
  *       - bearerAuth: []  # Apply bearerAuth security scheme
  */
 // router.post('/register', authenticateToken, authorizeRoles('admin'), UserController.register);
-router.post("/register", UserController_1.default.register);
+router.post('/register', UserController_1.default.register);
 /**
  * @swagger
  * /auth/users/{id}:
@@ -209,11 +167,7 @@ router.post("/register", UserController_1.default.register);
  *     security:
  *       - bearerAuth: []  # Apply bearerAuth security scheme
  */
-router.delete(
-  "/:id",
-  AuthMiddleware_1.authenticateToken,
-  UserController_1.default.delete
-);
+router.delete('/:id', AuthMiddleware_1.authenticateToken, UserController_1.default.delete);
 /**
  * @swagger
  * /auth/users/{id}:
@@ -293,11 +247,7 @@ router.delete(
  *                 error:
  *                   type: string
  */
-router.put(
-  "/:id",
-  AuthMiddleware_1.authenticateToken,
-  UserController_1.default.update
-);
+router.put('/:id', AuthMiddleware_1.authenticateToken, UserController_1.default.update);
 /**
  * @swagger
  * /auth/users/profile/{id}:
@@ -370,24 +320,19 @@ router.put(
  *     security:
  *       - bearerAuth: []  # Apply bearerAuth security scheme
  */
-router.put(
-  "/profile/:id",
-  AuthMiddleware_1.authenticateToken,
-  multerConfig_1.default.single("profilePicture"),
-  (req, res) =>
-    __awaiter(void 0, void 0, void 0, function* () {
-      try {
+router.put('/profile/:id', AuthMiddleware_1.authenticateToken, multerConfig_1.default.single('profilePicture'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
         if (req.file) {
-          console.log("Uploaded file:", req.file);
+            console.log('Uploaded file:', req.file);
         }
-        console.log("Form data:", req.body);
+        console.log('Form data:', req.body);
         yield UserController_1.default.updateProfile(req, res);
-      } catch (error) {
-        console.error("Error during profile update:", error);
-        res.status(500).json({ message: "Server error", error: error.message });
-      }
-    })
-);
+    }
+    catch (error) {
+        console.error('Error during profile update:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}));
 /**
  * @swagger
  * /auth/users/{id}/role:
@@ -473,12 +418,7 @@ router.put(
  *                   type: string
  *                   example: Internal Server Error
  */
-router.patch(
-  "/:id/role",
-  AuthMiddleware_1.authenticateToken,
-  (0, AuthMiddleware_1.authorizeRoles)("admin"),
-  UserController_1.default.changeUserRole
-);
+router.patch('/:id/role', AuthMiddleware_1.authenticateToken, (0, AuthMiddleware_1.authorizeRoles)('admin'), UserController_1.default.changeUserRole);
 /**
  * @swagger
  * /auth/users/upload-users:
@@ -552,12 +492,7 @@ router.patch(
  *     security:
  *       - bearerAuth: []  # Apply bearerAuth security scheme
  */
-router.post(
-  "/upload-users",
-  AuthMiddleware_1.authenticateToken,
-  (0, AuthMiddleware_1.authorizeRoles)("admin"),
-  UserController_1.default.bulkUploadUsers
-);
+router.post('/upload-users', AuthMiddleware_1.authenticateToken, (0, AuthMiddleware_1.authorizeRoles)('admin'), UserController_1.default.bulkUploadUsers);
 /**
  * @swagger
  * /auth/users/update-onboarding-step:
@@ -625,86 +560,80 @@ router.post(
  *                   type: string
  *                   example: "Server error"
  */
-router.patch(
-  "/update-onboarding-step",
-  UserController_1.default.updateOnboardingStep
-);
+router.patch('/update-onboarding-step', UserController_1.default.updateOnboardingStep);
 /**
- * @swagger
- * /auth/users/update-onboarding-status:
- *   patch:
- *     summary: Update the onboarding status for a user.
- *     description: This endpoint allows updating the onboarding status for a user based on their application number.
- *     tags: [Admin - Private Endpoints]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - applicationNo
- *               - onboardingStatus
- *             properties:
- *               applicationNo:
- *                 type: string
- *                 description: The application number of the user.
- *                 example: "APP123456"
- *               onboardingStatus:
- *                 type: string
- *                 description: The onboarding status to be updated.
- *                 enum:
- *                   - Invitation Sent
- *                   - Onboarding not Completed
- *                   - Onboarding Completed
- *                   - Approved
- *                 example: "Onboarding Completed"
- *     responses:
- *       200:
- *         description: Successfully updated the onboarding status.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "Onboarding status updated successfully"
- *       400:
- *         description: Missing required parameters (applicationNo or onboardingStatus).
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "Application number and onboarding status are required"
- *       404:
- *         description: User not found.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "User not found"
- *       500:
- *         description: Server error.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "Server error"
- */
-router.patch(
-  "/update-onboarding-status",
-  UserController_1.default.updateOnboardingStatus
-);
+* @swagger
+* /auth/users/update-onboarding-status:
+*   patch:
+*     summary: Update the onboarding status for a user.
+*     description: This endpoint allows updating the onboarding status for a user based on their application number.
+*     tags: [Admin - Private Endpoints]
+*     requestBody:
+*       required: true
+*       content:
+*         application/json:
+*           schema:
+*             type: object
+*             required:
+*               - applicationNo
+*               - onboardingStatus
+*             properties:
+*               applicationNo:
+*                 type: string
+*                 description: The application number of the user.
+*                 example: "APP123456"
+*               onboardingStatus:
+*                 type: string
+*                 description: The onboarding status to be updated.
+*                 enum:
+*                   - Invitation Sent
+*                   - Onboarding not Completed
+*                   - Onboarding Completed
+*                   - Approved
+*                 example: "Onboarding Completed"
+*     responses:
+*       200:
+*         description: Successfully updated the onboarding status.
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 message:
+*                   type: string
+*                   example: "Onboarding status updated successfully"
+*       400:
+*         description: Missing required parameters (applicationNo or onboardingStatus).
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 message:
+*                   type: string
+*                   example: "Application number and onboarding status are required"
+*       404:
+*         description: User not found.
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 message:
+*                   type: string
+*                   example: "User not found"
+*       500:
+*         description: Server error.
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 message:
+*                   type: string
+*                   example: "Server error"
+*/
+router.patch('/update-onboarding-status', UserController_1.default.updateOnboardingStatus);
 /**
  * @swagger
  * /auth/users/onboarding-step/{applicationNo}:
@@ -754,8 +683,5 @@ router.patch(
  *                   type: string
  *                   example: "Error details"
  */
-router.get(
-  "/onboarding-step/:applicationNo",
-  UserController_1.default.getOnboardingStepByApplicationNo
-);
+router.get('/onboarding-step/:applicationNo', UserController_1.default.getOnboardingStepByApplicationNo);
 exports.default = router;
