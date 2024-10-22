@@ -211,7 +211,6 @@ router.delete('/:id', authenticateToken, UserController.delete);
  *                   type: string
  *                   example: User updated successfully
  *                 data:
- *                   $ref: '#/components/schemas/User'
  *       400:
  *         description: Invalid user ID or bad request
  *         content:
