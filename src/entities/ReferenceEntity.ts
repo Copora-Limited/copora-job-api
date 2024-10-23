@@ -25,9 +25,6 @@ export class Reference {
 
     // New fields
     @Column()
-    companyName: string;
-
-    @Column()
     jobTitle: string;
 
     @Column({ type: 'date', nullable: true  })

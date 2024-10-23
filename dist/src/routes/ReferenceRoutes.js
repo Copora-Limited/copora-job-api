@@ -101,9 +101,6 @@ const router = (0, express_1.Router)();
  *                   address:
  *                     type: string
  *                     example: "123 Main St, Anytown, AN"
- *                   companyName:
- *                     type: string
- *                     example: "Tech Corp"
  *                   jobTitle:
  *                     type: string
  *                     example: "Software Engineer"
@@ -136,9 +133,6 @@ const router = (0, express_1.Router)();
  *                   address:
  *                     type: string
  *                     example: "456 Secondary St, Othertown, OT"
- *                   companyName:
- *                     type: string
- *                     example: "Innovate Solutions"
  *                   jobTitle:
  *                     type: string
  *                     example: "Project Manager"
@@ -171,9 +165,6 @@ const router = (0, express_1.Router)();
  *                   address:
  *                     type: string
  *                     example: "789 Tertiary St, New City, NC"
- *                   companyName:
- *                     type: string
- *                     example: "NextGen Inc."
  *                   jobTitle:
  *                     type: string
  *                     example: "Senior Developer"
