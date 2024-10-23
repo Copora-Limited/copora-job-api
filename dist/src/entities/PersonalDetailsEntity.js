@@ -24,10 +24,6 @@ __decorate([
 ], PersonalDetails.prototype, "applicationNo", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], PersonalDetails.prototype, "title", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
 ], PersonalDetails.prototype, "dateOfBirth", void 0);
 __decorate([

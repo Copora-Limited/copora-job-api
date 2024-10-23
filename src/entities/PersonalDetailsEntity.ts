@@ -5,26 +5,8 @@ export class PersonalDetails {
     @PrimaryGeneratedColumn()
     id: number;
 
-    // @ManyToOne(() => Application)
-    // applicationNo: Application;
-
     @Column({ unique: true })
     applicationNo: string;
-
-    @Column()
-    title: string;
-
-    // @Column()
-    // firstname: string;
-
-    // @Column()
-    // lastname: string;
-
-    // @Column()
-    // middlename: string;
-
-    // @Column()
-    // email: string;
 
     @Column()
     dateOfBirth: Date;
