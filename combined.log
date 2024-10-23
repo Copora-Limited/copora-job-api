@@ -81,3 +81,15 @@
 2024-10-22T14:44:02.422Z [[32minfo[39m]: HTTP GET /api/employment-types
 2024-10-22T15:06:54.764Z [[32minfo[39m]: HTTP GET /api/groups
 2024-10-22T16:23:49.180Z [[32minfo[39m]: HTTP GET /auth/users/status/Invitation%20Sent?role=admin
+2024-10-23T16:48:40.913Z [[32minfo[39m]: HTTP GET /api-docs/
+2024-10-23T16:48:40.976Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui.css
+2024-10-23T16:48:40.980Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-10-23T16:48:40.988Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-10-23T16:48:40.994Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-10-23T16:48:41.686Z [[32minfo[39m]: HTTP GET /api-docs/favicon-32x32.png
+2024-10-23T16:50:05.122Z [[32minfo[39m]: HTTP GET /api-docs/
+2024-10-23T16:50:05.148Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui.css
+2024-10-23T16:50:05.160Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-10-23T16:50:05.165Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-10-23T16:50:05.174Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-10-23T16:50:05.678Z [[32minfo[39m]: HTTP GET /api-docs/favicon-32x32.png

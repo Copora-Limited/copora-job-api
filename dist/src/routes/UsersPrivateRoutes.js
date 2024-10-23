@@ -85,7 +85,6 @@ router.get('/', AuthMiddleware_1.authenticateToken, (0, AuthMiddleware_1.authori
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/User'
  *       400:
  *         description: Invalid status or role provided
  *       404:

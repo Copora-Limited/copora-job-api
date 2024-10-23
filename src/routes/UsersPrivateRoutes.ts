@@ -77,7 +77,6 @@ router.get('/', authenticateToken, authorizeRoles('admin'), UserController.getAl
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/User'
  *       400:
  *         description: Invalid status or role provided
  *       404:
