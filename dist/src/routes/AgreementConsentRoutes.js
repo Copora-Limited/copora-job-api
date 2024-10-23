@@ -25,12 +25,6 @@ const router = (0, express_1.Router)();
  *               applicationNo:
  *                 type: string
  *                 example: "APP12345"
- *               employmentStatusDeclaration:
- *                 type: string
- *                 example: "Employed"
- *               declarationAgreement:
- *                 type: string
- *                 example: "I agree to the terms and conditions."
  *               userConsent:
  *                 type: string
  *                 example: "Yes"

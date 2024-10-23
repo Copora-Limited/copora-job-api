@@ -23,15 +23,7 @@ __decorate([
     __metadata("design:type", String)
 ], AgreementConsent.prototype, "applicationNo", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], AgreementConsent.prototype, "employmentStatusDeclaration", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], AgreementConsent.prototype, "declarationAgreement", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], AgreementConsent.prototype, "userConsent", void 0);
 exports.AgreementConsent = AgreementConsent = __decorate([

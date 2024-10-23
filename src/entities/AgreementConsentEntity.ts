@@ -12,12 +12,7 @@ export class AgreementConsent {
     @Column({ unique: true })
     applicationNo: string;
 
-    @Column()
-    employmentStatusDeclaration: string;
 
-    @Column()
-    declarationAgreement: string;
-
-    @Column()
+    @Column({ nullable: true})
     userConsent: string;
 }
