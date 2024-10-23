@@ -83,43 +83,111 @@ const router = (0, express_1.Router)();
  *               applicationNo:
  *                 type: string
  *                 example: "APP-3E5E1BE8"
- *               references:
- *                 type: array
- *                 items:
- *                   type: object
- *                   properties:
- *                     employerName:
- *                       type: string
- *                       example: "Tech Corp"
- *                     contactName:
- *                       type: string
- *                       example: "John Doe"
- *                     phone:
- *                       type: string
- *                       example: "+1234567890"
- *                     email:
- *                       type: string
- *                       example: "john.doe@example.com"
- *                     address:
- *                       type: string
- *                       example: "123 Main St, Anytown, AN"
- *                     companyName:
- *                       type: string
- *                       example: "Tech Corp"
- *                     jobTitle:
- *                       type: string
- *                       example: "Software Engineer"
- *                     startDate:
- *                       type: string
- *                       format: date
- *                       example: "2020-01-01"
- *                     endDate:
- *                       type: string
- *                       format: date
- *                       example: "2022-01-01"
- *                     responsibilities:
- *                       type: string
- *                       example: "Developed and maintained web applications"
+ *               0:
+ *                 type: object
+ *                 properties:
+ *                   employerName:
+ *                     type: string
+ *                     example: "Tech Corp"
+ *                   contactName:
+ *                     type: string
+ *                     example: "John Doe"
+ *                   phone:
+ *                     type: string
+ *                     example: "+1234567890"
+ *                   email:
+ *                     type: string
+ *                     example: "john.doe@example.com"
+ *                   address:
+ *                     type: string
+ *                     example: "123 Main St, Anytown, AN"
+ *                   companyName:
+ *                     type: string
+ *                     example: "Tech Corp"
+ *                   jobTitle:
+ *                     type: string
+ *                     example: "Software Engineer"
+ *                   startDate:
+ *                     type: string
+ *                     format: date
+ *                     example: "2020-01-01"
+ *                   endDate:
+ *                     type: string
+ *                     format: date
+ *                     example: "2022-01-01"
+ *                   responsibilities:
+ *                     type: string
+ *                     example: "Developed and maintained web applications"
+ *               1:
+ *                 type: object
+ *                 properties:
+ *                   employerName:
+ *                     type: string
+ *                     example: "Innovate Solutions"
+ *                   contactName:
+ *                     type: string
+ *                     example: "Jane Smith"
+ *                   phone:
+ *                     type: string
+ *                     example: "+0987654321"
+ *                   email:
+ *                     type: string
+ *                     example: "jane.smith@example.com"
+ *                   address:
+ *                     type: string
+ *                     example: "456 Secondary St, Othertown, OT"
+ *                   companyName:
+ *                     type: string
+ *                     example: "Innovate Solutions"
+ *                   jobTitle:
+ *                     type: string
+ *                     example: "Project Manager"
+ *                   startDate:
+ *                     type: string
+ *                     format: date
+ *                     example: "2018-05-15"
+ *                   endDate:
+ *                     type: string
+ *                     format: date
+ *                     example: "2020-10-01"
+ *                   responsibilities:
+ *                     type: string
+ *                     example: "Led project teams and coordinated development"
+ *               2:
+ *                 type: object
+ *                 properties:
+ *                   employerName:
+ *                     type: string
+ *                     example: "NextGen Inc."
+ *                   contactName:
+ *                     type: string
+ *                     example: "Alice Johnson"
+ *                   phone:
+ *                     type: string
+ *                     example: "+1122334455"
+ *                   email:
+ *                     type: string
+ *                     example: "alice.johnson@example.com"
+ *                   address:
+ *                     type: string
+ *                     example: "789 Tertiary St, New City, NC"
+ *                   companyName:
+ *                     type: string
+ *                     example: "NextGen Inc."
+ *                   jobTitle:
+ *                     type: string
+ *                     example: "Senior Developer"
+ *                   startDate:
+ *                     type: string
+ *                     format: date
+ *                     example: "2019-03-01"
+ *                   endDate:
+ *                     type: string
+ *                     format: date
+ *                     example: "2023-07-30"
+ *                   responsibilities:
+ *                     type: string
+ *                     example: "Architected and implemented new system features"
  *     responses:
  *       201:
  *         description: Reference records created or updated successfully
