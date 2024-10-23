@@ -20,6 +20,23 @@ export class Reference {
     @Column()
     email: string;
 
-    @Column()
+    @Column({ nullable: true })
     address: string;
+
+    // New fields
+    @Column()
+    companyName: string;
+
+    @Column()
+    jobTitle: string;
+
+    @Column({ type: 'date', nullable: true  })
+    startDate: Date;
+
+    @Column({ type: 'date', nullable: true })
+    endDate: Date;
+
+    @Column({ type: 'text', nullable: true })
+    responsibilities: string;
+
 }

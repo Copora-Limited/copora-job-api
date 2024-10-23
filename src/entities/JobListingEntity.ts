@@ -5,22 +5,22 @@ export class JobListing {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column()
   applicationNo: string;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ nullable: true })
   jobTitle: string;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ nullable: true })
   employmentType: string;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ nullable: true })
   location: string;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ nullable: true })
   group: string;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ nullable: true })
   createdBy: string;
 
   @Column({ nullable: true, type: 'timestamp' })

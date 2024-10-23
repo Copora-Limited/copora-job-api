@@ -19,27 +19,27 @@ __decorate([
     __metadata("design:type", Number)
 ], JobListing.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', nullable: true }),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], JobListing.prototype, "applicationNo", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], JobListing.prototype, "jobTitle", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], JobListing.prototype, "employmentType", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], JobListing.prototype, "location", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], JobListing.prototype, "group", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], JobListing.prototype, "createdBy", void 0);
 __decorate([

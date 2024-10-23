@@ -39,9 +39,29 @@ __decorate([
     __metadata("design:type", String)
 ], Reference.prototype, "email", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Reference.prototype, "address", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Reference.prototype, "companyName", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Reference.prototype, "jobTitle", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'date', nullable: true }),
+    __metadata("design:type", Date)
+], Reference.prototype, "startDate", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'date', nullable: true }),
+    __metadata("design:type", Date)
+], Reference.prototype, "endDate", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'text', nullable: true }),
+    __metadata("design:type", String)
+], Reference.prototype, "responsibilities", void 0);
 exports.Reference = Reference = __decorate([
     (0, typeorm_1.Entity)()
 ], Reference);
