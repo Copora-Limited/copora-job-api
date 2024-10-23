@@ -88,60 +88,43 @@ const router = Router();
  *               applicationNo:
  *                 type: string
  *                 example: "APP-3E5E1BE8"
- *               0:
- *                 type: object
- *                 properties:
- *                   employerName:
- *                     type: string
- *                     example: "Tech Corp"
- *                   contactName:
- *                     type: string
- *                     example: "John Doe"
- *                   phone:
- *                     type: string
- *                     example: "+1234567890"
- *                   email:
- *                     type: string
- *                     example: "john.doe@example.com"
- *                   address:
- *                     type: string
- *                     example: "123 Main St, Anytown, AN"
- *               1:
- *                 type: object
- *                 properties:
- *                   employerName:
- *                     type: string
- *                     example: "Innovate Solutions"
- *                   contactName:
- *                     type: string
- *                     example: "Jane Smith"
- *                   phone:
- *                     type: string
- *                     example: "+0987654321"
- *                   email:
- *                     type: string
- *                     example: "jane.smith@example.com"
- *                   address:
- *                     type: string
- *                     example: "456 Secondary St, Othertown, OT"
- *               2:
- *                 type: object
- *                 properties:
- *                   employerName:
- *                     type: string
- *                     example: "NextGen Inc."
- *                   contactName:
- *                     type: string
- *                     example: "Alice Johnson"
- *                   phone:
- *                     type: string
- *                     example: "+1122334455"
- *                   email:
- *                     type: string
- *                     example: "alice.johnson@example.com"
- *                   address:
- *                     type: string
- *                     example: "789 Tertiary St, New City, NC"
+ *               references:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     employerName:
+ *                       type: string
+ *                       example: "Tech Corp"
+ *                     contactName:
+ *                       type: string
+ *                       example: "John Doe"
+ *                     phone:
+ *                       type: string
+ *                       example: "+1234567890"
+ *                     email:
+ *                       type: string
+ *                       example: "john.doe@example.com"
+ *                     address:
+ *                       type: string
+ *                       example: "123 Main St, Anytown, AN"
+ *                     companyName:
+ *                       type: string
+ *                       example: "Tech Corp"
+ *                     jobTitle:
+ *                       type: string
+ *                       example: "Software Engineer"
+ *                     startDate:
+ *                       type: string
+ *                       format: date
+ *                       example: "2020-01-01"
+ *                     endDate:
+ *                       type: string
+ *                       format: date
+ *                       example: "2022-01-01"
+ *                     responsibilities:
+ *                       type: string
+ *                       example: "Developed and maintained web applications"
  *     responses:
  *       201:
  *         description: Reference records created or updated successfully
@@ -149,6 +132,7 @@ const router = Router();
  *         description: Bad request
  */
 router.post('/', ReferenceController.createOrUpdateReferences);
+
 
 /**
  * @swagger
