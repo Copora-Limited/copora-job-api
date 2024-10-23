@@ -112,11 +112,11 @@ class ReferenceController {
         });
     }
     // Delete Reference by applicationNo
-    static deleteReferenceByNo(req, res) {
+    static deleteReferenceByNoAndId(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { applicationNo } = req.params;
-                const message = yield ReferenceService_1.ReferenceService.deleteByApplicationNo(applicationNo);
+                const { applicationNo, id } = req.params; // Extract applicationNo and id from request params
+                const message = yield ReferenceService_1.ReferenceService.deleteByApplicationNoAndId(applicationNo, parseInt(id));
                 res.status(200).send({ message });
             }
             catch (error) {

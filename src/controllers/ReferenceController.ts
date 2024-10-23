@@ -104,13 +104,14 @@ export class ReferenceController {
     }
 
     // Delete Reference by applicationNo
-    static async deleteReferenceByNo(req: Request, res: Response) {
+    static async deleteReferenceByNoAndId(req: Request, res: Response) {
         try {
-            const { applicationNo } = req.params;
-            const message = await ReferenceService.deleteByApplicationNo(applicationNo);
+            const { applicationNo, id } = req.params;  // Extract applicationNo and id from request params
+            const message = await ReferenceService.deleteByApplicationNoAndId(applicationNo, parseInt(id));
             res.status(200).send({ message });
         } catch (error) {
             res.status(404).send({ message: error.message });
         }
     }
+    
 }

@@ -89,11 +89,11 @@ class EducationalDetailsService {
             }
         });
     }
-    // Delete EducationalDetails by applicationNo
-    static deleteEducationalDetailsByApplicationNo(applicationNo) {
+    // Delete EducationalDetails by applicationNo and id
+    static deleteEducationalDetailsByApplicationNoAndId(applicationNo, id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const result = yield educationalDetailsRepository.delete({ applicationNo });
+                const result = yield educationalDetailsRepository.delete({ applicationNo, id });
                 if (result.affected === 0) {
                     throw new Error('Educational Details not found');
                 }

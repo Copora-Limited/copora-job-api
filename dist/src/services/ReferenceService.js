@@ -55,9 +55,9 @@ class ReferenceService {
         });
     }
     // Delete Reference by applicationNo
-    static deleteByApplicationNo(applicationNo) {
+    static deleteByApplicationNoAndId(applicationNo, id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield referenceRepository.delete({ applicationNo });
+            const result = yield referenceRepository.delete({ applicationNo, id });
             if (result.affected === 0) {
                 throw new Error('Reference not found');
             }

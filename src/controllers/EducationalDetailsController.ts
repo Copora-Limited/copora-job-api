@@ -166,13 +166,14 @@ export class EducationalDetailsController {
     }
 
     // Delete Educational Details by applicationNo
-    static async deleteEducationalDetailsByNo(req: Request, res: Response) {
+    static async deleteEducationalDetailsByNoAndId(req: Request, res: Response) {
         try {
-            const { applicationNo } = req.params;
-            const message = await EducationalDetailsService.deleteEducationalDetailsByApplicationNo(applicationNo);
+            const { applicationNo, id } = req.params;  // Extract applicationNo and id from request params
+            const message = await EducationalDetailsService.deleteEducationalDetailsByApplicationNoAndId(applicationNo, parseInt(id));
             res.status(200).send({ message });
         } catch (error) {
             res.status(404).send({ message: error.message });
         }
     }
+    
 }

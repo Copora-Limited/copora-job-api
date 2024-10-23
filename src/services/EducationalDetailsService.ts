@@ -74,10 +74,10 @@ export class EducationalDetailsService {
         }
     }
 
-    // Delete EducationalDetails by applicationNo
-    static async deleteEducationalDetailsByApplicationNo(applicationNo: string): Promise<string> {
+    // Delete EducationalDetails by applicationNo and id
+    static async deleteEducationalDetailsByApplicationNoAndId(applicationNo: string, id: number): Promise<string> {
         try {
-            const result = await educationalDetailsRepository.delete({ applicationNo });
+            const result = await educationalDetailsRepository.delete({ applicationNo, id });
             if (result.affected === 0) {
                 throw new Error('Educational Details not found');
             }
@@ -86,4 +86,5 @@ export class EducationalDetailsService {
             throw new Error(`Error deleting educational details: ${error.message}`);
         }
     }
+
 }

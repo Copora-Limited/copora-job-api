@@ -161,11 +161,11 @@ class EducationalDetailsController {
         });
     }
     // Delete Educational Details by applicationNo
-    static deleteEducationalDetailsByNo(req, res) {
+    static deleteEducationalDetailsByNoAndId(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { applicationNo } = req.params;
-                const message = yield EducationalDetailsService_1.EducationalDetailsService.deleteEducationalDetailsByApplicationNo(applicationNo);
+                const { applicationNo, id } = req.params; // Extract applicationNo and id from request params
+                const message = yield EducationalDetailsService_1.EducationalDetailsService.deleteEducationalDetailsByApplicationNoAndId(applicationNo, parseInt(id));
                 res.status(200).send({ message });
             }
             catch (error) {

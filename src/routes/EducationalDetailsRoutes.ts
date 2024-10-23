@@ -174,9 +174,9 @@ router.put('/:applicationNo', EducationalDetailsController.updateEducationalDeta
 
 /**
  * @swagger
- * /educational-details/{applicationNo}:
+ * /educational-details/{applicationNo}/{id}:
  *   delete:
- *     summary: Delete Educational Details by Application Number
+ *     summary: Delete Educational Details by Application Number and ID
  *     tags: [EducationalDetails]
  *     parameters:
  *       - in: path
@@ -185,12 +185,19 @@ router.put('/:applicationNo', EducationalDetailsController.updateEducationalDeta
  *           type: string
  *         required: true
  *         description: The application number
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: The ID of the educational details record
  *     responses:
  *       200:
  *         description: Educational Details deleted successfully
  *       404:
  *         description: Educational Details not found
  */
-router.delete('/:applicationNo', EducationalDetailsController.deleteEducationalDetailsByNo);
+router.delete('/:applicationNo/:id', EducationalDetailsController.deleteEducationalDetailsByNoAndId);
+
 
 export default router;

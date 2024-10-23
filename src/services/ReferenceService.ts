@@ -41,13 +41,14 @@ export class ReferenceService {
     }
 
     // Delete Reference by applicationNo
-    static async deleteByApplicationNo(applicationNo: string): Promise<string> {
-        const result = await referenceRepository.delete({ applicationNo });
+    static async deleteByApplicationNoAndId(applicationNo: string, id: number): Promise<string> {
+        const result = await referenceRepository.delete({ applicationNo, id });
         if (result.affected === 0) {
             throw new Error('Reference not found');
         }
         return 'Reference deleted';
     }
+    
 
     static async findByApplicationNoAndPhone(applicationNo: string, phone: string): Promise<Reference | null> {
         try {
