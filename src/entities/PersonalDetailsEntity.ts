@@ -8,16 +8,22 @@ export class PersonalDetails {
     @Column({ unique: true })
     applicationNo: string;
 
-    @Column()
+    @Column({nullable: true})
+    title: string;
+
+    @Column({nullable: true})
     dateOfBirth: Date;
 
-    @Column()
+    @Column({nullable: true})
     gender: string;
 
-    @Column()
+    @Column({nullable: true})
     nationalInsuranceNumber: string;
 
-    @Column()
+    @Column({nullable: true})
     passportPhoto: string;
+
+    @Column({nullable: true, default: false})
+    attempted: boolean;
     
 }

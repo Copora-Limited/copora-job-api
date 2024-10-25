@@ -42,6 +42,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], EmploymentDetails.prototype, "address", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, default: false }),
+    __metadata("design:type", Boolean)
+], EmploymentDetails.prototype, "attempted", void 0);
 exports.EmploymentDetails = EmploymentDetails = __decorate([
     (0, typeorm_1.Entity)()
 ], EmploymentDetails);

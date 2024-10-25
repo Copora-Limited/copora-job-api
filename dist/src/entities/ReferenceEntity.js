@@ -43,7 +43,7 @@ __decorate([
     __metadata("design:type", String)
 ], Reference.prototype, "address", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Reference.prototype, "jobTitle", void 0);
 __decorate([
@@ -58,6 +58,10 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'text', nullable: true }),
     __metadata("design:type", String)
 ], Reference.prototype, "responsibilities", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, default: false }),
+    __metadata("design:type", Boolean)
+], Reference.prototype, "attempted", void 0);
 exports.Reference = Reference = __decorate([
     (0, typeorm_1.Entity)()
 ], Reference);

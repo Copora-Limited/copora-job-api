@@ -67,6 +67,24 @@ export class ApplicationController {
     }
   }
 
+  // Controller
+  static async getApplicantAttemptedData(req: Request, res: Response) {
+    try {
+        const result = await ApplicationService.getApplicantAttemptedData(req.params.applicationNo);
+        
+        // Check if the user attempted status is available
+        // const userAttemptedStatus = result.find(item => item.hasOwnProperty('user'));
+        // if (!userAttemptedStatus || !userAttemptedStatus.user) {
+        //     return res.status(404).json({ message: 'Applicant not found' });
+        // }
+        
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+  }
+
+
   static async getAllApplicants(req: Request, res: Response) {
     try {
       const result = await ApplicationService.getAllApplicants();

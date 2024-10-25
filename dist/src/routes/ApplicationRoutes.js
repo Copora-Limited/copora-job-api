@@ -193,6 +193,59 @@ router.get('/download/csv', ApplicationController_1.ApplicationController.downlo
 router.get('/:applicationNo', ApplicationController_1.ApplicationController.getApplicantData); // Fetch single applicant data
 /**
  * @swagger
+ * /applicant/attempts/{applicationNo}:
+ *   get:
+ *     summary: Retrieve applicant attempted data by application number
+ *     tags: [Applicants]
+ *     parameters:
+ *       - name: applicationNo
+ *         in: path
+ *         required: true
+ *         description: The application number of the applicant to retrieve.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved applicant data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   user:
+ *                     type: boolean
+ *                   personalDetails:
+ *                     type: boolean
+ *                   contactDetails:
+ *                     type: boolean
+ *                   generalInfo:
+ *                     type: boolean
+ *                   nextOfKin:
+ *                     type: boolean
+ *                   professionalDetails:
+ *                     type: boolean
+ *                   educationalDetails:
+ *                     type: boolean
+ *                   healthAndDisability:
+ *                     type: boolean
+ *                   foodSafetyQuestionnaire:
+ *                     type: boolean
+ *                   bankDetails:
+ *                     type: boolean
+ *                   agreementConsent:
+ *                     type: boolean
+ *                   reference:
+ *                     type: boolean
+ *       404:
+ *         description: Applicant not found
+ *       500:
+ *         description: Server error
+ */
+router.get('/attempts/:applicationNo', ApplicationController_1.ApplicationController.getApplicantAttemptedData); // Fetch single applicant data
+/**
+ * @swagger
  * /applicant/download/{applicationNo}:
  *   get:
  *     summary: Download applicant data as CSV

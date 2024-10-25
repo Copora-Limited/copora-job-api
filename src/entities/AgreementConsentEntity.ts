@@ -15,4 +15,7 @@ export class AgreementConsent {
 
     @Column({ nullable: true})
     userConsent: string;
+
+    @Column({nullable: true, default: false})
+    attempted: boolean;
 }

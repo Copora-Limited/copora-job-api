@@ -23,21 +23,29 @@ __decorate([
     __metadata("design:type", String)
 ], PersonalDetails.prototype, "applicationNo", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], PersonalDetails.prototype, "title", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Date)
 ], PersonalDetails.prototype, "dateOfBirth", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], PersonalDetails.prototype, "gender", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], PersonalDetails.prototype, "nationalInsuranceNumber", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], PersonalDetails.prototype, "passportPhoto", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, default: false }),
+    __metadata("design:type", Boolean)
+], PersonalDetails.prototype, "attempted", void 0);
 exports.PersonalDetails = PersonalDetails = __decorate([
     (0, typeorm_1.Entity)()
 ], PersonalDetails);

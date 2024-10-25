@@ -87,6 +87,23 @@ class ApplicationController {
             }
         });
     }
+    // Controller
+    static getApplicantAttemptedData(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield ApplicationService_1.ApplicationService.getApplicantAttemptedData(req.params.applicationNo);
+                // Check if the user attempted status is available
+                // const userAttemptedStatus = result.find(item => item.hasOwnProperty('user'));
+                // if (!userAttemptedStatus || !userAttemptedStatus.user) {
+                //     return res.status(404).json({ message: 'Applicant not found' });
+                // }
+                res.status(200).json(result);
+            }
+            catch (error) {
+                res.status(500).json({ error: error.message });
+            }
+        });
+    }
     static getAllApplicants(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

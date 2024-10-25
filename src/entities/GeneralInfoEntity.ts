@@ -46,4 +46,7 @@ export class GeneralInfo {
 
     @Column({ nullable: true })
     dbsCertificateUpload: string;
+
+    @Column({nullable: true, default: false})
+    attempted: boolean;
 }

@@ -34,4 +34,7 @@ export class ContactDetails {
 
     @Column({nullable: true})
     twitter: string;
+
+    @Column({nullable: true, default: false})
+    attempted: boolean;
 }

@@ -26,4 +26,7 @@ export class EmploymentDetails {
 
     @Column()
     address: string;
+
+    @Column({nullable: true, default: false})
+    attempted: boolean;
 }

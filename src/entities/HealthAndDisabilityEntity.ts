@@ -68,4 +68,7 @@ export class HealthAndDisability {
 
     @Column({nullable: true})
     agreementToReportInfection: boolean;
+
+    @Column({nullable: true, default: false})
+    attempted: boolean;
 }

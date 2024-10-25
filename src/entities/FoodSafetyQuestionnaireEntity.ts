@@ -59,4 +59,7 @@ export class FoodSafetyQuestionnaire {
     // Additional column: Agreement to licensing regulations
     @Column({ nullable: true })
     licensingRegulationAgreement: boolean;
+
+    @Column({nullable: true, default: false})
+    attempted: boolean;
 }

@@ -42,6 +42,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], EducationalDetails.prototype, "yearGraduated", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, default: false }),
+    __metadata("design:type", Boolean)
+], EducationalDetails.prototype, "attempted", void 0);
 exports.EducationalDetails = EducationalDetails = __decorate([
     (0, typeorm_1.Entity)()
 ], EducationalDetails);

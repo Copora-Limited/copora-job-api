@@ -46,6 +46,10 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], NextOfKin.prototype, "phoneNumber", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, default: false }),
+    __metadata("design:type", Boolean)
+], NextOfKin.prototype, "attempted", void 0);
 exports.NextOfKin = NextOfKin = __decorate([
     (0, typeorm_1.Entity)()
 ], NextOfKin);

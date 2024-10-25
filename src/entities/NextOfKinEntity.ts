@@ -29,4 +29,7 @@ export class NextOfKin {
 
     @Column({nullable: true })
     phoneNumber: string;
+
+    @Column({nullable: true, default: false})
+    attempted: boolean;
 }

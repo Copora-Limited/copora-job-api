@@ -31,4 +31,7 @@ export class BankDetails {
     // Field for indicating whether P45 is attached
     @Column({ default: false })
     p45Attached: boolean;
+
+    @Column({nullable: true, default: false})
+    attempted: boolean;
 }

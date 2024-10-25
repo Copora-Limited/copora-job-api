@@ -128,6 +128,10 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], User.prototype, "role", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, default: false }),
+    __metadata("design:type", Boolean)
+], User.prototype, "attempted", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

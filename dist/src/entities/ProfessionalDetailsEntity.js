@@ -58,6 +58,10 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], ProfessionalDetails.prototype, "referenceContactEmail", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, default: false }),
+    __metadata("design:type", Boolean)
+], ProfessionalDetails.prototype, "attempted", void 0);
 exports.ProfessionalDetails = ProfessionalDetails = __decorate([
     (0, typeorm_1.Entity)()
 ], ProfessionalDetails);

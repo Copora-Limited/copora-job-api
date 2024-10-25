@@ -24,7 +24,7 @@ export class Reference {
     address: string;
 
     // New fields
-    @Column()
+    @Column({nullable: true})
     jobTitle: string;
 
     @Column({ type: 'date', nullable: true  })
@@ -35,5 +35,8 @@ export class Reference {
 
     @Column({ type: 'text', nullable: true })
     responsibilities: string;
+
+    @Column({nullable: true, default: false})
+    attempted: boolean;
 
 }

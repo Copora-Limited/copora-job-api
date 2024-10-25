@@ -70,6 +70,10 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Boolean)
 ], FoodSafetyQuestionnaire.prototype, "licensingRegulationAgreement", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, default: false }),
+    __metadata("design:type", Boolean)
+], FoodSafetyQuestionnaire.prototype, "attempted", void 0);
 exports.FoodSafetyQuestionnaire = FoodSafetyQuestionnaire = __decorate([
     (0, typeorm_1.Entity)()
 ], FoodSafetyQuestionnaire);

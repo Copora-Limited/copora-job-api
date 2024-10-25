@@ -95,6 +95,45 @@ class ApplicationService {
             }
         });
     }
+    // Services
+    static getApplicantAttemptedData(applicationNo) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                // Fetch `attempted` status from each table
+                const user = yield data_source_1.AppDataSource.getRepository(UserEntity_1.User).findOneBy({ applicationNo });
+                const personalDetails = yield data_source_1.AppDataSource.getRepository(PersonalDetailsEntity_1.PersonalDetails).findOneBy({ applicationNo });
+                const contactDetails = yield data_source_1.AppDataSource.getRepository(ContactDetailsEntity_1.ContactDetails).findOneBy({ applicationNo });
+                const professionalDetails = yield data_source_1.AppDataSource.getRepository(ProfessionalDetailsEntity_1.ProfessionalDetails).find({ where: { applicationNo } });
+                const educationalDetails = yield data_source_1.AppDataSource.getRepository(EducationalDetailsEntity_1.EducationalDetails).find({ where: { applicationNo } });
+                const healthAndDisability = yield data_source_1.AppDataSource.getRepository(HealthAndDisabilityEntity_1.HealthAndDisability).findOneBy({ applicationNo });
+                const generalInfo = yield data_source_1.AppDataSource.getRepository(GeneralInfoEntity_1.GeneralInfo).findOneBy({ applicationNo });
+                const nextOfKin = yield data_source_1.AppDataSource.getRepository(NextOfKinEntity_1.NextOfKin).findOneBy({ applicationNo });
+                const foodSafetyQuestionnaire = yield data_source_1.AppDataSource.getRepository(FoodSafetyQuestionnaireEntity_1.FoodSafetyQuestionnaire).findOneBy({ applicationNo });
+                const bankDetails = yield data_source_1.AppDataSource.getRepository(BankDetailsEntity_1.BankDetails).findOneBy({ applicationNo });
+                const agreementConsent = yield data_source_1.AppDataSource.getRepository(AgreementConsentEntity_1.AgreementConsent).findOneBy({ applicationNo });
+                const reference = yield data_source_1.AppDataSource.getRepository(ReferenceEntity_1.Reference).find({ where: { applicationNo } });
+                // Consolidate all `attempted` values into a single array
+                const result = [
+                    // { user: user?.attempted || false },
+                    { personalDetails: (personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.attempted) || false },
+                    { contactDetails: (contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.attempted) || false },
+                    { generalInfo: (generalInfo === null || generalInfo === void 0 ? void 0 : generalInfo.attempted) || false },
+                    { nextOfKin: (nextOfKin === null || nextOfKin === void 0 ? void 0 : nextOfKin.attempted) || false },
+                    { professionalDetails: professionalDetails.length > 0 ? professionalDetails.some(detail => detail.attempted) : false },
+                    { educationalDetails: educationalDetails.length > 0 ? educationalDetails.some(detail => detail.attempted) : false },
+                    { healthAndDisability: (healthAndDisability === null || healthAndDisability === void 0 ? void 0 : healthAndDisability.attempted) || false },
+                    { foodSafetyQuestionnaire: (foodSafetyQuestionnaire === null || foodSafetyQuestionnaire === void 0 ? void 0 : foodSafetyQuestionnaire.attempted) || false },
+                    { bankDetails: (bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.attempted) || false },
+                    { agreementConsent: (agreementConsent === null || agreementConsent === void 0 ? void 0 : agreementConsent.attempted) || false },
+                    { reference: reference.length > 0 ? reference.some(ref => ref.attempted) : false },
+                ];
+                return result;
+            }
+            catch (error) {
+                throw new Error(`Error retrieving applicant data: ${error.message}`);
+            }
+        });
+    }
     // Updated getAllApplicants method with relations
     static getAllApplicantsData() {
         return __awaiter(this, void 0, void 0, function* () {

@@ -74,6 +74,10 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], GeneralInfo.prototype, "dbsCertificateUpload", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, default: false }),
+    __metadata("design:type", Boolean)
+], GeneralInfo.prototype, "attempted", void 0);
 exports.GeneralInfo = GeneralInfo = __decorate([
     (0, typeorm_1.Entity)()
 ], GeneralInfo);

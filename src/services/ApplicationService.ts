@@ -81,6 +81,47 @@ export class ApplicationService {
       throw new Error(`Error retrieving applicant data: ${error.message}`);
     }
   }
+  
+  // Services
+static async getApplicantAttemptedData(applicationNo: string) {
+  try {
+      // Fetch `attempted` status from each table
+      const user = await AppDataSource.getRepository(User).findOneBy({ applicationNo });
+      const personalDetails = await AppDataSource.getRepository(PersonalDetails).findOneBy({ applicationNo });
+      const contactDetails = await AppDataSource.getRepository(ContactDetails).findOneBy({ applicationNo });
+      const professionalDetails = await AppDataSource.getRepository(ProfessionalDetails).find({ where: { applicationNo } });
+      const educationalDetails = await AppDataSource.getRepository(EducationalDetails).find({ where: { applicationNo } });
+      const healthAndDisability = await AppDataSource.getRepository(HealthAndDisability).findOneBy({ applicationNo });
+      const generalInfo = await AppDataSource.getRepository(GeneralInfo).findOneBy({ applicationNo });
+      const nextOfKin = await AppDataSource.getRepository(NextOfKin).findOneBy({ applicationNo });
+      const foodSafetyQuestionnaire = await AppDataSource.getRepository(FoodSafetyQuestionnaire).findOneBy({ applicationNo });
+      const bankDetails = await AppDataSource.getRepository(BankDetails).findOneBy({ applicationNo });
+      const agreementConsent = await AppDataSource.getRepository(AgreementConsent).findOneBy({ applicationNo });
+      const reference = await AppDataSource.getRepository(Reference).find({ where: { applicationNo } });
+
+      // Consolidate all `attempted` values into a single array
+      const result = [
+          // { user: user?.attempted || false },
+          { personalDetails: personalDetails?.attempted || false },
+          { contactDetails: contactDetails?.attempted || false },
+          { generalInfo: generalInfo?.attempted || false },
+          { nextOfKin: nextOfKin?.attempted || false },
+          { professionalDetails: professionalDetails.length > 0 ? professionalDetails.some(detail => detail.attempted) : false },
+          { educationalDetails: educationalDetails.length > 0 ? educationalDetails.some(detail => detail.attempted) : false },
+          { healthAndDisability: healthAndDisability?.attempted || false },
+          { foodSafetyQuestionnaire: foodSafetyQuestionnaire?.attempted || false },
+          { bankDetails: bankDetails?.attempted || false },
+          { agreementConsent: agreementConsent?.attempted || false },
+          { reference: reference.length > 0 ? reference.some(ref => ref.attempted) : false },
+      ];
+
+      return result;
+  } catch (error) {
+      throw new Error(`Error retrieving applicant data: ${error.message}`);
+  }
+}
+
+
 
    // Updated getAllApplicants method with relations
   static async getAllApplicantsData() {

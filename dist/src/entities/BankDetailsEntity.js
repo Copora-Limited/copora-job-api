@@ -50,6 +50,10 @@ __decorate([
     (0, typeorm_1.Column)({ default: false }),
     __metadata("design:type", Boolean)
 ], BankDetails.prototype, "p45Attached", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, default: false }),
+    __metadata("design:type", Boolean)
+], BankDetails.prototype, "attempted", void 0);
 exports.BankDetails = BankDetails = __decorate([
     (0, typeorm_1.Entity)()
 ], BankDetails);

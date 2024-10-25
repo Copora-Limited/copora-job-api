@@ -22,4 +22,7 @@ export class EducationalDetails {
 
     @Column()
     yearGraduated: number;
+
+    @Column({nullable: true, default: false})
+    attempted: boolean;
 }

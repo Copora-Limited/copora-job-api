@@ -34,4 +34,7 @@ export class ProfessionalDetails {
 
     @Column({ nullable: true })
     referenceContactEmail: string;
+
+    @Column({nullable: true, default: false})
+    attempted: boolean;
 }

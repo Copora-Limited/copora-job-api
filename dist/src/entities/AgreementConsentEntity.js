@@ -26,6 +26,10 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], AgreementConsent.prototype, "userConsent", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, default: false }),
+    __metadata("design:type", Boolean)
+], AgreementConsent.prototype, "attempted", void 0);
 exports.AgreementConsent = AgreementConsent = __decorate([
     (0, typeorm_1.Entity)()
 ], AgreementConsent);

@@ -92,5 +92,8 @@ export class User {
     default: UserRole.Applicant,
   })
   role: UserRole;
+
+  @Column({nullable: true, default: false})
+  attempted: boolean;
   
 }

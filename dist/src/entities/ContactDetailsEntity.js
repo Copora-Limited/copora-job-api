@@ -54,6 +54,10 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], ContactDetails.prototype, "twitter", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, default: false }),
+    __metadata("design:type", Boolean)
+], ContactDetails.prototype, "attempted", void 0);
 exports.ContactDetails = ContactDetails = __decorate([
     (0, typeorm_1.Entity)()
 ], ContactDetails);
