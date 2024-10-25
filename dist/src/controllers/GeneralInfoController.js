@@ -78,7 +78,7 @@ class GeneralInfoController {
                     : existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.dbsCertificateUpload;
                 // Merge the new data with the existing data, only updating fields that are provided
                 const dataToSave = Object.assign(Object.assign(Object.assign(Object.assign({}, existingEntry), { // Retain existing fields
-                    applicationNo }), otherFields), { level2FoodHygieneCertificateUpload: level2FoodHygieneCertificateUrl, personalLicenseCertificateUpload: personalLicenseCertificateUrl, dbsCertificateUpload: dbsCertificateUrl });
+                    applicationNo }), otherFields), { level2FoodHygieneCertificateUpload: level2FoodHygieneCertificateUrl, personalLicenseCertificateUpload: personalLicenseCertificateUrl, dbsCertificateUpload: dbsCertificateUrl, attempted: true });
                 console.log("dataToSave:", dataToSave);
                 // Save or update the record based on whether it exists
                 if (existingEntry) {

@@ -8,24 +8,25 @@ export class FoodSafetyQuestionnaireController {
     static async createFoodSafetyQuestionnaire(req: Request, res: Response) {
         try {
             const { applicationNo } = req.body;
-
+    
             // Check if the FoodSafetyQuestionnaire with the given applicationNo exists
             const existingFoodSafetyQuestionnaire = await FoodSafetyQuestionnaireController.foodSafetyQuestionnaireService.getFoodSafetyQuestionnaireByApplicationNo(applicationNo);
-
+    
             if (existingFoodSafetyQuestionnaire) {
                 // If it exists, update the existing record
                 const updatedFoodSafetyQuestionnaire = await FoodSafetyQuestionnaireController.foodSafetyQuestionnaireService.updateFoodSafetyQuestionnaireByApplicationNo(applicationNo, req.body);
                 return res.status(200).send({ message: 'Food Safety Questionnaire updated', data: updatedFoodSafetyQuestionnaire });
             } else {
-                // If it does not exist, create a new record
-                const newFoodSafetyQuestionnaire = await FoodSafetyQuestionnaireController.foodSafetyQuestionnaireService.createFoodSafetyQuestionnaire(req.body);
+                // If it does not exist, create a new record with attempted set to true
+                const foodSafetyData = { ...req.body, attempted: true };
+                const newFoodSafetyQuestionnaire = await FoodSafetyQuestionnaireController.foodSafetyQuestionnaireService.createFoodSafetyQuestionnaire(foodSafetyData);
                 return res.status(201).send({ message: 'Food Safety Questionnaire created', data: newFoodSafetyQuestionnaire });
             }
         } catch (error) {
             res.status(500).send({ message: 'Error creating or updating food safety questionnaire', error: error.message });
         }
     }
-
+    
     // Get Food Safety Questionnaire by applicationNo
     static async getFoodSafetyQuestionnaireByNo(req: Request, res: Response) {
         try {

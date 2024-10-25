@@ -8,6 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HealthAndDisabilityController = void 0;
 const HealthAndDisabilityService_1 = require("../services/HealthAndDisabilityService");
@@ -16,17 +27,19 @@ class HealthAndDisabilityController {
     static createHealthAndDisability(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { applicationNo } = req.body;
+                const _a = req.body, { applicationNo } = _a, otherFields = __rest(_a, ["applicationNo"]);
                 // Check if the HealthAndDisability with the given applicationNo exists
                 const existingEntry = yield HealthAndDisabilityService_1.HealthAndDisabilityService.getByApplicationNo(applicationNo);
+                // Add attempted: true to the data being saved
+                const dataToSave = Object.assign(Object.assign({}, otherFields), { applicationNo, attempted: true });
                 if (existingEntry) {
                     // If it exists, update the existing record
-                    const updatedEntry = yield HealthAndDisabilityService_1.HealthAndDisabilityService.updateByApplicationNo(applicationNo, req.body);
+                    const updatedEntry = yield HealthAndDisabilityService_1.HealthAndDisabilityService.updateByApplicationNo(applicationNo, dataToSave);
                     return res.status(200).send({ message: 'Health and Disability entry updated', data: updatedEntry });
                 }
                 else {
                     // If it does not exist, create a new record
-                    const newEntry = yield HealthAndDisabilityService_1.HealthAndDisabilityService.create(req.body);
+                    const newEntry = yield HealthAndDisabilityService_1.HealthAndDisabilityService.create(dataToSave);
                     return res.status(201).send({ message: 'Health and Disability entry created', data: newEntry });
                 }
             }

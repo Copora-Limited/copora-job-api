@@ -54,7 +54,7 @@ class PersonalDetailsController {
                     passportPhoto = yield PersonalDetailsController.uploadPassportPhoto(file);
                 }
                 // Merge the new data with the existing data, only updating fields that are provided
-                const dataToSave = Object.assign(Object.assign(Object.assign({}, existingEntry), req.body), { passportPhoto: passportPhoto || (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.passportPhoto) });
+                const dataToSave = Object.assign(Object.assign(Object.assign({}, existingEntry), req.body), { passportPhoto: passportPhoto || (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.passportPhoto), attempted: true });
                 // console.log("dataToSave", dataToSave);
                 if (existingEntry) {
                     // Update the existing record

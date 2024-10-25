@@ -162,7 +162,8 @@ class UserController {
         role,
         createdBy,
         verificationToken,
-        applicationNo // Save the generated application number
+        applicationNo, // Save the generated application number
+        attempted: true
       });
   
       // Send relevant email based on creator

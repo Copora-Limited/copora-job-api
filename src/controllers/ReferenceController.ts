@@ -44,17 +44,19 @@ export class ReferenceController {
                     const existingReference = await ReferenceService.findByApplicationNoAndPhone(applicationNo, phone);
     
                     if (existingReference) {
-                        // Update existing reference
+                        // Update existing reference with attempted: true
                         await ReferenceService.update(existingReference.id, {
                             ...restOfEntry,
-                            applicationNo
+                            applicationNo,
+                            attempted: true
                         });
-                        updatedEntries.push({ ...existingReference, ...restOfEntry });
+                        updatedEntries.push({ ...existingReference, ...restOfEntry, attempted: true });
                     } else {
-                        // Create new reference
+                        // Create new reference with attempted: true
                         const newReference = await ReferenceService.create({
                             applicationNo, 
-                            ...entry
+                            ...entry,
+                            attempted: true
                         });
                         newEntries.push(newReference);
                     }
@@ -71,6 +73,7 @@ export class ReferenceController {
             res.status(500).json({ message: 'Error creating or updating reference details', error: error.message });
         }
     }
+    
     
     
 

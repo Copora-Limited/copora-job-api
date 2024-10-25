@@ -52,7 +52,8 @@ export class PersonalDetailsController {
               ...existingEntry, // Spread the existing entry fields to retain their values
               ...req.body,      // Override fields with the new values from req.body
               passportPhoto: passportPhoto || existingEntry?.passportPhoto, // Only override if a new passport photo is available
-          };
+              attempted: true, // Set attempted to true
+            };
 
           // console.log("dataToSave", dataToSave);
 

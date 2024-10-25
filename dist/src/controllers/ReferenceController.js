@@ -57,13 +57,13 @@ class ReferenceController {
                         }
                         const existingReference = yield ReferenceService_1.ReferenceService.findByApplicationNoAndPhone(applicationNo, phone);
                         if (existingReference) {
-                            // Update existing reference
-                            yield ReferenceService_1.ReferenceService.update(existingReference.id, Object.assign(Object.assign({}, restOfEntry), { applicationNo }));
-                            updatedEntries.push(Object.assign(Object.assign({}, existingReference), restOfEntry));
+                            // Update existing reference with attempted: true
+                            yield ReferenceService_1.ReferenceService.update(existingReference.id, Object.assign(Object.assign({}, restOfEntry), { applicationNo, attempted: true }));
+                            updatedEntries.push(Object.assign(Object.assign(Object.assign({}, existingReference), restOfEntry), { attempted: true }));
                         }
                         else {
-                            // Create new reference
-                            const newReference = yield ReferenceService_1.ReferenceService.create(Object.assign({ applicationNo }, entry));
+                            // Create new reference with attempted: true
+                            const newReference = yield ReferenceService_1.ReferenceService.create(Object.assign(Object.assign({ applicationNo }, entry), { attempted: true }));
                             newEntries.push(newReference);
                         }
                     }

@@ -77,6 +77,7 @@ export class GeneralInfoController {
                 level2FoodHygieneCertificateUpload: level2FoodHygieneCertificateUrl,
                 personalLicenseCertificateUpload: personalLicenseCertificateUrl,
                 dbsCertificateUpload: dbsCertificateUrl,
+                attempted: true, // Set attempted to true
             };
     
             console.log("dataToSave:", dataToSave);
@@ -96,6 +97,7 @@ export class GeneralInfoController {
             res.status(500).json({ message: 'Error creating or updating general info', error: error.message });
         }
     }
+    
     
 
 

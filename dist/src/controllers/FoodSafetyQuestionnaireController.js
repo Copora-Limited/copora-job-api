@@ -25,8 +25,9 @@ class FoodSafetyQuestionnaireController {
                     return res.status(200).send({ message: 'Food Safety Questionnaire updated', data: updatedFoodSafetyQuestionnaire });
                 }
                 else {
-                    // If it does not exist, create a new record
-                    const newFoodSafetyQuestionnaire = yield FoodSafetyQuestionnaireController.foodSafetyQuestionnaireService.createFoodSafetyQuestionnaire(req.body);
+                    // If it does not exist, create a new record with attempted set to true
+                    const foodSafetyData = Object.assign(Object.assign({}, req.body), { attempted: true });
+                    const newFoodSafetyQuestionnaire = yield FoodSafetyQuestionnaireController.foodSafetyQuestionnaireService.createFoodSafetyQuestionnaire(foodSafetyData);
                     return res.status(201).send({ message: 'Food Safety Questionnaire created', data: newFoodSafetyQuestionnaire });
                 }
             }

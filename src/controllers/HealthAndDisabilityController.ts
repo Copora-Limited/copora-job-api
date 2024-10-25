@@ -5,24 +5,32 @@ export class HealthAndDisabilityController {
     // Create or update a HealthAndDisability entry
     static async createHealthAndDisability(req: Request, res: Response) {
         try {
-            const { applicationNo } = req.body;
-
+            const { applicationNo, ...otherFields } = req.body;
+    
             // Check if the HealthAndDisability with the given applicationNo exists
             const existingEntry = await HealthAndDisabilityService.getByApplicationNo(applicationNo);
-
+    
+            // Add attempted: true to the data being saved
+            const dataToSave = {
+                ...otherFields,
+                applicationNo,
+                attempted: true, // Set attempted to true
+            };
+    
             if (existingEntry) {
                 // If it exists, update the existing record
-                const updatedEntry = await HealthAndDisabilityService.updateByApplicationNo(applicationNo, req.body);
+                const updatedEntry = await HealthAndDisabilityService.updateByApplicationNo(applicationNo, dataToSave);
                 return res.status(200).send({ message: 'Health and Disability entry updated', data: updatedEntry });
             } else {
                 // If it does not exist, create a new record
-                const newEntry = await HealthAndDisabilityService.create(req.body);
+                const newEntry = await HealthAndDisabilityService.create(dataToSave);
                 return res.status(201).send({ message: 'Health and Disability entry created', data: newEntry });
             }
         } catch (error) {
             res.status(500).send({ message: 'Error creating or updating Health and Disability entry', error: error.message });
         }
     }
+    
 
     // Get HealthAndDisability entry by applicationNo
     static async getHealthAndDisabilityByNo(req: Request, res: Response) {
