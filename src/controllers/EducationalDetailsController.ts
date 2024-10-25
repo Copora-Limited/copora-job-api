@@ -116,10 +116,12 @@ export class EducationalDetailsController {
                     } else {
                         // Create new reference
                         const newReference = await EducationalDetailsService.create({
-                            applicationNo, 
+                            applicationNo,
+                            attempted: true,
                             ...entry
                         });
                         newEntries.push(newReference);
+                        
                     }
                 }
             }

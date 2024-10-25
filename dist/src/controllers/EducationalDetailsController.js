@@ -112,7 +112,7 @@ class EducationalDetailsController {
                         }
                         else {
                             // Create new reference
-                            const newReference = yield EducationalDetailsService_1.EducationalDetailsService.create(Object.assign({ applicationNo }, entry));
+                            const newReference = yield EducationalDetailsService_1.EducationalDetailsService.create(Object.assign({ applicationNo, attempted: true }, entry));
                             newEntries.push(newReference);
                         }
                     }

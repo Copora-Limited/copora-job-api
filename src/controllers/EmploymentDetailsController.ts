@@ -6,7 +6,10 @@ export class EmploymentDetailsController {
     private employmentDetailsRepository = AppDataSource.getRepository(EmploymentDetails);
 
     async create(req: Request, res: Response) {
-        const employmentDetails = this.employmentDetailsRepository.create(req.body);
+        // Include 'attempted: true' when creating a new employment details record
+        const employmentDetailsData = { ...req.body, attempted: true };
+
+        const employmentDetails = this.employmentDetailsRepository.create(employmentDetailsData);
         await this.employmentDetailsRepository.save(employmentDetails);
         res.status(201).send(employmentDetails);
     }

@@ -7,17 +7,19 @@ export class BankDetailsController {
     static async createBankDetails(req: Request, res: Response) {
         try {
             const { applicationNo } = req.body;
-
+    
             // Check if the BankDetails with the given applicationNo exists
             const existingBankDetails = await BankDetailsService.getBankDetailsByApplicationNo(applicationNo);
-
+    
             if (existingBankDetails) {
                 // If it exists, update the existing record
                 const updatedBankDetails = await BankDetailsService.updateBankDetailsByApplicationNo(applicationNo, req.body);
                 return res.status(200).send({ message: 'Bank Details updated', data: updatedBankDetails });
             } else {
-                // If it does not exist, create a new record
-                const newBankDetails = await BankDetailsService.createBankDetails(req.body);
+                // If it does not exist, create a new record with attempted set to true
+                const newBankDetailsData = { ...req.body, attempted: true }; // Set attempted to true
+                
+                const newBankDetails = await BankDetailsService.createBankDetails(newBankDetailsData);
                 return res.status(201).send({ message: 'Bank Details created', data: newBankDetails });
             }
         } catch (error) {

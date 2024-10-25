@@ -18,7 +18,9 @@ class EmploymentDetailsController {
     }
     create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const employmentDetails = this.employmentDetailsRepository.create(req.body);
+            // Include 'attempted: true' when creating a new employment details record
+            const employmentDetailsData = Object.assign(Object.assign({}, req.body), { attempted: true });
+            const employmentDetails = this.employmentDetailsRepository.create(employmentDetailsData);
             yield this.employmentDetailsRepository.save(employmentDetails);
             res.status(201).send(employmentDetails);
         });

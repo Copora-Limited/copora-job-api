@@ -34,8 +34,9 @@ class AgreementConsentController {
                     res.status(200).send({ message: 'Agreement Consent updated', data: agreementConsent });
                 }
                 else {
-                    // If it does not exist, create a new record
-                    agreementConsent = yield AgreementConsentService_1.AgreementConsentService.create(req.body);
+                    // If it does not exist, create a new record with attempted set to true
+                    const agreementConsentData = Object.assign(Object.assign({}, req.body), { attempted: true }); // Set attempted to true
+                    agreementConsent = yield AgreementConsentService_1.AgreementConsentService.create(agreementConsentData);
                     res.status(201).send({ message: 'Agreement Consent created', data: agreementConsent });
                 }
                 // Update the user's onboarding status to "OnboardingCompleted"

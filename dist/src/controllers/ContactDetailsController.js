@@ -27,8 +27,9 @@ class ContactDetailsController {
                     return res.status(200).send({ message: 'Contact Details updated', data: updatedContactDetails });
                 }
                 else {
-                    // If it does not exist, create a new record
-                    const newContactDetails = yield ContactDetailsService_1.ContactDetailsService.createContactDetails(req.body);
+                    // If it does not exist, create a new record with attempted set to true
+                    const newContactDetailsData = Object.assign(Object.assign({}, req.body), { attempted: true }); // Set attempted to true
+                    const newContactDetails = yield ContactDetailsService_1.ContactDetailsService.createContactDetails(newContactDetailsData);
                     return res.status(201).send({ message: 'Contact Details created', data: newContactDetails });
                 }
             }

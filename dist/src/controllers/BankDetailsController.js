@@ -25,8 +25,9 @@ class BankDetailsController {
                     return res.status(200).send({ message: 'Bank Details updated', data: updatedBankDetails });
                 }
                 else {
-                    // If it does not exist, create a new record
-                    const newBankDetails = yield BankDetailsService_1.BankDetailsService.createBankDetails(req.body);
+                    // If it does not exist, create a new record with attempted set to true
+                    const newBankDetailsData = Object.assign(Object.assign({}, req.body), { attempted: true }); // Set attempted to true
+                    const newBankDetails = yield BankDetailsService_1.BankDetailsService.createBankDetails(newBankDetailsData);
                     return res.status(201).send({ message: 'Bank Details created', data: newBankDetails });
                 }
             }

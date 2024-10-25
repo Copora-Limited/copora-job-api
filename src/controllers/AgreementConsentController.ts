@@ -29,8 +29,9 @@ export class AgreementConsentController {
                 agreementConsent = await AgreementConsentService.updateByApplicationNo(applicationNo, req.body);
                 res.status(200).send({ message: 'Agreement Consent updated', data: agreementConsent });
             } else {
-                // If it does not exist, create a new record
-                agreementConsent = await AgreementConsentService.create(req.body);
+                // If it does not exist, create a new record with attempted set to true
+                const agreementConsentData = { ...req.body, attempted: true }; // Set attempted to true
+                agreementConsent = await AgreementConsentService.create(agreementConsentData);
                 res.status(201).send({ message: 'Agreement Consent created', data: agreementConsent });
             }
 

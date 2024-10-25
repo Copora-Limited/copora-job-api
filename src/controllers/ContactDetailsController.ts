@@ -18,9 +18,11 @@ export class ContactDetailsController {
                 const updatedContactDetails = await ContactDetailsService.updateContactDetailsByApplicationNo(applicationNo, req.body);
                 return res.status(200).send({ message: 'Contact Details updated', data: updatedContactDetails });
             } else {
-                // If it does not exist, create a new record
-                const newContactDetails = await ContactDetailsService.createContactDetails(req.body);
-                return res.status(201).send({ message: 'Contact Details created', data: newContactDetails });
+                 // If it does not exist, create a new record with attempted set to true
+            const newContactDetailsData = { ...req.body, attempted: true }; // Set attempted to true
+            
+            const newContactDetails = await ContactDetailsService.createContactDetails(newContactDetailsData);
+            return res.status(201).send({ message: 'Contact Details created', data: newContactDetails });
             }
         } catch (error) {
             res.status(500).send({ message: 'Error creating or updating contact details', error: error.message });
