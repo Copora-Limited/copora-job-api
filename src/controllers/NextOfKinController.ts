@@ -7,14 +7,35 @@ export class NextOfKinController {
     private nextOfKinRepository = AppDataSource.getRepository(NextOfKin);
 
     async create(req: Request, res: Response) {
-        const { applicationNo } = req.body;
-        try {
-            const existingApplicant = await UserService.findApplicationNo(applicationNo);
+        const { applicationNo, firstName, lastName, relationship, email, phone, address} = req.body;
 
-            if(!existingApplicant){
+        try {
+             // Check if all required fields are provided
+             if (!firstName) {
+                return res.status(400).json({ statusCode: 400, message: 'First Name is required' });
+            }
+            if (!lastName) {
+                return res.status(400).json({ statusCode: 400, message: 'Last Name is required' });
+            }
+            if (!relationship) {
+                return res.status(400).json({ statusCode: 400, message: 'Select Relationship is required' });
+            }
+            if (!phone) {
+                return res.status(400).json({ statusCode: 400, message: 'Phone Number is required' });
+            }
+            if (!email) {
+                return res.status(400).json({ statusCode: 400, message: 'Email is required' });
+            }
+            if (!address) {
+                return res.status(400).json({ statusCode: 400, message: 'Address is required' });
+            }
+
+            // Validate applicationNo
+            const existingApplicant = await UserService.findApplicationNo(applicationNo);
+            if (!existingApplicant) {
                 return res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
             }
-            
+
             // Check if an entry with the given applicationNo already exists
             let existingEntry = await this.nextOfKinRepository.findOneBy({ applicationNo });
 
@@ -22,13 +43,12 @@ export class NextOfKinController {
                 // Update the existing entry with the new data
                 this.nextOfKinRepository.merge(existingEntry, req.body);
                 await this.nextOfKinRepository.save(existingEntry);
-                return res.status(200).send({message: 'Next of Kin updated', data: existingEntry}); // Return updated entry
+                return res.status(200).send({ message: 'Next of Kin updated', data: existingEntry }); // Return updated entry
             } else {
                 // Create a new entry if none exists
                 const nextOfKin = this.nextOfKinRepository.create(req.body);
                 await this.nextOfKinRepository.save(nextOfKin);
                 return res.status(201).send({ message: 'Entry created', data: nextOfKin }); // Return newly created entry
-
             }
         } catch (error) {
             console.error('Error creating/updating NextOfKin:', error);

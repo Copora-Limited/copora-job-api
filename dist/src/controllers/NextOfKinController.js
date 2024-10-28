@@ -19,8 +19,28 @@ class NextOfKinController {
     }
     create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { applicationNo } = req.body;
+            const { applicationNo, firstName, lastName, relationship, email, phone, address } = req.body;
             try {
+                // Check if all required fields are provided
+                if (!firstName) {
+                    return res.status(400).json({ statusCode: 400, message: 'First Name is required' });
+                }
+                if (!lastName) {
+                    return res.status(400).json({ statusCode: 400, message: 'Last Name is required' });
+                }
+                if (!relationship) {
+                    return res.status(400).json({ statusCode: 400, message: 'Select Relationship is required' });
+                }
+                if (!phone) {
+                    return res.status(400).json({ statusCode: 400, message: 'Phone Number is required' });
+                }
+                if (!email) {
+                    return res.status(400).json({ statusCode: 400, message: 'Email is required' });
+                }
+                if (!address) {
+                    return res.status(400).json({ statusCode: 400, message: 'Address is required' });
+                }
+                // Validate applicationNo
                 const existingApplicant = yield UserService_1.UserService.findApplicationNo(applicationNo);
                 if (!existingApplicant) {
                     return res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });

@@ -13,6 +13,7 @@ exports.PersonalDetailsController = void 0;
 const PersonalDetailsService_1 = require("../services/PersonalDetailsService");
 const UserService_1 = require("../services/UserService");
 const cloudinary_1 = require("cloudinary");
+const date_fns_1 = require("date-fns"); // Use date-fns or similar library to calculate age
 // Configure Cloudinary
 cloudinary_1.v2.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -39,23 +40,45 @@ class PersonalDetailsController {
     static createOrUpdatePersonalDetails(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { applicationNo } = req.body;
+                const { applicationNo, dateOfBirth, gender, nationalInsuranceNumber } = req.body;
                 const file = req.file;
-                console.log("req.body", req.body);
+                // Check required fields
+                if (!dateOfBirth) {
+                    res.status(400).json({ message: 'Date of birth is required' });
+                    return;
+                }
+                // Age validation: Check if the applicant is at least 16 years old
+                const age = (0, date_fns_1.differenceInYears)(new Date(), new Date(dateOfBirth));
+                if (age < 16) {
+                    res.status(400).json({ message: 'Under Age: Date of birth invalid. You must be at least 16 years old to proceed.' });
+                    return;
+                }
+                if (age >= 50) {
+                    res.status(400).json({ message: 'Date of birth invalid. Age must be below 50 to proceed.' });
+                    return;
+                }
+                if (!gender) {
+                    res.status(400).json({ message: 'Gender is required' });
+                    return;
+                }
+                if (!nationalInsuranceNumber) {
+                    res.status(400).json({ message: 'National Insurance Number is required' });
+                    return;
+                }
                 const existingApplicant = yield UserService_1.UserService.findApplicationNo(applicationNo);
                 if (!existingApplicant) {
-                    res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
-                    return; // Ensure to return here to avoid further execution
+                    res.status(400).json({ message: 'Applicant does not exist' });
+                    return;
                 }
                 // Check if the PersonalDetails with the given applicationNo exists
                 const existingEntry = yield PersonalDetailsService_1.PersonalDetailsService.getByApplicationNo(applicationNo);
-                let passportPhoto = (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.passportPhoto) || ''; // Preserve existing passport photo if no new file is uploaded
+                // Preserve existing passport photo if no new file is uploaded
+                let passportPhoto = (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.passportPhoto) || '';
                 if (file) {
                     passportPhoto = yield PersonalDetailsController.uploadPassportPhoto(file);
                 }
-                // Merge the new data with the existing data, only updating fields that are provided
+                // Merge the new data with the existing data, updating only fields that are provided
                 const dataToSave = Object.assign(Object.assign(Object.assign({}, existingEntry), req.body), { passportPhoto: passportPhoto || (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.passportPhoto), attempted: true });
-                // console.log("dataToSave", dataToSave);
                 if (existingEntry) {
                     // Update the existing record
                     const updatedEntry = yield PersonalDetailsService_1.PersonalDetailsService.updateByApplicationNo(applicationNo, dataToSave);

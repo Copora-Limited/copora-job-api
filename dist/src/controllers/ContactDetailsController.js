@@ -18,23 +18,47 @@ class ContactDetailsController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 console.log("Data:", req.body);
-                const { applicationNo } = req.body;
-                // Check if the ContactDetails with the given applicationNo exists
+                const { applicationNo, phone, address_line_1, town, country, postcode } = req.body;
+                // Validation checks
+                if (!phone) {
+                    return res.status(400).json({ message: 'Phone is required' });
+                }
+                const phoneDigits = phone.replace(/\D/g, ''); // Remove non-numeric characters for digit validation
+                if ((phone.startsWith('+44') && phoneDigits.length !== 12) || (!phone.startsWith('+44') && ![10, 11].includes(phoneDigits.length))) {
+                    return res.status(400).json({ message: 'Phone number should have 10 or 11 digits, or 11 digits if starting with +44' });
+                }
+                if (!address_line_1) {
+                    return res.status(400).json({ message: 'Property name or number is required' });
+                }
+                if (!town) {
+                    return res.status(400).json({ message: 'Town is required' });
+                }
+                if (!/^[a-zA-Z\s]+$/.test(town)) {
+                    return res.status(400).json({ message: 'Town should contain letters only' });
+                }
+                if (!country) {
+                    return res.status(400).json({ message: 'Country is required' });
+                }
+                if (!postcode) {
+                    return res.status(400).json({ message: 'Postcode is required' });
+                }
+                // Check if ContactDetails with the given applicationNo exists
                 const existingContactDetails = yield ContactDetailsService_1.ContactDetailsService.getContactDetailsByApplicationNo(applicationNo);
                 if (existingContactDetails) {
-                    // If it exists, update the existing record
+                    // Update existing record if found
                     const updatedContactDetails = yield ContactDetailsService_1.ContactDetailsService.updateContactDetailsByApplicationNo(applicationNo, req.body);
-                    return res.status(200).send({ message: 'Contact Details updated', data: updatedContactDetails });
+                    return res.status(200).json({ message: 'Contact Details updated', data: updatedContactDetails });
                 }
                 else {
-                    // If it does not exist, create a new record with attempted set to true
-                    const newContactDetailsData = Object.assign(Object.assign({}, req.body), { attempted: true }); // Set attempted to true
+                    // Create a new record with 'attempted' set to true
+                    const newContactDetailsData = Object.assign(Object.assign({}, req.body), { attempted: true });
                     const newContactDetails = yield ContactDetailsService_1.ContactDetailsService.createContactDetails(newContactDetailsData);
-                    return res.status(201).send({ message: 'Contact Details created', data: newContactDetails });
+                    return res.status(201).json({ message: 'Contact Details created', data: newContactDetails });
                 }
             }
             catch (error) {
-                res.status(500).send({ message: 'Error creating or updating contact details', error: error.message });
+                console.error('Error creating or updating contact details:', error);
+                res.status(500).json({ message: 'Error creating or updating contact details', error: error.message });
             }
         });
     }

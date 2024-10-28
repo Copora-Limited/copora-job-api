@@ -3,6 +3,8 @@ import { Request, Response } from 'express';
 import { PersonalDetailsService } from '../services/PersonalDetailsService';
 import { UserService } from '../services/UserService';
 import { v2 as cloudinary } from 'cloudinary';
+import { differenceInYears } from 'date-fns'; // Use date-fns or similar library to calculate age
+
 
 // Configure Cloudinary
 cloudinary.config({
@@ -26,54 +28,77 @@ export class PersonalDetailsController {
 
   // Create or update PersonalDetails
   static async createOrUpdatePersonalDetails(req: Request, res: Response): Promise<void> {
-      try {
-          const { applicationNo } = req.body;
-          const file = req.file;
-          console.log("req.body", req.body);
+    try {
+      const { applicationNo, dateOfBirth, gender, nationalInsuranceNumber } = req.body;
+      const file = req.file;
 
-          const existingApplicant = await UserService.findApplicationNo(applicationNo);
-
-          if (!existingApplicant) {
-              res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
-              return; // Ensure to return here to avoid further execution
-          }
-
-          // Check if the PersonalDetails with the given applicationNo exists
-          const existingEntry = await PersonalDetailsService.getByApplicationNo(applicationNo);
-
-          let passportPhoto = existingEntry?.passportPhoto || ''; // Preserve existing passport photo if no new file is uploaded
-
-          if (file) {
-              passportPhoto = await PersonalDetailsController.uploadPassportPhoto(file);
-          }
-
-          // Merge the new data with the existing data, only updating fields that are provided
-          const dataToSave = {
-              ...existingEntry, // Spread the existing entry fields to retain their values
-              ...req.body,      // Override fields with the new values from req.body
-              passportPhoto: passportPhoto || existingEntry?.passportPhoto, // Only override if a new passport photo is available
-              attempted: true, // Set attempted to true
-            };
-
-          // console.log("dataToSave", dataToSave);
-
-          if (existingEntry) {
-              // Update the existing record
-              const updatedEntry = await PersonalDetailsService.updateByApplicationNo(applicationNo, dataToSave);
-              res.status(200).json({ message: 'Personal details updated', data: updatedEntry });
-          } else {
-              // Create a new record
-              const newEntry = await PersonalDetailsService.create(dataToSave);
-              res.status(201).json({ message: 'Personal details created', data: newEntry });
-          }
-      } catch (error) {
-          console.error('Error creating or updating personal details:', error);
-          res.status(500).json({ message: 'Error creating or updating personal details', error: error.message });
+      // Check required fields
+      if (!dateOfBirth) {
+        res.status(400).json({ message: 'Date of birth is required' });
+        return;
       }
+
+      // Age validation: Check if the applicant is at least 16 years old
+      const age = differenceInYears(new Date(), new Date(dateOfBirth));
+      if (age < 16) {
+        res.status(400).json({ message: 'Under Age: Date of birth invalid. You must be at least 16 years old to proceed.' });
+        return;
+      }
+
+      if (age >= 50) {
+        res.status(400).json({ message: 'Date of birth invalid. Age must be below 50 to proceed.' });
+        return;
+      }
+
+      if (!gender) {
+        res.status(400).json({ message: 'Gender is required' });
+        return;
+      }
+
+      if (!nationalInsuranceNumber) {
+        res.status(400).json({ message: 'National Insurance Number is required' });
+        return;
+      }
+
+      const existingApplicant = await UserService.findApplicationNo(applicationNo);
+
+      if (!existingApplicant) {
+        res.status(400).json({ message: 'Applicant does not exist' });
+        return;
+      }
+
+      // Check if the PersonalDetails with the given applicationNo exists
+      const existingEntry = await PersonalDetailsService.getByApplicationNo(applicationNo);
+
+      // Preserve existing passport photo if no new file is uploaded
+      let passportPhoto = existingEntry?.passportPhoto || '';
+
+      if (file) {
+        passportPhoto = await PersonalDetailsController.uploadPassportPhoto(file);
+      }
+
+      // Merge the new data with the existing data, updating only fields that are provided
+      const dataToSave = {
+        ...existingEntry,
+        ...req.body,
+        passportPhoto: passportPhoto || existingEntry?.passportPhoto,
+        attempted: true, // Set attempted to true
+      };
+
+      if (existingEntry) {
+        // Update the existing record
+        const updatedEntry = await PersonalDetailsService.updateByApplicationNo(applicationNo, dataToSave);
+        res.status(200).json({ message: 'Personal details updated', data: updatedEntry });
+      } else {
+        // Create a new record
+        const newEntry = await PersonalDetailsService.create(dataToSave);
+        res.status(201).json({ message: 'Personal details created', data: newEntry });
+      }
+    } catch (error) {
+      console.error('Error creating or updating personal details:', error);
+      res.status(500).json({ message: 'Error creating or updating personal details', error: error.message });
+    }
   }
-
-  
-
 
 
     // Get PersonalDetails by applicationNo

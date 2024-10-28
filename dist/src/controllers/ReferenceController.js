@@ -42,7 +42,7 @@ class ReferenceController {
                 if (typeof references !== 'object' || Array.isArray(references)) {
                     return res.status(400).json({ statusCode: 400, message: 'Invalid references format' });
                 }
-                // Process and save each reference entry
+                // Process and validate each reference entry
                 const entries = Object.values(references).filter(value => typeof value === 'object' && value !== null);
                 if (entries.length === 0) {
                     return res.status(400).json({ statusCode: 400, message: 'No valid reference entries provided' });
@@ -51,10 +51,30 @@ class ReferenceController {
                 const newEntries = [];
                 for (const entry of entries) {
                     if (entry && typeof entry === 'object') {
-                        const { phone } = entry, restOfEntry = __rest(entry, ["phone"]);
-                        if (!phone) {
-                            return res.status(400).json({ statusCode: 400, message: 'Reference contact phone is required' });
+                        const { employerName, jobTitle, contactName, phone, email, startDate, endDate } = entry, restOfEntry = __rest(entry, ["employerName", "jobTitle", "contactName", "phone", "email", "startDate", "endDate"]);
+                        // Validate required fields
+                        if (!employerName) {
+                            return res.status(400).json({ statusCode: 400, message: 'Employer Name is required' });
                         }
+                        if (!jobTitle) {
+                            return res.status(400).json({ statusCode: 400, message: 'Job Title is required' });
+                        }
+                        if (!contactName) {
+                            return res.status(400).json({ statusCode: 400, message: 'Contact Name is required' });
+                        }
+                        if (!phone) {
+                            return res.status(400).json({ statusCode: 400, message: 'Phone Number is required' });
+                        }
+                        if (!email) {
+                            return res.status(400).json({ statusCode: 400, message: 'Email is required' });
+                        }
+                        if (!startDate) {
+                            return res.status(400).json({ statusCode: 400, message: 'Start Date is required' });
+                        }
+                        if (!endDate) {
+                            return res.status(400).json({ statusCode: 400, message: 'End Date is required' });
+                        }
+                        // Check for existing reference by phone
                         const existingReference = yield ReferenceService_1.ReferenceService.findByApplicationNoAndPhone(applicationNo, phone);
                         if (existingReference) {
                             // Update existing reference with attempted: true
