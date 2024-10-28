@@ -6,11 +6,52 @@ export class BankDetailsController {
     // Create or update BankDetails based on applicationNo
     static async createBankDetails(req: Request, res: Response) {
         try {
-            const { applicationNo } = req.body;
-    
+            const {
+                applicationNo,
+                bankName,
+                accountNumber,
+                sortCode,
+                accountName,
+                employmentStatusDeclaration,
+                studentLoanStatus,
+                p45Attached
+            } = req.body;
+
+            // Validate required fields
+            if (!bankName) {
+                return res.status(400).json({ statusCode: 400, message: 'Bank Name is required' });
+            }
+            if (!/^[A-Za-z\s]+$/.test(bankName)) {
+                return res.status(400).json({ statusCode: 400, message: 'Bank Name should contain letters only' });
+            }
+            if (!accountNumber) {
+                return res.status(400).json({ statusCode: 400, message: 'Account number is required' });
+            }
+            if (!/^\d+$/.test(accountNumber)) {
+                return res.status(400).json({ statusCode: 400, message: 'Account number should contain numbers only' });
+            }
+            if (!sortCode) {
+                return res.status(400).json({ statusCode: 400, message: 'Sort Code is required' });
+            }
+            if (!accountName) {
+                return res.status(400).json({ statusCode: 400, message: 'Account Name is required' });
+            }
+            if (!studentLoanStatus) {
+                return res.status(400).json({ statusCode: 400, message: 'Please Tick One is required' });
+            }
+
+            // Check for the removal of Student Loans if one of the statements is ticked
+            if (studentLoanStatus === 'I have a student loan and another job.' && employmentStatusDeclaration) {
+                // Assuming employmentStatusDeclaration indicates selection of one of the three statements
+                // You can add logic here if you have specific statements to check against
+                // For example:
+                // if (employmentStatusDeclaration.includes('specific statement')) { ... }
+                return res.status(400).json({ statusCode: 400, message: 'Student Loans tick is removed due to selection of another statement.' });
+            }
+
             // Check if the BankDetails with the given applicationNo exists
             const existingBankDetails = await BankDetailsService.getBankDetailsByApplicationNo(applicationNo);
-    
+
             if (existingBankDetails) {
                 // If it exists, update the existing record
                 const updatedBankDetails = await BankDetailsService.updateBankDetailsByApplicationNo(applicationNo, req.body);
