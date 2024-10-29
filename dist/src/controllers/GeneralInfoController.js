@@ -16,50 +16,37 @@ exports.GeneralInfoController = void 0;
 const GeneralInfoService_1 = require("../services/GeneralInfoService");
 const UserService_1 = require("../services/UserService");
 const path_1 = __importDefault(require("path"));
-const fs_1 = __importDefault(require("fs"));
-const cloudinary_1 = require("cloudinary");
-// Configure Cloudinary
-cloudinary_1.v2.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+const digitalOceanConfig_1 = require("../config/digitalOceanConfig"); // Import S3 instance for DigitalOcean Spaces
+const uuid_1 = require("uuid"); // For generating unique file names
 class GeneralInfoController {
-    // Helper function to upload images to Cloudinary
-    static uploadImageToCloudinary(file) {
+    // Helper function to upload document to DigitalOcean Spaces
+    static uploadDocumentToSpace(file) {
         return __awaiter(this, void 0, void 0, function* () {
+            const fileKey = `uploads/certificates/${(0, uuid_1.v4)()}-${file.originalname}`;
             try {
-                const result = yield cloudinary_1.v2.uploader.upload(file.path);
-                return result.secure_url;
+                const params = {
+                    Bucket: process.env.DO_SPACE_NAME, // Your Space name
+                    Key: fileKey,
+                    Body: file.buffer,
+                    ACL: 'public-read', // Make file public
+                    ContentType: file.mimetype,
+                };
+                const { Location } = yield digitalOceanConfig_1.s3.upload(params).promise();
+                return Location; // URL to access the uploaded document
             }
             catch (error) {
-                console.error('Error uploading image to Cloudinary:', error);
-                throw new Error('Failed to upload image');
+                console.error('Error uploading file to DigitalOcean:', error);
+                throw new Error('Failed to upload document');
             }
-        });
-    }
-    // Helper function to save document locally and return the path
-    static saveDocumentLocally(file) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const uploadDir = path_1.default.join(__dirname, '../../uploads/certificates');
-            if (!fs_1.default.existsSync(uploadDir))
-                fs_1.default.mkdirSync(uploadDir);
-            const filePath = path_1.default.join(uploadDir, file.originalname);
-            fs_1.default.renameSync(file.path, filePath); // Move file to the uploads directory
-            return filePath;
         });
     }
     // Helper function to handle file upload based on type
     static handleFileUpload(file) {
         return __awaiter(this, void 0, void 0, function* () {
             const fileExtension = path_1.default.extname(file.originalname).toLowerCase();
-            // Document file formats
+            // Check for supported document formats
             if (['.pdf', '.doc', '.docx'].includes(fileExtension)) {
-                return yield GeneralInfoController.saveDocumentLocally(file); // Local path for documents
-            }
-            // Image file formats for Cloudinary
-            else if (['.jpg', '.jpeg', '.png'].includes(fileExtension)) {
-                return yield GeneralInfoController.uploadImageToCloudinary(file);
+                return yield GeneralInfoController.uploadDocumentToSpace(file); // Upload to DigitalOcean Spaces
             }
             else {
                 throw new Error('Unsupported file format');

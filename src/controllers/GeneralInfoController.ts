@@ -5,49 +5,38 @@ import { GeneralInfoService } from '../services/GeneralInfoService';
 import { UserService } from '../services/UserService';
 import path from 'path';
 import fs from 'fs';
-import uploadDocumentsAndImages from '../multerConfig';
-import { v2 as cloudinary } from 'cloudinary';
-
-// Configure Cloudinary
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY, 
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+import { s3 } from '../config/digitalOceanConfig'; // Import S3 instance for DigitalOcean Spaces
+import { v4 as uuidv4 } from 'uuid'; // For generating unique file names
 
 export class GeneralInfoController {
-    // Helper function to upload images to Cloudinary
-    private static async uploadImageToCloudinary(file: Express.Multer.File): Promise<string> {
+    // Helper function to upload document to DigitalOcean Spaces
+    private static async uploadDocumentToSpace(file: Express.Multer.File): Promise<string> {
+        const fileKey = `uploads/certificates/${uuidv4()}-${file.originalname}`;
+
         try {
-            const result = await cloudinary.uploader.upload(file.path);
-            return result.secure_url;
+            const params = {
+                Bucket: process.env.DO_SPACE_NAME, // Your Space name
+                Key: fileKey,
+                Body: file.buffer,
+                ACL: 'public-read', // Make file public
+                ContentType: file.mimetype,
+            };
+
+            const { Location } = await s3.upload(params).promise();
+            return Location; // URL to access the uploaded document
         } catch (error) {
-            console.error('Error uploading image to Cloudinary:', error);
-            throw new Error('Failed to upload image');
+            console.error('Error uploading file to DigitalOcean:', error);
+            throw new Error('Failed to upload document');
         }
-    }
-
-    // Helper function to save document locally and return the path
-    private static async saveDocumentLocally(file: Express.Multer.File): Promise<string> {
-        const uploadDir = path.join(__dirname, '../../uploads/certificates');
-        if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
-
-        const filePath = path.join(uploadDir, file.originalname);
-        fs.renameSync(file.path, filePath); // Move file to the uploads directory
-        return filePath;
     }
 
     // Helper function to handle file upload based on type
     private static async handleFileUpload(file: Express.Multer.File): Promise<string> {
         const fileExtension = path.extname(file.originalname).toLowerCase();
 
-        // Document file formats
+        // Check for supported document formats
         if (['.pdf', '.doc', '.docx'].includes(fileExtension)) {
-            return await GeneralInfoController.saveDocumentLocally(file); // Local path for documents
-        } 
-        // Image file formats for Cloudinary
-        else if (['.jpg', '.jpeg', '.png'].includes(fileExtension)) {
-            return await GeneralInfoController.uploadImageToCloudinary(file);
+            return await GeneralInfoController.uploadDocumentToSpace(file); // Upload to DigitalOcean Spaces
         } else {
             throw new Error('Unsupported file format');
         }
@@ -151,8 +140,7 @@ export class GeneralInfoController {
             console.error('Error creating or updating general info:', error);
             res.status(500).json({ message: 'Error creating or updating general info', error: error.message });
         }
-    }
-    
+    }    
 
     // Get GeneralInfo by applicationNo
     static async getGeneralInfoByNo(req: Request, res: Response) {
