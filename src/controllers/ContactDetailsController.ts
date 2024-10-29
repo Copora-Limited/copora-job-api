@@ -15,9 +15,18 @@ export class ContactDetailsController {
             return res.status(400).json({ message: 'Phone is required' });
           }
     
-          const phoneDigits = phone.replace(/\D/g, ''); // Remove non-numeric characters for digit validation
-          if ((phone.startsWith('+44') && phoneDigits.length !== 12) || (!phone.startsWith('+44') && ![10, 11].includes(phoneDigits.length))) {
-            return res.status(400).json({ message: 'Phone number should have 10 or 11 digits, or 11 digits if starting with +44' });
+          // const phoneDigits = phone.replace(/\D/g, ''); // Remove non-numeric characters for digit validation
+          // if ((phone.startsWith('+44') && phoneDigits.length !== 12) || (!phone.startsWith('+44') && ![10, 11].includes(phoneDigits.length))) {
+          //   return res.status(400).json({ message: 'Phone number should have 10 or 11 digits, or 11 digits if starting with +44' });
+          // }
+
+          const phoneDigits = phone.replace(/\D/g, ''); // Remove non-numeric characters
+
+          if (
+            (phone.startsWith('+44') && phoneDigits.length !== 12) || 
+            (!phone.startsWith('+44') && ![10, 11].includes(phoneDigits.length))
+          ) {
+            return res.status(400).json({ message: 'Phone number should have 10 or 11 digits, or 12 digits if starting with +44' });
           }
     
           if (!address_line_1) {

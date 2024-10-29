@@ -41,7 +41,7 @@ AppDataSource.initialize()
 
     const app = express();
     const isLocal = process.env.NODE_ENV === 'development';
-    const port = process.env.PORT || 4000;
+    const port = process.env.PORT || 8100;
     const url = isLocal ? process.env.LOCAL_URL : process.env.REMOTE_URL;
 
     // Trust the proxy

@@ -42,7 +42,7 @@ data_source_1.AppDataSource.initialize()
     console.log('Database connection established successfully.');
     const app = (0, express_1.default)();
     const isLocal = process.env.NODE_ENV === 'development';
-    const port = process.env.PORT || 4000;
+    const port = process.env.PORT || 8100;
     const url = isLocal ? process.env.LOCAL_URL : process.env.REMOTE_URL;
     // Trust the proxy
     app.set('trust proxy', 1);
