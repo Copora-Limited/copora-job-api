@@ -15,19 +15,18 @@ export class ContactDetailsController {
             return res.status(400).json({ message: 'Phone is required' });
           }
     
-          // const phoneDigits = phone.replace(/\D/g, ''); // Remove non-numeric characters for digit validation
-          // if ((phone.startsWith('+44') && phoneDigits.length !== 12) || (!phone.startsWith('+44') && ![10, 11].includes(phoneDigits.length))) {
-          //   return res.status(400).json({ message: 'Phone number should have 10 or 11 digits, or 11 digits if starting with +44' });
-          // }
+          // Define phone validation
+          const phoneDigits = phone.replace(/\D/g, ''); // Remove non-numeric characters for validation
+          const validUkPhoneWithCode = /^\+44\d{10}$/; // +44 followed by 10 digits
+          const validUkPhoneWithoutCode = /^\d{10,11}$/; // 10 or 11 digits without country code
 
-          const phoneDigits = phone.replace(/\D/g, ''); // Remove non-numeric characters
-
-          if (
-            (phone.startsWith('+44') && phoneDigits.length !== 12) || 
-            (!phone.startsWith('+44') && ![10, 11].includes(phoneDigits.length))
-          ) {
-            return res.status(400).json({ message: 'Phone number should have 10 or 11 digits, or 12 digits if starting with +44' });
+          // Validate phone format
+          if (!(validUkPhoneWithCode.test(phone) || validUkPhoneWithoutCode.test(phoneDigits))) {
+              return res.status(400).json({
+                  message: 'Phone number should have 10 or 11 digits, or start with +44 followed by 10 digits.'
+              });
           }
+
     
           if (!address_line_1) {
             return res.status(400).json({ message: 'Property name or number is required' });
