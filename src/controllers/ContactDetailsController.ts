@@ -4,73 +4,78 @@ import { ContactDetailsService } from '../services/ContactDetailsService';
 export class ContactDetailsController {
     // private static contactDetailsService = new ContactDetailsService();
 
-    // Create or update ContactDetails based on applicationNo
-    static async createContactDetails(req: Request, res: Response) {
-        try {
+    private static validatePhone(phone: string): boolean {
+      const phoneDigits = phone.replace(/\D/g, ''); // Remove non-numeric characters
+
+      // UK number validation
+      if (phone.startsWith('+44') || phone.startsWith('44')) {
+          return phoneDigits.length === 12; // Expect exactly 12 digits for +44 or 44 format
+      } 
+      else if (/^\d{10,11}$/.test(phoneDigits)) { // Local UK number (without 44 prefix)
+          return true; // 10 or 11 digits are valid for local UK numbers
+      }
+
+      // International format validation (not UK)
+      return /^\+\d{10,15}$/.test(phone); // + followed by 10 to 15 digits
+  }
+
+  // Public method to create or update contact details
+  public static async createContactDetails(req: Request, res: Response) {
+      try {
           console.log("Data:", req.body);
           const { applicationNo, phone, address_line_1, town, country, postcode } = req.body;
-    
+
           // Validation checks
           if (!phone) {
-            return res.status(400).json({ message: 'Phone is required' });
+              return res.status(400).json({ message: 'Phone number is required' });
           }
-    
-          // Define regex patterns for phone validation
-          const phoneDigits = phone.replace(/\D/g, ''); // Remove non-numeric characters
-          const validUkPhoneWithCode = /^(\+44|44)\d{10}$/; // Either +44 or 44 followed by 10 digits
-          const validUkPhoneWithoutCode = /^\d{10,11}$/; // Local UK numbers: 10 or 11 digits
-          const validInternationalPhone = /^\+\d{10,15}$/; // International format: + followed by 10-15 digits
 
-          // Validate phone format
-          if (
-              !(validUkPhoneWithCode.test(phone) || 
-                validUkPhoneWithoutCode.test(phoneDigits) || 
-                validInternationalPhone.test(phone))
-          ) {
+          // Use the validatePhone method
+          if (!ContactDetailsController.validatePhone(phone)) {
               return res.status(400).json({
                   message: 'Phone number should be a valid UK number (starting with +44 or 44 followed by 10 digits, or 10-11 digits locally) or a valid international format (+ followed by 10-15 digits).'
               });
           }
 
-    
           if (!address_line_1) {
-            return res.status(400).json({ message: 'Property name or number is required' });
+              return res.status(400).json({ message: 'Property name or number is required' });
           }
-    
+
           if (!town) {
-            return res.status(400).json({ message: 'Town is required' });
+              return res.status(400).json({ message: 'Town is required' });
           }
-    
+
           if (!/^[a-zA-Z\s]+$/.test(town)) {
-            return res.status(400).json({ message: 'Town should contain letters only' });
+              return res.status(400).json({ message: 'Town should contain letters only' });
           }
-    
+
           if (!country) {
-            return res.status(400).json({ message: 'Country is required' });
+              return res.status(400).json({ message: 'Country is required' });
           }
-    
+
           if (!postcode) {
-            return res.status(400).json({ message: 'Postcode is required' });
+              return res.status(400).json({ message: 'Postcode is required' });
           }
-    
+
           // Check if ContactDetails with the given applicationNo exists
           const existingContactDetails = await ContactDetailsService.getContactDetailsByApplicationNo(applicationNo);
-    
+
           if (existingContactDetails) {
-            // Update existing record if found
-            const updatedContactDetails = await ContactDetailsService.updateContactDetailsByApplicationNo(applicationNo, req.body);
-            return res.status(200).json({ message: 'Contact Details updated', data: updatedContactDetails });
+              // Update existing record if found
+              const updatedContactDetails = await ContactDetailsService.updateContactDetailsByApplicationNo(applicationNo, req.body);
+              return res.status(200).json({ message: 'Contact Details updated', data: updatedContactDetails });
           } else {
-            // Create a new record with 'attempted' set to true
-            const newContactDetailsData = { ...req.body, attempted: true };
-            const newContactDetails = await ContactDetailsService.createContactDetails(newContactDetailsData);
-            return res.status(201).json({ message: 'Contact Details created', data: newContactDetails });
+              // Create a new record with 'attempted' set to true
+              const newContactDetailsData = { ...req.body, attempted: true };
+              const newContactDetails = await ContactDetailsService.createContactDetails(newContactDetailsData);
+              return res.status(201).json({ message: 'Contact Details created', data: newContactDetails });
           }
-        } catch (error) {
+      } catch (error) {
           console.error('Error creating or updating contact details:', error);
           res.status(500).json({ message: 'Error creating or updating contact details', error: error.message });
-        }
       }
+  }
+
 
     // Get Contact Details by applicationNo
     static async getContactDetailsByNo(req: Request, res: Response) {

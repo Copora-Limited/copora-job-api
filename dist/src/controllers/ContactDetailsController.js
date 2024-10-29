@@ -13,7 +13,19 @@ exports.ContactDetailsController = void 0;
 const ContactDetailsService_1 = require("../services/ContactDetailsService");
 class ContactDetailsController {
     // private static contactDetailsService = new ContactDetailsService();
-    // Create or update ContactDetails based on applicationNo
+    static validatePhone(phone) {
+        const phoneDigits = phone.replace(/\D/g, ''); // Remove non-numeric characters
+        // UK number validation
+        if (phone.startsWith('+44') || phone.startsWith('44')) {
+            return phoneDigits.length === 12; // Expect exactly 12 digits for +44 or 44 format
+        }
+        else if (/^\d{10,11}$/.test(phoneDigits)) { // Local UK number (without 44 prefix)
+            return true; // 10 or 11 digits are valid for local UK numbers
+        }
+        // International format validation (not UK)
+        return /^\+\d{10,15}$/.test(phone); // + followed by 10 to 15 digits
+    }
+    // Public method to create or update contact details
     static createContactDetails(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -21,17 +33,10 @@ class ContactDetailsController {
                 const { applicationNo, phone, address_line_1, town, country, postcode } = req.body;
                 // Validation checks
                 if (!phone) {
-                    return res.status(400).json({ message: 'Phone is required' });
+                    return res.status(400).json({ message: 'Phone number is required' });
                 }
-                // Define regex patterns for phone validation
-                const phoneDigits = phone.replace(/\D/g, ''); // Remove non-numeric characters
-                const validUkPhoneWithCode = /^(\+44|44)\d{10}$/; // Either +44 or 44 followed by 10 digits
-                const validUkPhoneWithoutCode = /^\d{10,11}$/; // Local UK numbers: 10 or 11 digits
-                const validInternationalPhone = /^\+\d{10,15}$/; // International format: + followed by 10-15 digits
-                // Validate phone format
-                if (!(validUkPhoneWithCode.test(phone) ||
-                    validUkPhoneWithoutCode.test(phoneDigits) ||
-                    validInternationalPhone.test(phone))) {
+                // Use the validatePhone method
+                if (!ContactDetailsController.validatePhone(phone)) {
                     return res.status(400).json({
                         message: 'Phone number should be a valid UK number (starting with +44 or 44 followed by 10 digits, or 10-11 digits locally) or a valid international format (+ followed by 10-15 digits).'
                     });
