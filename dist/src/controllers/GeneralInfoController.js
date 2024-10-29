@@ -17,26 +17,36 @@ const GeneralInfoService_1 = require("../services/GeneralInfoService");
 const UserService_1 = require("../services/UserService");
 const path_1 = __importDefault(require("path"));
 const digitalOceanConfig_1 = require("../config/digitalOceanConfig"); // Import S3 instance for DigitalOcean Spaces
-const uuid_1 = require("uuid"); // For generating unique file names
+const lib_storage_1 = require("@aws-sdk/lib-storage");
+const uuid_1 = require("uuid");
 class GeneralInfoController {
     // Helper function to upload document to DigitalOcean Spaces
     static uploadDocumentToSpace(file) {
         return __awaiter(this, void 0, void 0, function* () {
-            const fileKey = `uploads/certificates/${(0, uuid_1.v4)()}-${file.originalname}`;
+            const uniqueId = (0, uuid_1.v4)().slice(0, 8);
+            const fileKey = `${uniqueId}-${file.originalname}`;
+            if (!file.buffer) {
+                throw new Error("File buffer is undefined. Ensure Multer is configured to store files in memory.");
+            }
             try {
                 const params = {
-                    Bucket: process.env.DO_SPACE_NAME, // Your Space name
+                    Bucket: process.env.DO_SPACE_NAME,
                     Key: fileKey,
-                    Body: file.buffer,
-                    ACL: 'public-read', // Make file public
+                    Body: file.buffer, // Directly use buffer without conversion
+                    ACL: "public-read",
                     ContentType: file.mimetype,
                 };
-                const { Location } = yield digitalOceanConfig_1.s3.upload(params).promise();
-                return Location; // URL to access the uploaded document
+                const upload = new lib_storage_1.Upload({
+                    client: digitalOceanConfig_1.s3,
+                    params: params,
+                });
+                yield upload.done();
+                const fileUrl = `${process.env.DO_SPACE_ENDPOINT}/certificates/${fileKey}`;
+                return fileUrl;
             }
             catch (error) {
-                console.error('Error uploading file to DigitalOcean:', error);
-                throw new Error('Failed to upload document');
+                console.error("Error uploading file to DigitalOcean:", error);
+                throw new Error("Failed to upload document");
             }
         });
     }

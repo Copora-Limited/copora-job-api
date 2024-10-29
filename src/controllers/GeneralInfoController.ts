@@ -4,31 +4,43 @@ import { GeneralInfo } from '../entities/GeneralInfoEntity';
 import { GeneralInfoService } from '../services/GeneralInfoService';
 import { UserService } from '../services/UserService';
 import path from 'path';
-import fs from 'fs';
+import { S3Client, ObjectCannedACL } from "@aws-sdk/client-s3";
 import { s3 } from '../config/digitalOceanConfig'; // Import S3 instance for DigitalOcean Spaces
-import { v4 as uuidv4 } from 'uuid'; // For generating unique file names
+import { Upload } from "@aws-sdk/lib-storage";
+import { v4 as uuidv4 } from "uuid";
 
 export class GeneralInfoController {
     // Helper function to upload document to DigitalOcean Spaces
     private static async uploadDocumentToSpace(file: Express.Multer.File): Promise<string> {
-        const fileKey = `uploads/certificates/${uuidv4()}-${file.originalname}`;
+      const uniqueId = uuidv4().slice(0, 8);
+      const fileKey = `${uniqueId}-${file.originalname}`;
 
-        try {
-            const params = {
-                Bucket: process.env.DO_SPACE_NAME, // Your Space name
-                Key: fileKey,
-                Body: file.buffer,
-                ACL: 'public-read', // Make file public
-                ContentType: file.mimetype,
-            };
+      if (!file.buffer) {
+          throw new Error("File buffer is undefined. Ensure Multer is configured to store files in memory.");
+      }
 
-            const { Location } = await s3.upload(params).promise();
-            return Location; // URL to access the uploaded document
-        } catch (error) {
-            console.error('Error uploading file to DigitalOcean:', error);
-            throw new Error('Failed to upload document');
-        }
-    }
+      try {
+          const params = {
+              Bucket: process.env.DO_SPACE_NAME!,
+              Key: fileKey,
+              Body: file.buffer, // Directly use buffer without conversion
+              ACL: "public-read" as ObjectCannedACL,
+              ContentType: file.mimetype,
+          };
+
+          const upload = new Upload({
+              client: s3,
+              params: params,
+          });
+
+          await upload.done();
+          const fileUrl = `${process.env.DO_SPACE_ENDPOINT}/certificates/${fileKey}`;
+          return fileUrl;
+      } catch (error) {
+          console.error("Error uploading file to DigitalOcean:", error);
+          throw new Error("Failed to upload document");
+      }
+  }
 
     // Helper function to handle file upload based on type
     private static async handleFileUpload(file: Express.Multer.File): Promise<string> {
