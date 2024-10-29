@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.uploadDocumentsAndImages = void 0;
 const multer_1 = __importDefault(require("multer"));
 // Define memory storage configuration to store files in memory as buffers
 const storage = multer_1.default.memoryStorage();
@@ -15,8 +16,11 @@ const allowedFileTypes = [
     "image/png" // PNG images
 ];
 // Multer upload configuration for both documents and images
-const uploadDocumentsAndImages = (0, multer_1.default)({
+exports.uploadDocumentsAndImages = (0, multer_1.default)({
     storage: storage, // Use memory storage to save the files as buffers
+    limits: {
+        fileSize: 10 * 1024 * 1024 // Set file size limit to 10 MB
+    },
     fileFilter: (req, file, cb) => {
         if (allowedFileTypes.includes(file.mimetype)) {
             cb(null, true); // Accept the file, no error
@@ -27,6 +31,4 @@ const uploadDocumentsAndImages = (0, multer_1.default)({
         }
     }
 });
-exports.default = uploadDocumentsAndImages;
-// https://copora-candidates.lon1.digitaloceanspaces.com/certificates/certificates/2524ad30-Invoice_ISS-1080_2024-10-29%20(1).pdf
-// https://copora-candidates.lon1.digitaloceanspaces.com/certificates/2524ad30-Invoice_ISS-1080_2024-10-29 (1).pdf
+exports.default = exports.uploadDocumentsAndImages;

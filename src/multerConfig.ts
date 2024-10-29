@@ -13,8 +13,11 @@ const allowedFileTypes = [
 ];
 
 // Multer upload configuration for both documents and images
-const uploadDocumentsAndImages = multer({
+export const uploadDocumentsAndImages = multer({
     storage: storage, // Use memory storage to save the files as buffers
+    limits: {
+        fileSize: 10 * 1024 * 1024 // Set file size limit to 10 MB
+    },
     fileFilter: (req, file, cb) => {
         if (allowedFileTypes.includes(file.mimetype)) {
             cb(null, true); // Accept the file, no error
@@ -26,6 +29,3 @@ const uploadDocumentsAndImages = multer({
 });
 
 export default uploadDocumentsAndImages;
-
-// https://copora-candidates.lon1.digitaloceanspaces.com/certificates/certificates/2524ad30-Invoice_ISS-1080_2024-10-29%20(1).pdf
-// https://copora-candidates.lon1.digitaloceanspaces.com/certificates/2524ad30-Invoice_ISS-1080_2024-10-29 (1).pdf

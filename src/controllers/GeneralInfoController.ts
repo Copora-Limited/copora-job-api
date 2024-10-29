@@ -3,56 +3,9 @@ import { AppDataSource } from '../data-source';
 import { GeneralInfo } from '../entities/GeneralInfoEntity';
 import { GeneralInfoService } from '../services/GeneralInfoService';
 import { UserService } from '../services/UserService';
-import path from 'path';
-import { S3Client, ObjectCannedACL } from "@aws-sdk/client-s3";
-import { s3 } from '../config/digitalOceanConfig'; // Import S3 instance for DigitalOcean Spaces
-import { Upload } from "@aws-sdk/lib-storage";
-import { v4 as uuidv4 } from "uuid";
+import { handleFileUpload } from '../utils/uploadToSpace'; // Adjust the import path as necessary
 
 export class GeneralInfoController {
-    // Helper function to upload document to DigitalOcean Spaces
-    private static async uploadDocumentToSpace(file: Express.Multer.File): Promise<string> {
-      const uniqueId = uuidv4().slice(0, 8);
-      const fileKey = `${uniqueId}-${file.originalname}`;
-
-      if (!file.buffer) {
-          throw new Error("File buffer is undefined. Ensure Multer is configured to store files in memory.");
-      }
-
-      try {
-          const params = {
-              Bucket: process.env.DO_SPACE_NAME!,
-              Key: fileKey,
-              Body: file.buffer, // Directly use buffer without conversion
-              ACL: "public-read" as ObjectCannedACL,
-              ContentType: file.mimetype,
-          };
-
-          const upload = new Upload({
-              client: s3,
-              params: params,
-          });
-
-          await upload.done();
-          const fileUrl = `${process.env.DO_SPACE_ENDPOINT}/certificates/${fileKey}`;
-          return fileUrl;
-      } catch (error) {
-          console.error("Error uploading file to DigitalOcean:", error);
-          throw new Error("Failed to upload document");
-      }
-  }
-
-    // Helper function to handle file upload based on type
-    private static async handleFileUpload(file: Express.Multer.File): Promise<string> {
-        const fileExtension = path.extname(file.originalname).toLowerCase();
-
-        // Check for supported document formats
-        if (['.pdf', '.doc', '.docx'].includes(fileExtension)) {
-            return await GeneralInfoController.uploadDocumentToSpace(file); // Upload to DigitalOcean Spaces
-        } else {
-            throw new Error('Unsupported file format');
-        }
-    }
 
     public static async createOrUpdateGeneralInfo(req: Request, res: Response) {
         try {
@@ -109,15 +62,15 @@ export class GeneralInfoController {
 
             // Handle file uploads and set URLs
             const level2FoodHygieneCertificateUrl = level2FoodHygieneCertificateUpload?.[0]
-                ? await GeneralInfoController.handleFileUpload(level2FoodHygieneCertificateUpload[0])
+                ? await handleFileUpload(level2FoodHygieneCertificateUpload[0])
                 : existingEntry?.level2FoodHygieneCertificateUpload;
 
             const personalLicenseCertificateUrl = personalLicenseCertificateUpload?.[0]
-                ? await GeneralInfoController.handleFileUpload(personalLicenseCertificateUpload[0])
+                ? await handleFileUpload(personalLicenseCertificateUpload[0])
                 : existingEntry?.personalLicenseCertificateUpload;
 
             const dbsCertificateUrl = dbsCertificateUpload?.[0]
-                ? await GeneralInfoController.handleFileUpload(dbsCertificateUpload[0])
+                ? await handleFileUpload(dbsCertificateUpload[0])
                 : existingEntry?.dbsCertificateUpload;
 
             // Merge data to save with the existing data if present
@@ -155,7 +108,7 @@ export class GeneralInfoController {
     }    
 
     // Get GeneralInfo by applicationNo
-    static async getGeneralInfoByNo(req: Request, res: Response) {
+    public static async getGeneralInfoByNo(req: Request, res: Response) {
         console.log("req:", req.params)
         try {
             const { applicationNo } = req.params;
@@ -172,7 +125,7 @@ export class GeneralInfoController {
     }
 
     // Update GeneralInfo by applicationNo
-    static async updateGeneralInfoByNo(req: Request, res: Response) {
+    public static async updateGeneralInfoByNo(req: Request, res: Response) {
         try {
             const { applicationNo } = req.params;
             const updatedEntry = await GeneralInfoService.updateByApplicationNo(applicationNo, req.body);
@@ -186,7 +139,7 @@ export class GeneralInfoController {
     }
 
     // Delete GeneralInfo by applicationNo
-    static async deleteGeneralInfoByNo(req: Request, res: Response) {
+    public static async deleteGeneralInfoByNo(req: Request, res: Response) {
         try {
             const { applicationNo } = req.params;
             const message = await GeneralInfoService.deleteByApplicationNo(applicationNo);

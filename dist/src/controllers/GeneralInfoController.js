@@ -8,61 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GeneralInfoController = void 0;
 const GeneralInfoService_1 = require("../services/GeneralInfoService");
 const UserService_1 = require("../services/UserService");
-const path_1 = __importDefault(require("path"));
-const digitalOceanConfig_1 = require("../config/digitalOceanConfig"); // Import S3 instance for DigitalOcean Spaces
-const lib_storage_1 = require("@aws-sdk/lib-storage");
-const uuid_1 = require("uuid");
+const uploadToSpace_1 = require("../utils/uploadToSpace"); // Adjust the import path as necessary
 class GeneralInfoController {
-    // Helper function to upload document to DigitalOcean Spaces
-    static uploadDocumentToSpace(file) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const uniqueId = (0, uuid_1.v4)().slice(0, 8);
-            const fileKey = `${uniqueId}-${file.originalname}`;
-            if (!file.buffer) {
-                throw new Error("File buffer is undefined. Ensure Multer is configured to store files in memory.");
-            }
-            try {
-                const params = {
-                    Bucket: process.env.DO_SPACE_NAME,
-                    Key: fileKey,
-                    Body: file.buffer, // Directly use buffer without conversion
-                    ACL: "public-read",
-                    ContentType: file.mimetype,
-                };
-                const upload = new lib_storage_1.Upload({
-                    client: digitalOceanConfig_1.s3,
-                    params: params,
-                });
-                yield upload.done();
-                const fileUrl = `${process.env.DO_SPACE_ENDPOINT}/certificates/${fileKey}`;
-                return fileUrl;
-            }
-            catch (error) {
-                console.error("Error uploading file to DigitalOcean:", error);
-                throw new Error("Failed to upload document");
-            }
-        });
-    }
-    // Helper function to handle file upload based on type
-    static handleFileUpload(file) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const fileExtension = path_1.default.extname(file.originalname).toLowerCase();
-            // Check for supported document formats
-            if (['.pdf', '.doc', '.docx'].includes(fileExtension)) {
-                return yield GeneralInfoController.uploadDocumentToSpace(file); // Upload to DigitalOcean Spaces
-            }
-            else {
-                throw new Error('Unsupported file format');
-            }
-        });
-    }
     static createOrUpdateGeneralInfo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -99,13 +50,13 @@ class GeneralInfoController {
                 const { level2FoodHygieneCertificateUpload, personalLicenseCertificateUpload, dbsCertificateUpload } = req.files;
                 // Handle file uploads and set URLs
                 const level2FoodHygieneCertificateUrl = (level2FoodHygieneCertificateUpload === null || level2FoodHygieneCertificateUpload === void 0 ? void 0 : level2FoodHygieneCertificateUpload[0])
-                    ? yield GeneralInfoController.handleFileUpload(level2FoodHygieneCertificateUpload[0])
+                    ? yield (0, uploadToSpace_1.handleFileUpload)(level2FoodHygieneCertificateUpload[0])
                     : existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.level2FoodHygieneCertificateUpload;
                 const personalLicenseCertificateUrl = (personalLicenseCertificateUpload === null || personalLicenseCertificateUpload === void 0 ? void 0 : personalLicenseCertificateUpload[0])
-                    ? yield GeneralInfoController.handleFileUpload(personalLicenseCertificateUpload[0])
+                    ? yield (0, uploadToSpace_1.handleFileUpload)(personalLicenseCertificateUpload[0])
                     : existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.personalLicenseCertificateUpload;
                 const dbsCertificateUrl = (dbsCertificateUpload === null || dbsCertificateUpload === void 0 ? void 0 : dbsCertificateUpload[0])
-                    ? yield GeneralInfoController.handleFileUpload(dbsCertificateUpload[0])
+                    ? yield (0, uploadToSpace_1.handleFileUpload)(dbsCertificateUpload[0])
                     : existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.dbsCertificateUpload;
                 // Merge data to save with the existing data if present
                 const dataToSave = Object.assign(Object.assign({}, existingEntry), { applicationNo,
