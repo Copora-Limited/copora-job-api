@@ -24,16 +24,16 @@ class ContactDetailsController {
                     return res.status(400).json({ message: 'Phone is required' });
                 }
                 // Define regex patterns for phone validation
-                const phoneDigits = phone.replace(/\D/g, ''); // Remove non-numeric characters for digit validation
-                const validUkPhoneWithCode = /^\+44\d{10}$/; // +44 followed by 10 digits (for UK numbers)
-                const validUkPhoneWithoutCode = /^\d{10,11}$/; // 10 or 11 digits without country code (for UK local numbers)
-                const validInternationalPhone = /^\+\d{10,15}$/; // Any international number starting with + and 10-15 digits
+                const phoneDigits = phone.replace(/\D/g, ''); // Remove non-numeric characters
+                const validUkPhoneWithCode = /^(\+44|44)\d{10}$/; // Either +44 or 44 followed by 10 digits
+                const validUkPhoneWithoutCode = /^\d{10,11}$/; // Local UK numbers: 10 or 11 digits
+                const validInternationalPhone = /^\+\d{10,15}$/; // International format: + followed by 10-15 digits
                 // Validate phone format
                 if (!(validUkPhoneWithCode.test(phone) ||
                     validUkPhoneWithoutCode.test(phoneDigits) ||
                     validInternationalPhone.test(phone))) {
                     return res.status(400).json({
-                        message: 'Phone number should be a valid UK number (+44 followed by 10 digits or 10-11 digits locally) or an international format (+ followed by 10-15 digits).'
+                        message: 'Phone number should be a valid UK number (starting with +44 or 44 followed by 10 digits, or 10-11 digits locally) or a valid international format (+ followed by 10-15 digits).'
                     });
                 }
                 if (!address_line_1) {
