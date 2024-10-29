@@ -58,7 +58,7 @@ class GeneralInfoController {
                 return yield GeneralInfoController.saveDocumentLocally(file); // Local path for documents
             }
             // Image file formats for Cloudinary
-            else if (['.jpg', '.jpeg', '.png', '.gif'].includes(fileExtension)) {
+            else if (['.jpg', '.jpeg', '.png'].includes(fileExtension)) {
                 return yield GeneralInfoController.uploadImageToCloudinary(file);
             }
             else {

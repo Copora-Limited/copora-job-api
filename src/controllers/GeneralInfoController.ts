@@ -46,7 +46,7 @@ export class GeneralInfoController {
             return await GeneralInfoController.saveDocumentLocally(file); // Local path for documents
         } 
         // Image file formats for Cloudinary
-        else if (['.jpg', '.jpeg', '.png', '.gif'].includes(fileExtension)) {
+        else if (['.jpg', '.jpeg', '.png'].includes(fileExtension)) {
             return await GeneralInfoController.uploadImageToCloudinary(file);
         } else {
             throw new Error('Unsupported file format');
