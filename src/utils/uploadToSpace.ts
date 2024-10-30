@@ -39,6 +39,6 @@ export const handleFileUpload = async (file: Express.Multer.File): Promise<strin
     if (['.jpg', 'jpeg', 'png', '.pdf', '.doc', '.docx'].includes(fileExtension)) {
         return await uploadDocumentToSpace(file); // Upload to DigitalOcean Spaces
     } else {
-        throw new Error('Unsupported file format');
+        throw new Error('Unsupported file format. Upload any of this format jpg, jpeg, png, .pdf, .doc, .docx');
     }
 };

@@ -47,7 +47,7 @@ const handleFileUpload = (file) => __awaiter(void 0, void 0, void 0, function* (
         return yield (0, exports.uploadDocumentToSpace)(file); // Upload to DigitalOcean Spaces
     }
     else {
-        throw new Error('Unsupported file format');
+        throw new Error('Unsupported file format. Upload any of this format jpg, jpeg, png, .pdf, .doc, .docx');
     }
 });
 exports.handleFileUpload = handleFileUpload;
