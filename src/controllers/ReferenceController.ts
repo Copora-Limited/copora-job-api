@@ -92,7 +92,7 @@ export class ReferenceController {
                 }
             }
 
-            return res.status(201).json({
+            return res.status(200).json({
                 message: 'Reference details processed successfully',
                 data: { updatedEntries, newEntries }
             });
