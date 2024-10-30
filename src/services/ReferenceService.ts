@@ -50,13 +50,14 @@ export class ReferenceService {
     }
     
 
-    static async findByApplicationNoAndPhone(applicationNo: string, phone: string): Promise<Reference | null> {
+    static async findByApplicationNoAndPhone(applicationNo: string, phone: string, email: string): Promise<Reference | null> {
         try {
             // Find the reference details by applicationNo and phone
             const entry = await referenceRepository.findOne({
                 where: {
                     applicationNo,
-                    phone
+                    phone,
+                    email
                 }
             });
     

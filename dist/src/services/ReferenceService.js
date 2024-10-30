@@ -64,14 +64,15 @@ class ReferenceService {
             return 'Reference deleted';
         });
     }
-    static findByApplicationNoAndPhone(applicationNo, phone) {
+    static findByApplicationNoAndPhone(applicationNo, phone, email) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 // Find the reference details by applicationNo and phone
                 const entry = yield referenceRepository.findOne({
                     where: {
                         applicationNo,
-                        phone
+                        phone,
+                        email
                     }
                 });
                 return entry || null; // Return null if entry is not found
