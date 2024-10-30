@@ -19,13 +19,13 @@ class NextOfKinController {
     }
     create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { applicationNo, firstName, lastName, relationship, email, phone, address } = req.body;
+            const { applicationNo, firstName, lastname, relationship, email, phone, address } = req.body;
             try {
                 // Check if all required fields are provided
                 if (!firstName) {
                     return res.status(400).json({ statusCode: 400, message: 'First Name is required' });
                 }
-                if (!lastName) {
+                if (!lastname) {
                     return res.status(400).json({ statusCode: 400, message: 'Last Name is required' });
                 }
                 if (!relationship) {
