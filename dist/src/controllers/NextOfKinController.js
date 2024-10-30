@@ -58,13 +58,13 @@ class NextOfKinController {
                     const updateRecord = Object.assign(Object.assign({}, req.body), { attempted: true });
                     this.nextOfKinRepository.merge(existingEntry, updateRecord);
                     yield this.nextOfKinRepository.save(existingEntry);
-                    return res.status(200).send({ message: 'Next of Kin updated', data: existingEntry }); // Return updated entry
+                    return res.status(200).send({ message: 'Emergency Contact updated Sucessfully', data: existingEntry }); // Return updated entry
                 }
                 else {
                     // Create a new entry if none exists
                     const nextOfKin = this.nextOfKinRepository.create(Object.assign(Object.assign({}, req.body), { attempted: true }));
                     yield this.nextOfKinRepository.save(nextOfKin);
-                    return res.status(201).send({ message: 'Entry created', data: nextOfKin }); // Return newly created entry
+                    return res.status(201).send({ message: 'Emergency Contact created Sucessfully', data: nextOfKin }); // Return newly created entry
                 }
             }
             catch (error) {
@@ -83,7 +83,7 @@ class NextOfKinController {
         return __awaiter(this, void 0, void 0, function* () {
             const nextOfKin = yield this.nextOfKinRepository.findOneBy({ id: parseInt(req.params.id) });
             if (!nextOfKin) {
-                return res.status(404).send('Next of Kin not found');
+                return res.status(404).send('Emergency Contact not found');
             }
             res.status(200).send(nextOfKin);
         });
@@ -92,7 +92,7 @@ class NextOfKinController {
         return __awaiter(this, void 0, void 0, function* () {
             const nextOfKin = yield this.nextOfKinRepository.findOneBy({ id: parseInt(req.params.id) });
             if (!nextOfKin) {
-                return res.status(404).send('Next of Kin not found');
+                return res.status(404).send('Emergency Contact not found');
             }
             Object.assign(nextOfKin, req.body);
             yield this.nextOfKinRepository.save(nextOfKin);
@@ -103,9 +103,9 @@ class NextOfKinController {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield this.nextOfKinRepository.delete({ id: parseInt(req.params.id) });
             if (result.affected === 0) {
-                return res.status(404).send('Next of Kin not found');
+                return res.status(404).send('Emergency Contact not found');
             }
-            res.status(200).send('Next of Kin deleted');
+            res.status(200).send('Emergency Contact deleted');
         });
     }
 }
