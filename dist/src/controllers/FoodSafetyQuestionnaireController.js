@@ -21,7 +21,8 @@ class FoodSafetyQuestionnaireController {
                 const existingFoodSafetyQuestionnaire = yield FoodSafetyQuestionnaireController.foodSafetyQuestionnaireService.getFoodSafetyQuestionnaireByApplicationNo(applicationNo);
                 if (existingFoodSafetyQuestionnaire) {
                     // If it exists, update the existing record
-                    const updatedFoodSafetyQuestionnaire = yield FoodSafetyQuestionnaireController.foodSafetyQuestionnaireService.updateFoodSafetyQuestionnaireByApplicationNo(applicationNo, req.body);
+                    const updateData = Object.assign(Object.assign({}, req.body), { attempted: true });
+                    const updatedFoodSafetyQuestionnaire = yield FoodSafetyQuestionnaireController.foodSafetyQuestionnaireService.updateFoodSafetyQuestionnaireByApplicationNo(applicationNo, updateData);
                     return res.status(200).send({ message: 'Food Safety Questionnaire updated', data: updatedFoodSafetyQuestionnaire });
                 }
                 else {

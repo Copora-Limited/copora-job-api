@@ -80,16 +80,16 @@ export class ReferenceController {
                         // Update existing reference with attempted: true
                         await ReferenceService.update(existingReference.id, {
                             ...restOfEntry,
+                            attempted: true,
                             applicationNo,
-                            attempted: true
                         });
                         updatedEntries.push({ ...existingReference, ...restOfEntry, attempted: true });
                     } else {
                         // Create new reference with attempted: true
                         const newReference = await ReferenceService.create({
-                            applicationNo, 
+                            applicationNo,
+                            attempted: true,
                             ...entry,
-                            attempted: true
                         });
                         newEntries.push(newReference);
                     }

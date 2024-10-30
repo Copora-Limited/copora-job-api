@@ -30,7 +30,8 @@ class AgreementConsentController {
                 let agreementConsent;
                 if (existingAgreementConsent) {
                     // If it exists, update the existing record
-                    agreementConsent = yield AgreementConsentService_1.AgreementConsentService.updateByApplicationNo(applicationNo, req.body);
+                    const updateData = Object.assign(Object.assign({}, req.body), { attempted: true });
+                    agreementConsent = yield AgreementConsentService_1.AgreementConsentService.updateByApplicationNo(applicationNo, updateData);
                     res.status(200).send({ message: 'Agreement Consent updated', data: agreementConsent });
                 }
                 else {

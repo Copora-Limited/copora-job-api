@@ -73,12 +73,12 @@ class EducationalDetailsController {
                         const existingEntry = yield EducationalDetailsService_1.EducationalDetailsService.findByApplicationNoAndCourseOfStudy(applicationNo, courseOfStudy);
                         if (existingEntry) {
                             // Update existing entry
-                            yield EducationalDetailsService_1.EducationalDetailsService.update(existingEntry.id, Object.assign(Object.assign({}, restOfEntry), { applicationNo }));
+                            yield EducationalDetailsService_1.EducationalDetailsService.update(existingEntry.id, Object.assign(Object.assign({}, restOfEntry), { applicationNo, attempted: true }));
                             updatedEntries.push(Object.assign(Object.assign({}, existingEntry), restOfEntry));
                         }
                         else {
                             // Create new entry
-                            const newReference = yield EducationalDetailsService_1.EducationalDetailsService.create(Object.assign({ applicationNo }, entry));
+                            const newReference = yield EducationalDetailsService_1.EducationalDetailsService.create(Object.assign(Object.assign({ applicationNo }, entry), { attempted: true }));
                             newEntries.push(newReference);
                         }
                     }

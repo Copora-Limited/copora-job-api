@@ -71,14 +71,16 @@ export class EducationalDetailsController {
                         // Update existing entry
                         await EducationalDetailsService.update(existingEntry.id, {
                             ...restOfEntry,
-                            applicationNo
+                            applicationNo,
+                            attempted: true
                         });
                         updatedEntries.push({ ...existingEntry, ...restOfEntry });
                     } else {
                         // Create new entry
                         const newReference = await EducationalDetailsService.create({
                             applicationNo,
-                            ...entry
+                            ...entry,
+                            attempted: true
                         });
                         newEntries.push(newReference);
                     }

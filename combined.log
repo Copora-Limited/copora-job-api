@@ -40,3 +40,14 @@
 2024-10-29T19:01:26.601Z [[32minfo[39m]: HTTP POST /general-info
 2024-10-29T19:35:21.702Z [[32minfo[39m]: HTTP POST /general-info
 2024-10-29T19:52:52.364Z [[32minfo[39m]: HTTP POST /general-info
+2024-10-30T13:26:14.143Z [[32minfo[39m]: HTTP GET /api-docs
+2024-10-30T13:26:14.178Z [[32minfo[39m]: HTTP GET /api-docs/
+2024-10-30T13:26:14.233Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui.css
+2024-10-30T13:26:14.261Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-10-30T13:26:14.322Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-10-30T13:26:14.369Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-10-30T13:28:19.240Z [[32minfo[39m]: HTTP GET /applicant/attempts/APP-985506AA
+2024-10-30T13:28:56.870Z [[32minfo[39m]: HTTP GET /applicant/attempts/APP-985506AA
+2024-10-30T13:29:57.638Z [[32minfo[39m]: HTTP GET /applicant/attempts/APP-985506AA
+2024-10-30T13:31:13.570Z [[32minfo[39m]: HTTP GET /applicant/attempts/APP-985506AA
+2024-10-30T13:31:40.880Z [[32minfo[39m]: HTTP GET /applicant/attempts/APP-985506AA

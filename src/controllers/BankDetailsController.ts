@@ -54,7 +54,8 @@ export class BankDetailsController {
 
             if (existingBankDetails) {
                 // If it exists, update the existing record
-                const updatedBankDetails = await BankDetailsService.updateBankDetailsByApplicationNo(applicationNo, req.body);
+                const updateData = {...req.body, attempted: true};
+                const updatedBankDetails = await BankDetailsService.updateBankDetailsByApplicationNo(applicationNo, updateData);
                 return res.status(200).send({ message: 'Bank Details updated', data: updatedBankDetails });
             } else {
                 // If it does not exist, create a new record with attempted set to true

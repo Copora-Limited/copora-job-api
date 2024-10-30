@@ -14,7 +14,8 @@ export class FoodSafetyQuestionnaireController {
     
             if (existingFoodSafetyQuestionnaire) {
                 // If it exists, update the existing record
-                const updatedFoodSafetyQuestionnaire = await FoodSafetyQuestionnaireController.foodSafetyQuestionnaireService.updateFoodSafetyQuestionnaireByApplicationNo(applicationNo, req.body);
+                const updateData = {...req.body, attempted: true};
+                const updatedFoodSafetyQuestionnaire = await FoodSafetyQuestionnaireController.foodSafetyQuestionnaireService.updateFoodSafetyQuestionnaireByApplicationNo(applicationNo, updateData);
                 return res.status(200).send({ message: 'Food Safety Questionnaire updated', data: updatedFoodSafetyQuestionnaire });
             } else {
                 // If it does not exist, create a new record with attempted set to true

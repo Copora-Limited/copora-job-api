@@ -51,7 +51,8 @@ class BankDetailsController {
                 const existingBankDetails = yield BankDetailsService_1.BankDetailsService.getBankDetailsByApplicationNo(applicationNo);
                 if (existingBankDetails) {
                     // If it exists, update the existing record
-                    const updatedBankDetails = yield BankDetailsService_1.BankDetailsService.updateBankDetailsByApplicationNo(applicationNo, req.body);
+                    const updateData = Object.assign(Object.assign({}, req.body), { attempted: true });
+                    const updatedBankDetails = yield BankDetailsService_1.BankDetailsService.updateBankDetailsByApplicationNo(applicationNo, updateData);
                     return res.status(200).send({ message: 'Bank Details updated', data: updatedBankDetails });
                 }
                 else {

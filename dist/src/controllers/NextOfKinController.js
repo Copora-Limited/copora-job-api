@@ -55,13 +55,14 @@ class NextOfKinController {
                 let existingEntry = yield this.nextOfKinRepository.findOneBy({ applicationNo });
                 if (existingEntry) {
                     // Update the existing entry with the new data
-                    this.nextOfKinRepository.merge(existingEntry, req.body);
+                    const updateRecord = Object.assign(Object.assign({}, req.body), { attempted: true });
+                    this.nextOfKinRepository.merge(existingEntry, updateRecord);
                     yield this.nextOfKinRepository.save(existingEntry);
                     return res.status(200).send({ message: 'Next of Kin updated', data: existingEntry }); // Return updated entry
                 }
                 else {
                     // Create a new entry if none exists
-                    const nextOfKin = this.nextOfKinRepository.create(req.body);
+                    const nextOfKin = this.nextOfKinRepository.create(Object.assign(Object.assign({}, req.body), { attempted: true }));
                     yield this.nextOfKinRepository.save(nextOfKin);
                     return res.status(201).send({ message: 'Entry created', data: nextOfKin }); // Return newly created entry
                 }

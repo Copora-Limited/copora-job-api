@@ -47,7 +47,8 @@ export class ContactDetailsController {
 
           if (existingContactDetails) {
               // Update existing record if found
-              const updatedContactDetails = await ContactDetailsService.updateContactDetailsByApplicationNo(applicationNo, req.body);
+              const updateRecord = { ...req.body, attempted: true };
+              const updatedContactDetails = await ContactDetailsService.updateContactDetailsByApplicationNo(applicationNo, updateRecord);
               return res.status(200).json({ message: 'Contact Details updated', data: updatedContactDetails });
           } else {
               // Create a new record with 'attempted' set to true

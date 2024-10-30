@@ -48,7 +48,8 @@ class ContactDetailsController {
                 const existingContactDetails = yield ContactDetailsService_1.ContactDetailsService.getContactDetailsByApplicationNo(applicationNo);
                 if (existingContactDetails) {
                     // Update existing record if found
-                    const updatedContactDetails = yield ContactDetailsService_1.ContactDetailsService.updateContactDetailsByApplicationNo(applicationNo, req.body);
+                    const updateRecord = Object.assign(Object.assign({}, req.body), { attempted: true });
+                    const updatedContactDetails = yield ContactDetailsService_1.ContactDetailsService.updateContactDetailsByApplicationNo(applicationNo, updateRecord);
                     return res.status(200).json({ message: 'Contact Details updated', data: updatedContactDetails });
                 }
                 else {
