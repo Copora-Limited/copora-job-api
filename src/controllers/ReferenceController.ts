@@ -69,6 +69,10 @@ export class ReferenceController {
                         return res.status(400).json({ statusCode: 400, message: 'End Date is required' });
                     }
 
+                    // Ensure startDate is not greater than endDate
+                    if (new Date(startDate) > new Date(endDate)) {
+                        return res.status(400).json({ statusCode: 400, message: 'Start Date cannot be later than End Date' });
+                    }
                     // Check for existing reference by phone
                     const existingReference = await ReferenceService.findByApplicationNoAndPhone(applicationNo, phone);
 

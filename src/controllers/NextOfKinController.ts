@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { AppDataSource } from '../data-source';
 import { NextOfKin } from '../entities/NextOfKinEntity';
 import { UserService } from '../services/UserService';
+import {validatePhone} from '../utils/formValidation';
 
 export class NextOfKinController {
     private nextOfKinRepository = AppDataSource.getRepository(NextOfKin);
@@ -22,6 +23,12 @@ export class NextOfKinController {
             }
             if (!phone) {
                 return res.status(400).json({ statusCode: 400, message: 'Phone Number is required' });
+            }
+
+            if (!validatePhone(phone)) {
+                return res.status(400).json({
+                    message: 'Phone number should be a valid UK number (starting with +44 or 44 followed by 10 digits, or 10-11 digits locally) or a valid international format (+ followed by 10-15 digits).'
+                });
             }
             if (!email) {
                 return res.status(400).json({ statusCode: 400, message: 'Email is required' });

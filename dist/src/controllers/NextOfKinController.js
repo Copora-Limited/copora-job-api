@@ -13,6 +13,7 @@ exports.NextOfKinController = void 0;
 const data_source_1 = require("../data-source");
 const NextOfKinEntity_1 = require("../entities/NextOfKinEntity");
 const UserService_1 = require("../services/UserService");
+const formValidation_1 = require("../utils/formValidation");
 class NextOfKinController {
     constructor() {
         this.nextOfKinRepository = data_source_1.AppDataSource.getRepository(NextOfKinEntity_1.NextOfKin);
@@ -33,6 +34,11 @@ class NextOfKinController {
                 }
                 if (!phone) {
                     return res.status(400).json({ statusCode: 400, message: 'Phone Number is required' });
+                }
+                if (!(0, formValidation_1.validatePhone)(phone)) {
+                    return res.status(400).json({
+                        message: 'Phone number should be a valid UK number (starting with +44 or 44 followed by 10 digits, or 10-11 digits locally) or a valid international format (+ followed by 10-15 digits).'
+                    });
                 }
                 if (!email) {
                     return res.status(400).json({ statusCode: 400, message: 'Email is required' });

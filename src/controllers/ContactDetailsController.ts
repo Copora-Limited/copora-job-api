@@ -1,23 +1,8 @@
 import { Request, Response } from 'express';
 import { ContactDetailsService } from '../services/ContactDetailsService';
+import {validatePhone} from '../utils/formValidation';
 
 export class ContactDetailsController {
-    // private static contactDetailsService = new ContactDetailsService();
-
-    private static validatePhone(phone: string): boolean {
-      const phoneDigits = phone.replace(/\D/g, ''); // Remove non-numeric characters
-
-      // UK number validation
-      if (phone.startsWith('+44') || phone.startsWith('44')) {
-          return phoneDigits.length === 12; // Expect exactly 12 digits for +44 or 44 format
-      } 
-      else if (/^\d{10,11}$/.test(phoneDigits)) { // Local UK number (without 44 prefix)
-          return true; // 10 or 11 digits are valid for local UK numbers
-      }
-
-      // International format validation (not UK)
-      return /^\+\d{10,15}$/.test(phone); // + followed by 10 to 15 digits
-  }
 
   // Public method to create or update contact details
   public static async createContactDetails(req: Request, res: Response) {
@@ -31,7 +16,7 @@ export class ContactDetailsController {
           }
 
           // Use the validatePhone method
-          if (!ContactDetailsController.validatePhone(phone)) {
+          if (!validatePhone(phone)) {
               return res.status(400).json({
                   message: 'Phone number should be a valid UK number (starting with +44 or 44 followed by 10 digits, or 10-11 digits locally) or a valid international format (+ followed by 10-15 digits).'
               });
