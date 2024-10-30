@@ -127,24 +127,24 @@ router.get('/:applicationNo', PersonalDetailsController_1.PersonalDetailsControl
  *         description: Personal Details record not found
  */
 router.put('/:applicationNo', PersonalDetailsController_1.PersonalDetailsController.updatePersonalDetailsByNo);
-// /**
-//  * @swagger
-//  * /personal-details/{applicationNo}:
-//  *   delete:
-//  *     summary: Delete Personal Details record by Application Number
-//  *     tags: [PersonalDetails]
-//  *     parameters:
-//  *       - in: path
-//  *         name: applicationNo
-//  *         schema:
-//  *           type: string
-//  *         required: true
-//  *         description: The application number
-//  *     responses:
-//  *       200:
-//  *         description: Personal Details record deleted successfully
-//  *       404:
-//  *         description: Personal Details record not found
-//  */
-// router.delete('/:applicationNo', PersonalDetailsController.deletePersonalDetailsByNo);
+/**
+ * @swagger
+ * /personal-details/{applicationNo}:
+ *   delete:
+ *     summary: Delete Personal Details record by Application Number
+ *     tags: [PersonalDetails]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The application number
+ *     responses:
+ *       200:
+ *         description: Personal Details record deleted successfully
+ *       404:
+ *         description: Personal Details record not found
+ */
+router.delete('/:applicationNo', PersonalDetailsController_1.PersonalDetailsController.deletePersonalDetailsByNo);
 exports.default = router;

@@ -37,26 +37,26 @@ const router = Router();
  */
 router.post('/', AgreementConsentController.create);
 
-// /**
-//  * @swagger
-//  * /agreement-consent/{applicationNo}:
-//  *   get:
-//  *     summary: Get Agreement Consent by Application Number
-//  *     tags: [AgreementConsent]
-//  *     parameters:
-//  *       - in: path
-//  *         name: applicationNo
-//  *         schema:
-//  *           type: string
-//  *         required: true
-//  *         description: The application number
-//  *     responses:
-//  *       200:
-//  *         description: Agreement Consent retrieved successfully
-//  *       404:
-//  *         description: Agreement Consent not found
-//  */
-// router.get('/:applicationNo', AgreementConsentController.getAgreementConsentByNo);
+/**
+ * @swagger
+ * /agreement-consent/{applicationNo}:
+ *   get:
+ *     summary: Get Agreement Consent by Application Number
+ *     tags: [AgreementConsent]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The application number
+ *     responses:
+ *       200:
+ *         description: Agreement Consent retrieved successfully
+ *       404:
+ *         description: Agreement Consent not found
+ */
+router.get('/:applicationNo', AgreementConsentController.getAgreementConsentByNo);
 
 /**
  * @swagger
@@ -97,25 +97,25 @@ router.post('/', AgreementConsentController.create);
  */
 router.put('/:applicationNo', AgreementConsentController.updateAgreementConsentByNo);
 
-// /**
-//  * @swagger
-//  * /agreement-consent/{applicationNo}:
-//  *   delete:
-//  *     summary: Delete Agreement Consent by Application Number
-//  *     tags: [AgreementConsent]
-//  *     parameters:
-//  *       - in: path
-//  *         name: applicationNo
-//  *         schema:
-//  *           type: string
-//  *         required: true
-//  *         description: The application number
-//  *     responses:
-//  *       200:
-//  *         description: Agreement Consent deleted successfully
-//  *       404:
-//  *         description: Agreement Consent not found
-//  */
-// router.delete('/:applicationNo', AgreementConsentController.deleteAgreementConsentByNo);
+/**
+ * @swagger
+ * /agreement-consent/{applicationNo}:
+ *   delete:
+ *     summary: Delete Agreement Consent by Application Number
+ *     tags: [AgreementConsent]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The application number
+ *     responses:
+ *       200:
+ *         description: Agreement Consent deleted successfully
+ *       404:
+ *         description: Agreement Consent not found
+ */
+router.delete('/:applicationNo', AgreementConsentController.deleteAgreementConsentByNo);
 
 export default router;

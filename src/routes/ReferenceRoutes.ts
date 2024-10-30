@@ -50,26 +50,26 @@ const router = Router();
 // router.post('/', ReferenceController.createOrUpdateReference);
 
 
-// /**
-//  * @swagger
-//  * /reference/{applicationNo}:
-//  *   get:
-//  *     summary: Get Reference record by Application Number
-//  *     tags: [Reference]
-//  *     parameters:
-//  *       - in: path
-//  *         name: applicationNo
-//  *         schema:
-//  *           type: string
-//  *         required: true
-//  *         description: The application number
-//  *     responses:
-//  *       200:
-//  *         description: Reference record retrieved successfully
-//  *       404:
-//  *         description: Reference record not found
-//  */
-// router.get('/:applicationNo', ReferenceController.getReferenceByNo);
+/**
+ * @swagger
+ * /reference/{applicationNo}:
+ *   get:
+ *     summary: Get Reference record by Application Number
+ *     tags: [Reference]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The application number
+ *     responses:
+ *       200:
+ *         description: Reference record retrieved successfully
+ *       404:
+ *         description: Reference record not found
+ */
+router.get('/:applicationNo', ReferenceController.getReferenceByNo);
 
 
 /**

@@ -117,24 +117,24 @@ router.get('/:applicationNo', BankDetailsController_1.BankDetailsController.getB
  *         description: Bank Details not found
  */
 router.put('/:applicationNo', BankDetailsController_1.BankDetailsController.updateBankDetailsByNo);
-// /**
-//  * @swagger
-//  * /bank-details/{applicationNo}:
-//  *   delete:
-//  *     summary: Delete Bank Details by Application Number
-//  *     tags: [BankDetails]
-//  *     parameters:
-//  *       - in: path
-//  *         name: applicationNo
-//  *         schema:
-//  *           type: string
-//  *         required: true
-//  *         description: The application number
-//  *     responses:
-//  *       200:
-//  *         description: Bank Details deleted successfully
-//  *       404:
-//  *         description: Bank Details not found
-//  */
-// router.delete('/:applicationNo', BankDetailsController.deleteBankDetailsByNo);
+/**
+ * @swagger
+ * /bank-details/{applicationNo}:
+ *   delete:
+ *     summary: Delete Bank Details by Application Number
+ *     tags: [BankDetails]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The application number
+ *     responses:
+ *       200:
+ *         description: Bank Details deleted successfully
+ *       404:
+ *         description: Bank Details not found
+ */
+router.delete('/:applicationNo', BankDetailsController_1.BankDetailsController.deleteBankDetailsByNo);
 exports.default = router;

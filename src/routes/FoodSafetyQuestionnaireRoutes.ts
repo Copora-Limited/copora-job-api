@@ -72,26 +72,26 @@ const router = Router();
  */
 router.post('/', FoodSafetyQuestionnaireController.createFoodSafetyQuestionnaire);
 
-// /**
-//  * @swagger
-//  * /food-safety-questionnaire/{applicationNo}:
-//  *   get:
-//  *     summary: Get Food Safety Questionnaire by Application Number
-//  *     tags: [FoodSafetyQuestionnaire]
-//  *     parameters:
-//  *       - in: path
-//  *         name: applicationNo
-//  *         schema:
-//  *           type: string
-//  *         required: true
-//  *         description: The application number
-//  *     responses:
-//  *       200:
-//  *         description: Food Safety Questionnaire retrieved successfully
-//  *       404:
-//  *         description: Food Safety Questionnaire not found
-//  */
-// router.get('/:applicationNo', FoodSafetyQuestionnaireController.getFoodSafetyQuestionnaireByNo);
+/**
+ * @swagger
+ * /food-safety-questionnaire/{applicationNo}:
+ *   get:
+ *     summary: Get Food Safety Questionnaire by Application Number
+ *     tags: [FoodSafetyQuestionnaire]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The application number
+ *     responses:
+ *       200:
+ *         description: Food Safety Questionnaire retrieved successfully
+ *       404:
+ *         description: Food Safety Questionnaire not found
+ */
+router.get('/:applicationNo', FoodSafetyQuestionnaireController.getFoodSafetyQuestionnaireByNo);
 
 /**
  * @swagger
@@ -159,25 +159,25 @@ router.post('/', FoodSafetyQuestionnaireController.createFoodSafetyQuestionnaire
  */
 router.put('/:applicationNo', FoodSafetyQuestionnaireController.updateFoodSafetyQuestionnaireByNo);
 
-// /**
-//  * @swagger
-//  * /food-safety-questionnaire/{applicationNo}:
-//  *   delete:
-//  *     summary: Delete Food Safety Questionnaire by Application Number
-//  *     tags: [FoodSafetyQuestionnaire]
-//  *     parameters:
-//  *       - in: path
-//  *         name: applicationNo
-//  *         schema:
-//  *           type: string
-//  *         required: true
-//  *         description: The application number
-//  *     responses:
-//  *       200:
-//  *         description: Food Safety Questionnaire deleted successfully
-//  *       404:
-//  *         description: Food Safety Questionnaire not found
-//  */
-// router.delete('/:applicationNo', FoodSafetyQuestionnaireController.deleteFoodSafetyQuestionnaireByNo);
+/**
+ * @swagger
+ * /food-safety-questionnaire/{applicationNo}:
+ *   delete:
+ *     summary: Delete Food Safety Questionnaire by Application Number
+ *     tags: [FoodSafetyQuestionnaire]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The application number
+ *     responses:
+ *       200:
+ *         description: Food Safety Questionnaire deleted successfully
+ *       404:
+ *         description: Food Safety Questionnaire not found
+ */
+router.delete('/:applicationNo', FoodSafetyQuestionnaireController.deleteFoodSafetyQuestionnaireByNo);
 
 export default router;

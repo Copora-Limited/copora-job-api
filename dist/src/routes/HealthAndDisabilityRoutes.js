@@ -89,26 +89,26 @@ const router = (0, express_1.Router)();
  *         description: Bad request
  */
 router.post('/', HealthAndDisabilityController_1.HealthAndDisabilityController.createHealthAndDisability);
-// /**
-//  * @swagger
-//  * /health-and-disability/{applicationNo}:
-//  *   get:
-//  *     summary: Get Health and Disability record by Application Number
-//  *     tags: [HealthAndDisability]
-//  *     parameters:
-//  *       - in: path
-//  *         name: applicationNo
-//  *         schema:
-//  *           type: string
-//  *         required: true
-//  *         description: The application number
-//  *     responses:
-//  *       200:
-//  *         description: Health and Disability record retrieved successfully
-//  *       404:
-//  *         description: Health and Disability record not found
-//  */
-// router.get('/:applicationNo', HealthAndDisabilityController.getHealthAndDisabilityByNo);
+/**
+ * @swagger
+ * /health-and-disability/{applicationNo}:
+ *   get:
+ *     summary: Get Health and Disability record by Application Number
+ *     tags: [HealthAndDisability]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The application number
+ *     responses:
+ *       200:
+ *         description: Health and Disability record retrieved successfully
+ *       404:
+ *         description: Health and Disability record not found
+ */
+router.get('/:applicationNo', HealthAndDisabilityController_1.HealthAndDisabilityController.getHealthAndDisabilityByNo);
 /**
  * @swagger
  * /health-and-disability/{applicationNo}:
@@ -195,24 +195,24 @@ router.post('/', HealthAndDisabilityController_1.HealthAndDisabilityController.c
  *         description: Health and Disability record not found
  */
 router.put('/:applicationNo', HealthAndDisabilityController_1.HealthAndDisabilityController.updateHealthAndDisabilityByNo);
-// /**
-//  * @swagger
-//  * /health-and-disability/{applicationNo}:
-//  *   delete:
-//  *     summary: Delete Health and Disability record by Application Number
-//  *     tags: [HealthAndDisability]
-//  *     parameters:
-//  *       - in: path
-//  *         name: applicationNo
-//  *         schema:
-//  *           type: string
-//  *         required: true
-//  *         description: The application number
-//  *     responses:
-//  *       200:
-//  *         description: Health and Disability record deleted successfully
-//  *       404:
-//  *         description: Health and Disability record not found
-//  */
-// router.delete('/:applicationNo', HealthAndDisabilityController.deleteHealthAndDisabilityByNo);
+/**
+ * @swagger
+ * /health-and-disability/{applicationNo}:
+ *   delete:
+ *     summary: Delete Health and Disability record by Application Number
+ *     tags: [HealthAndDisability]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The application number
+ *     responses:
+ *       200:
+ *         description: Health and Disability record deleted successfully
+ *       404:
+ *         description: Health and Disability record not found
+ */
+router.delete('/:applicationNo', HealthAndDisabilityController_1.HealthAndDisabilityController.deleteHealthAndDisabilityByNo);
 exports.default = router;

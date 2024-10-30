@@ -52,26 +52,26 @@ const router = Router();
  */
 router.post('/', ContactDetailsController.createContactDetails);
 
-// /**
-//  * @swagger
-//  * /contact-details/{applicationNo}:
-//  *   get:
-//  *     summary: Get Contact Details by Application Number
-//  *     tags: [ContactDetails]
-//  *     parameters:
-//  *       - in: path
-//  *         name: applicationNo
-//  *         schema:
-//  *           type: string
-//  *         required: true
-//  *         description: The application number
-//  *     responses:
-//  *       200:
-//  *         description: Contact Details retrieved successfully
-//  *       404:
-//  *         description: Contact Details not found
-//  */
-// router.get('/:applicationNo', ContactDetailsController.getContactDetailsByNo);
+/**
+ * @swagger
+ * /contact-details/{applicationNo}:
+ *   get:
+ *     summary: Get Contact Details by Application Number
+ *     tags: [ContactDetails]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The application number
+ *     responses:
+ *       200:
+ *         description: Contact Details retrieved successfully
+ *       404:
+ *         description: Contact Details not found
+ */
+router.get('/:applicationNo', ContactDetailsController.getContactDetailsByNo);
 
 /**
  * @swagger
@@ -121,25 +121,25 @@ router.post('/', ContactDetailsController.createContactDetails);
  */
 router.put('/:applicationNo', ContactDetailsController.updateContactDetailsByNo);
 
-// /**
-//  * @swagger
-//  * /contact-details/{applicationNo}:
-//  *   delete:
-//  *     summary: Delete Contact Details by Application Number
-//  *     tags: [ContactDetails]
-//  *     parameters:
-//  *       - in: path
-//  *         name: applicationNo
-//  *         schema:
-//  *           type: string
-//  *         required: true
-//  *         description: The application number
-//  *     responses:
-//  *       200:
-//  *         description: Contact Details deleted successfully
-//  *       404:
-//  *         description: Contact Details not found
-//  */
-// router.delete('/:applicationNo', ContactDetailsController.deleteContactDetailsByNo);
+/**
+ * @swagger
+ * /contact-details/{applicationNo}:
+ *   delete:
+ *     summary: Delete Contact Details by Application Number
+ *     tags: [ContactDetails]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The application number
+ *     responses:
+ *       200:
+ *         description: Contact Details deleted successfully
+ *       404:
+ *         description: Contact Details not found
+ */
+router.delete('/:applicationNo', ContactDetailsController.deleteContactDetailsByNo);
 
 export default router;

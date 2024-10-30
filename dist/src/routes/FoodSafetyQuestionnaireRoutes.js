@@ -70,26 +70,26 @@ const router = (0, express_1.Router)();
  *         description: Bad request
  */
 router.post('/', FoodSafetyQuestionnaireController_1.FoodSafetyQuestionnaireController.createFoodSafetyQuestionnaire);
-// /**
-//  * @swagger
-//  * /food-safety-questionnaire/{applicationNo}:
-//  *   get:
-//  *     summary: Get Food Safety Questionnaire by Application Number
-//  *     tags: [FoodSafetyQuestionnaire]
-//  *     parameters:
-//  *       - in: path
-//  *         name: applicationNo
-//  *         schema:
-//  *           type: string
-//  *         required: true
-//  *         description: The application number
-//  *     responses:
-//  *       200:
-//  *         description: Food Safety Questionnaire retrieved successfully
-//  *       404:
-//  *         description: Food Safety Questionnaire not found
-//  */
-// router.get('/:applicationNo', FoodSafetyQuestionnaireController.getFoodSafetyQuestionnaireByNo);
+/**
+ * @swagger
+ * /food-safety-questionnaire/{applicationNo}:
+ *   get:
+ *     summary: Get Food Safety Questionnaire by Application Number
+ *     tags: [FoodSafetyQuestionnaire]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The application number
+ *     responses:
+ *       200:
+ *         description: Food Safety Questionnaire retrieved successfully
+ *       404:
+ *         description: Food Safety Questionnaire not found
+ */
+router.get('/:applicationNo', FoodSafetyQuestionnaireController_1.FoodSafetyQuestionnaireController.getFoodSafetyQuestionnaireByNo);
 /**
  * @swagger
  * /food-safety-questionnaire/{applicationNo}:
@@ -155,24 +155,24 @@ router.post('/', FoodSafetyQuestionnaireController_1.FoodSafetyQuestionnaireCont
  *         description: Food Safety Questionnaire not found
  */
 router.put('/:applicationNo', FoodSafetyQuestionnaireController_1.FoodSafetyQuestionnaireController.updateFoodSafetyQuestionnaireByNo);
-// /**
-//  * @swagger
-//  * /food-safety-questionnaire/{applicationNo}:
-//  *   delete:
-//  *     summary: Delete Food Safety Questionnaire by Application Number
-//  *     tags: [FoodSafetyQuestionnaire]
-//  *     parameters:
-//  *       - in: path
-//  *         name: applicationNo
-//  *         schema:
-//  *           type: string
-//  *         required: true
-//  *         description: The application number
-//  *     responses:
-//  *       200:
-//  *         description: Food Safety Questionnaire deleted successfully
-//  *       404:
-//  *         description: Food Safety Questionnaire not found
-//  */
-// router.delete('/:applicationNo', FoodSafetyQuestionnaireController.deleteFoodSafetyQuestionnaireByNo);
+/**
+ * @swagger
+ * /food-safety-questionnaire/{applicationNo}:
+ *   delete:
+ *     summary: Delete Food Safety Questionnaire by Application Number
+ *     tags: [FoodSafetyQuestionnaire]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The application number
+ *     responses:
+ *       200:
+ *         description: Food Safety Questionnaire deleted successfully
+ *       404:
+ *         description: Food Safety Questionnaire not found
+ */
+router.delete('/:applicationNo', FoodSafetyQuestionnaireController_1.FoodSafetyQuestionnaireController.deleteFoodSafetyQuestionnaireByNo);
 exports.default = router;
