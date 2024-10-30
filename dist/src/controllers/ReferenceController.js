@@ -120,15 +120,15 @@ class ReferenceController {
         });
     }
     // Update Reference by applicationNo
-    static updateReferenceByNo(req, res) {
+    static updateReferenceById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { applicationNo } = req.params;
-                const updatedReference = yield ReferenceService_1.ReferenceService.updateByApplicationNo(applicationNo, req.body);
+                const { id } = req.params;
+                const updatedReference = yield ReferenceService_1.ReferenceService.update(Number(id), req.body);
                 if (!updatedReference) {
                     return res.status(404).send({ message: 'Reference not found' });
                 }
-                res.status(200).send({ message: 'Reference created successfully', data: updatedReference });
+                res.status(200).send({ message: 'Reference updated successfully', data: updatedReference });
             }
             catch (error) {
                 res.status(400).send({ message: 'Error updating reference', error: error.message });

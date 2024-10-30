@@ -122,19 +122,20 @@ export class ReferenceController {
     }
 
     // Update Reference by applicationNo
-    static async updateReferenceByNo(req: Request, res: Response) {
+    static async updateReferenceById(req: Request, res: Response) {
         try {
-            const { applicationNo } = req.params;
-            
-            const updatedReference = await ReferenceService.updateByApplicationNo(applicationNo, req.body);
+            const { id } = req.params;
+    
+            const updatedReference = await ReferenceService.update(Number(id), req.body);
             if (!updatedReference) {
                 return res.status(404).send({ message: 'Reference not found' });
             }
-            res.status(200).send({ message: 'Reference created successfully', data: updatedReference});
+            res.status(200).send({ message: 'Reference updated successfully', data: updatedReference });
         } catch (error) {
             res.status(400).send({ message: 'Error updating reference', error: error.message });
         }
     }
+    
 
     // Delete Reference by applicationNo
     static async deleteReferenceByNoAndId(req: Request, res: Response) {

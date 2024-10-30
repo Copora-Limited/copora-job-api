@@ -196,13 +196,13 @@ router.post('/', ReferenceController.createOrUpdateReferences);
 
 /**
  * @swagger
- * /reference/{applicationNo}:
+ * /reference/{id}:
  *   put:
  *     summary: Update Reference record by Application Number
  *     tags: [Reference]
  *     parameters:
  *       - in: path
- *         name: applicationNo
+ *         name: id
  *         schema:
  *           type: string
  *         required: true
@@ -237,7 +237,8 @@ router.post('/', ReferenceController.createOrUpdateReferences);
  *       404:
  *         description: Reference record not found
  */
-router.put('/:applicationNo', ReferenceController.updateReferenceByNo);
+router.put('/:id', ReferenceController.updateReferenceById);
+// router.put('/references/:id', ReferenceController.updateReferenceById);
 
 /**
  * @swagger

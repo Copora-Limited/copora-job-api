@@ -188,13 +188,13 @@ const router = (0, express_1.Router)();
 router.post('/', ReferenceController_1.ReferenceController.createOrUpdateReferences);
 /**
  * @swagger
- * /reference/{applicationNo}:
+ * /reference/{id}:
  *   put:
  *     summary: Update Reference record by Application Number
  *     tags: [Reference]
  *     parameters:
  *       - in: path
- *         name: applicationNo
+ *         name: id
  *         schema:
  *           type: string
  *         required: true
@@ -229,7 +229,8 @@ router.post('/', ReferenceController_1.ReferenceController.createOrUpdateReferen
  *       404:
  *         description: Reference record not found
  */
-router.put('/:applicationNo', ReferenceController_1.ReferenceController.updateReferenceByNo);
+router.put('/:id', ReferenceController_1.ReferenceController.updateReferenceById);
+// router.put('/references/:id', ReferenceController.updateReferenceById);
 /**
  * @swagger
  * /reference/{applicationNo}/{id}:
