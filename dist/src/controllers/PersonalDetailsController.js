@@ -44,30 +44,30 @@ class PersonalDetailsController {
                 const file = req.file;
                 // Check required fields
                 if (!dateOfBirth) {
-                    res.status(400).json({ message: 'Date of birth is required' });
+                    res.status(400).json({ statusCode: 400, message: 'Date of birth is required' });
                     return;
                 }
                 // Age validation: Check if the applicant is at least 16 years old
                 const age = (0, date_fns_1.differenceInYears)(new Date(), new Date(dateOfBirth));
                 if (age < 16) {
-                    res.status(400).json({ message: 'Under Age: Date of birth invalid. You must be at least 16 years old to proceed.' });
+                    res.status(400).json({ statusCode: 400, message: 'Under Age: Date of birth invalid. You must be at least 16 years old to proceed.' });
                     return;
                 }
                 if (age >= 50) {
-                    res.status(400).json({ message: 'Date of birth invalid. Age must be below 50 to proceed.' });
+                    res.status(400).json({ statusCode: 400, message: 'Date of birth invalid. Age must be below 50 to proceed.' });
                     return;
                 }
                 if (!gender) {
-                    res.status(400).json({ message: 'Gender is required' });
+                    res.status(400).json({ statusCode: 400, message: 'Gender is required' });
                     return;
                 }
                 if (!nationalInsuranceNumber) {
-                    res.status(400).json({ message: 'National Insurance Number is required' });
+                    res.status(400).json({ statusCode: 400, message: 'National Insurance Number is required' });
                     return;
                 }
                 const existingApplicant = yield UserService_1.UserService.findApplicationNo(applicationNo);
                 if (!existingApplicant) {
-                    res.status(400).json({ message: 'Applicant does not exist' });
+                    res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
                     return;
                 }
                 // Check if the PersonalDetails with the given applicationNo exists
