@@ -107,12 +107,13 @@ static async getApplicantAttemptedData(applicationNo: string) {
           { generalInfo: generalInfo?.attempted || false },
           { nextOfKin: nextOfKin?.attempted || false },
           // { professionalDetails: professionalDetails.length > 0 ? professionalDetails.some(detail => detail.attempted) : false },
+          { reference: reference.length > 0 ? reference.some(ref => ref.attempted) : false },
           { educationalDetails: educationalDetails.length > 0 ? educationalDetails.some(detail => detail.attempted) : false },
           { healthAndDisability: healthAndDisability?.attempted || false },
           { foodSafetyQuestionnaire: foodSafetyQuestionnaire?.attempted || false },
           { bankDetails: bankDetails?.attempted || false },
           { agreementConsent: agreementConsent?.attempted || false },
-          { reference: reference.length > 0 ? reference.some(ref => ref.attempted) : false },
+          
       ];
 
       return result;

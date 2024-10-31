@@ -120,12 +120,12 @@ class ApplicationService {
                     { generalInfo: (generalInfo === null || generalInfo === void 0 ? void 0 : generalInfo.attempted) || false },
                     { nextOfKin: (nextOfKin === null || nextOfKin === void 0 ? void 0 : nextOfKin.attempted) || false },
                     // { professionalDetails: professionalDetails.length > 0 ? professionalDetails.some(detail => detail.attempted) : false },
+                    { reference: reference.length > 0 ? reference.some(ref => ref.attempted) : false },
                     { educationalDetails: educationalDetails.length > 0 ? educationalDetails.some(detail => detail.attempted) : false },
                     { healthAndDisability: (healthAndDisability === null || healthAndDisability === void 0 ? void 0 : healthAndDisability.attempted) || false },
                     { foodSafetyQuestionnaire: (foodSafetyQuestionnaire === null || foodSafetyQuestionnaire === void 0 ? void 0 : foodSafetyQuestionnaire.attempted) || false },
                     { bankDetails: (bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.attempted) || false },
                     { agreementConsent: (agreementConsent === null || agreementConsent === void 0 ? void 0 : agreementConsent.attempted) || false },
-                    { reference: reference.length > 0 ? reference.some(ref => ref.attempted) : false },
                 ];
                 return result;
             }
