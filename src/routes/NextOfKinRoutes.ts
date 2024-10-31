@@ -6,11 +6,18 @@ const nextOfKinController = new NextOfKinController();
 
 /**
  * @swagger
+ * tags:
+ *   name: Next Of Kin
+ *   description: Operations related to Next of Kin information
+ */
+
+/**
+ * @swagger
  * /next-of-kin:
  *   post:
  *     summary: Create or update Next of Kin information
+ *     description: Creates a new Next of Kin entry or updates an existing one based on the `applicationNo`.
  *     tags: [Next Of Kin]
- *     description: Creates a new Next of Kin entry if it doesn't exist, or updates an existing entry based on the `applicationNo`.
  *     requestBody:
  *       required: true
  *       content:
@@ -25,13 +32,12 @@ const nextOfKinController = new NextOfKinController();
  *                 type: string
  *               lastName:
  *                 type: string
- *                 description: FirstName of the Next of Kin
  *               relationship:
  *                 type: string
  *                 description: Relationship of the Next of Kin to the applicant
  *               email:
  *                 type: string
- *                 description: email of the Next of Kin
+ *                 description: Email of the Next of Kin
  *               phone:
  *                 type: string
  *                 description: Phone number of the Next of Kin
@@ -40,8 +46,8 @@ const nextOfKinController = new NextOfKinController();
  *                 description: Address of the Next of Kin
  *             required:
  *               - applicationNo
- *               - firstname
- *               - lastname
+ *               - firstName
+ *               - lastName
  *               - relationship
  *     responses:
  *       201:
@@ -62,15 +68,15 @@ const nextOfKinController = new NextOfKinController();
  *                       description: ID of the newly created entry
  *                     applicationNo:
  *                       type: string
- *                     firstname:
+ *                     firstName:
  *                       type: string
- *                     lastname:
+ *                     lastName:
  *                       type: string
  *                     relationship:
  *                       type: string
  *                     email:
  *                       type: string
- *                     phoneNumber:
+ *                     phone:
  *                       type: string
  *                     address:
  *                       type: string
@@ -92,15 +98,15 @@ const nextOfKinController = new NextOfKinController();
  *                       description: ID of the updated entry
  *                     applicationNo:
  *                       type: string
- *                     firstname:
+ *                     firstName:
  *                       type: string
- *                     lastname:
+ *                     lastName:
  *                       type: string
  *                     email:
  *                       type: string
  *                     relationship:
  *                       type: string
- *                     phoneNumber:
+ *                     phone:
  *                       type: string
  *                     address:
  *                       type: string
@@ -111,9 +117,144 @@ const nextOfKinController = new NextOfKinController();
  */
 router.post('/', (req, res) => nextOfKinController.create(req, res));
 
+/**
+ * @swagger
+ * /next-of-kin:
+ *   get:
+ *     summary: Retrieve all Next of Kin entries
+ *     tags: [Next Of Kin]
+ *     responses:
+ *       200:
+ *         description: A list of Next of Kin entries
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   applicationNo:
+ *                     type: string
+ *                   firstName:
+ *                     type: string
+ *                   lastName:
+ *                     type: string
+ *                   relationship:
+ *                     type: string
+ *                   email:
+ *                     type: string
+ *                   phone:
+ *                     type: string
+ *                   address:
+ *                     type: string
+ */
 router.get('/', (req, res) => nextOfKinController.getAll(req, res));
+/**
+ * @swagger
+ * /next-of-kin/{id}:
+ *   get:
+ *     summary: Retrieve a Next of Kin entry by ID
+ *     tags: [Next Of Kin]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the Next of Kin entry
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: The Next of Kin entry
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 applicationNo:
+ *                   type: string
+ *                 firstName:
+ *                   type: string
+ *                 lastName:
+ *                   type: string
+ *                 relationship:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 phone:
+ *                   type: string
+ *                 address:
+ *                   type: string
+ *       404:
+ *         description: Next of Kin entry not found
+ */
+
 router.get('/:id', (req, res) => nextOfKinController.getById(req, res));
+/**
+ * @swagger
+ * /next-of-kin/{id}:
+ *   put:
+ *     summary: Update a Next of Kin entry by ID
+ *     tags: [Next Of Kin]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the Next of Kin entry
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *               relationship:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               phone:
+ *                 type: string
+ *               address:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Successfully updated the Next of Kin entry
+ *       400:
+ *         description: Invalid input
+ *       404:
+ *         description: Next of Kin entry not found
+ */
+
 router.put('/:id', (req, res) => nextOfKinController.update(req, res));
+/**
+ * @swagger
+ * /next-of-kin/{id}:
+ *   delete:
+ *     summary: Delete a Next of Kin entry by ID
+ *     tags: [Next Of Kin]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the Next of Kin entry
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       204:
+ *         description: Successfully deleted the Next of Kin entry
+ *       404:
+ *         description: Next of Kin entry not found
+ */
+
 router.delete('/:id', (req, res) => nextOfKinController.delete(req, res));
 
 export default router;
