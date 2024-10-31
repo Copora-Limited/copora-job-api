@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const NextOfKinController_1 = require("../controllers/NextOfKinController");
 const router = (0, express_1.Router)();
-const nextOfKinController = new NextOfKinController_1.NextOfKinController();
 /**
  * @swagger
  * tags:
@@ -114,7 +113,7 @@ const nextOfKinController = new NextOfKinController_1.NextOfKinController();
  *       500:
  *         description: Internal Server Error
  */
-router.post('/', (req, res) => nextOfKinController.create(req, res));
+router.post('/', NextOfKinController_1.NextOfKinController.create);
 /**
  * @swagger
  * /next-of-kin:
@@ -148,10 +147,10 @@ router.post('/', (req, res) => nextOfKinController.create(req, res));
  *                   address:
  *                     type: string
  */
-router.get('/', (req, res) => nextOfKinController.getAll(req, res));
+router.get('/', NextOfKinController_1.NextOfKinController.getAll);
 /**
  * @swagger
- * /next-of-kin/{id}:
+ * /next-of-kin/{applicationNo}:
  *   get:
  *     summary: Retrieve a Next of Kin entry by ID
  *     tags: [Next Of Kin]
@@ -189,7 +188,7 @@ router.get('/', (req, res) => nextOfKinController.getAll(req, res));
  *       404:
  *         description: Next of Kin entry not found
  */
-router.get('/:id', (req, res) => nextOfKinController.getById(req, res));
+router.get('/:applicationNo', NextOfKinController_1.NextOfKinController.getByApplicationNo);
 /**
  * @swagger
  * /next-of-kin/{id}:
@@ -230,7 +229,7 @@ router.get('/:id', (req, res) => nextOfKinController.getById(req, res));
  *       404:
  *         description: Next of Kin entry not found
  */
-router.put('/:id', (req, res) => nextOfKinController.update(req, res));
+router.put('/:id', NextOfKinController_1.NextOfKinController.update);
 /**
  * @swagger
  * /next-of-kin/{id}:
@@ -250,5 +249,5 @@ router.put('/:id', (req, res) => nextOfKinController.update(req, res));
  *       404:
  *         description: Next of Kin entry not found
  */
-router.delete('/:id', (req, res) => nextOfKinController.delete(req, res));
+router.delete('/:id', NextOfKinController_1.NextOfKinController.delete);
 exports.default = router;

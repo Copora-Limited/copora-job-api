@@ -12,13 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NextOfKinController = void 0;
 const data_source_1 = require("../data-source");
 const NextOfKinEntity_1 = require("../entities/NextOfKinEntity");
+const NextOfKinService_1 = require("../services/NextOfKinService");
 const UserService_1 = require("../services/UserService");
 const formValidation_1 = require("../utils/formValidation");
+const nextOfKinRepository = data_source_1.AppDataSource.getRepository(NextOfKinEntity_1.NextOfKin);
 class NextOfKinController {
-    constructor() {
-        this.nextOfKinRepository = data_source_1.AppDataSource.getRepository(NextOfKinEntity_1.NextOfKin);
-    }
-    create(req, res) {
+    static create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { applicationNo, firstName, lastname, relationship, email, phone, address } = req.body;
             try {
@@ -52,18 +51,18 @@ class NextOfKinController {
                     return res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
                 }
                 // Check if an entry with the given applicationNo already exists
-                let existingEntry = yield this.nextOfKinRepository.findOneBy({ applicationNo });
+                let existingEntry = yield nextOfKinRepository.findOneBy({ applicationNo });
                 if (existingEntry) {
                     // Update the existing entry with the new data
                     const updateRecord = Object.assign(Object.assign({}, req.body), { attempted: true });
-                    this.nextOfKinRepository.merge(existingEntry, updateRecord);
-                    yield this.nextOfKinRepository.save(existingEntry);
+                    nextOfKinRepository.merge(existingEntry, updateRecord);
+                    yield nextOfKinRepository.save(existingEntry);
                     return res.status(200).send({ message: 'Emergency Contact updated Sucessfully', data: existingEntry }); // Return updated entry
                 }
                 else {
                     // Create a new entry if none exists
-                    const nextOfKin = this.nextOfKinRepository.create(Object.assign(Object.assign({}, req.body), { attempted: true }));
-                    yield this.nextOfKinRepository.save(nextOfKin);
+                    const nextOfKin = nextOfKinRepository.create(Object.assign(Object.assign({}, req.body), { attempted: true }));
+                    yield nextOfKinRepository.save(nextOfKin);
                     return res.status(201).send({ message: 'Emergency Contact created Sucessfully', data: nextOfKin }); // Return newly created entry
                 }
             }
@@ -73,35 +72,52 @@ class NextOfKinController {
             }
         });
     }
-    getAll(req, res) {
+    static getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const nextOfKin = yield this.nextOfKinRepository.find();
+            const nextOfKin = yield nextOfKinRepository.find();
             res.status(200).send(nextOfKin);
         });
     }
-    getById(req, res) {
+    static getById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const nextOfKin = yield this.nextOfKinRepository.findOneBy({ id: parseInt(req.params.id) });
+            const nextOfKin = yield nextOfKinRepository.findOneBy({ id: parseInt(req.params.id) });
             if (!nextOfKin) {
                 return res.status(404).send('Emergency Contact not found');
             }
             res.status(200).send(nextOfKin);
         });
     }
-    update(req, res) {
+    static getByApplicationNo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const nextOfKin = yield this.nextOfKinRepository.findOneBy({ id: parseInt(req.params.id) });
+            console.log("req:", req.params);
+            try {
+                const { applicationNo } = req.params;
+                const entry = yield NextOfKinService_1.NextOfKinService.getNextOfKinByApplicationNo(applicationNo);
+                console.log("entry:", entry);
+                if (!entry) {
+                    return res.status(404).send({ message: 'Next of Kin not found' });
+                }
+                res.status(200).send(entry);
+            }
+            catch (error) {
+                res.status(500).send({ message: 'Error fetching Next of Kin', error: error.message });
+            }
+        });
+    }
+    static update(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const nextOfKin = yield nextOfKinRepository.findOneBy({ id: parseInt(req.params.id) });
             if (!nextOfKin) {
                 return res.status(404).send('Emergency Contact not found');
             }
             Object.assign(nextOfKin, req.body);
-            yield this.nextOfKinRepository.save(nextOfKin);
+            yield nextOfKinRepository.save(nextOfKin);
             res.status(200).send(nextOfKin);
         });
     }
-    delete(req, res) {
+    static delete(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.nextOfKinRepository.delete({ id: parseInt(req.params.id) });
+            const result = yield nextOfKinRepository.delete({ id: parseInt(req.params.id) });
             if (result.affected === 0) {
                 return res.status(404).send('Emergency Contact not found');
             }

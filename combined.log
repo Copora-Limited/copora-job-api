@@ -57,3 +57,13 @@
 2024-10-31T09:07:25.562Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
 2024-10-31T09:07:25.573Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
 2024-10-31T09:07:48.478Z [[32minfo[39m]: HTTP GET /general-info/APP-31985BD7
+2024-10-31T13:33:20.313Z [[32minfo[39m]: HTTP GET /api-docs/
+2024-10-31T13:33:20.529Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-10-31T13:33:20.545Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui.css
+2024-10-31T13:33:20.552Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-10-31T13:33:20.557Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-10-31T13:33:20.579Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-10-31T13:33:20.707Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-10-31T13:33:20.738Z [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-10-31T13:33:21.771Z [[32minfo[39m]: HTTP GET /api-docs/favicon-32x32.png
+2024-10-31T13:33:35.531Z [[32minfo[39m]: HTTP GET /next-of-kin
