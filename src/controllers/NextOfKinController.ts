@@ -11,7 +11,7 @@ export class NextOfKinController {
     
 
     public static async create(req: Request, res: Response) {
-        const { applicationNo, firstName, lastname, relationship, email, phone, address} = req.body;
+        const { applicationNo, firstName, lastname, relationship, email, phoneNumber, address} = req.body;
 
         try {
              // Check if all required fields are provided
@@ -24,11 +24,11 @@ export class NextOfKinController {
             if (!relationship) {
                 return res.status(400).json({ statusCode: 400, message: 'Select Relationship is required' });
             }
-            if (!phone) {
+            if (!phoneNumber) {
                 return res.status(400).json({ statusCode: 400, message: 'Phone Number is required' });
             }
 
-            if (!validatePhone(phone)) {
+            if (!validatePhone(phoneNumber)) {
                 return res.status(400).json({
                     message: 'Phone number should be a valid UK number (starting with +44 or 44 followed by 10 digits, or 10-11 digits locally) or a valid international format (+ followed by 10-15 digits).'
                 });

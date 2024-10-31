@@ -19,7 +19,7 @@ const nextOfKinRepository = data_source_1.AppDataSource.getRepository(NextOfKinE
 class NextOfKinController {
     static create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { applicationNo, firstName, lastname, relationship, email, phone, address } = req.body;
+            const { applicationNo, firstName, lastname, relationship, email, phoneNumber, address } = req.body;
             try {
                 // Check if all required fields are provided
                 if (!firstName) {
@@ -31,10 +31,10 @@ class NextOfKinController {
                 if (!relationship) {
                     return res.status(400).json({ statusCode: 400, message: 'Select Relationship is required' });
                 }
-                if (!phone) {
+                if (!phoneNumber) {
                     return res.status(400).json({ statusCode: 400, message: 'Phone Number is required' });
                 }
-                if (!(0, formValidation_1.validatePhone)(phone)) {
+                if (!(0, formValidation_1.validatePhone)(phoneNumber)) {
                     return res.status(400).json({
                         message: 'Phone number should be a valid UK number (starting with +44 or 44 followed by 10 digits, or 10-11 digits locally) or a valid international format (+ followed by 10-15 digits).'
                     });
