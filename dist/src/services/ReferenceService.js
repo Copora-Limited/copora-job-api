@@ -43,6 +43,11 @@ class ReferenceService {
             return yield referenceRepository.findOneBy({ applicationNo });
         });
     }
+    static getAllByApplicationNo(applicationNo) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield referenceRepository.find({ where: { applicationNo } });
+        });
+    }
     // Update Reference by applicationNo
     static updateByApplicationNo(applicationNo, data) {
         return __awaiter(this, void 0, void 0, function* () {

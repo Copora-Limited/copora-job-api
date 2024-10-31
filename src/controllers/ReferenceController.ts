@@ -111,7 +111,7 @@ export class ReferenceController {
     static async getReferenceByNo(req: Request, res: Response) {
         try {
             const { applicationNo } = req.params;
-            const reference = await ReferenceService.getByApplicationNo(applicationNo);
+            const reference = await ReferenceService.getAllByApplicationNo(applicationNo);
             
             // If no reference is found, return an empty array with a 200 status
             if (!reference) {

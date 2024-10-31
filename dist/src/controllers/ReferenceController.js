@@ -108,7 +108,7 @@ class ReferenceController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { applicationNo } = req.params;
-                const reference = yield ReferenceService_1.ReferenceService.getByApplicationNo(applicationNo);
+                const reference = yield ReferenceService_1.ReferenceService.getAllByApplicationNo(applicationNo);
                 // If no reference is found, return an empty array with a 200 status
                 if (!reference) {
                     return res.status(200).send([]);

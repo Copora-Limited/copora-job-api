@@ -30,6 +30,11 @@ export class ReferenceService {
         return await referenceRepository.findOneBy({ applicationNo });
     }
 
+    static async getAllByApplicationNo(applicationNo: string): Promise<Reference[]> {
+        return await referenceRepository.find({ where: { applicationNo } });
+    }
+    
+
     // Update Reference by applicationNo
     static async updateByApplicationNo(applicationNo: string, data: Partial<Reference>): Promise<Reference | null> {
         let reference = await this.getByApplicationNo(applicationNo);
