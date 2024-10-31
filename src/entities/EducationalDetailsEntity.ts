@@ -23,6 +23,9 @@ export class EducationalDetails {
     @Column()
     yearGraduated: number;
 
+    @Column({default: false})
+    stillStudying: string;
+
     @Column({nullable: true, default: false})
     attempted: boolean;
 }

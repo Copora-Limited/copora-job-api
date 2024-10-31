@@ -43,6 +43,10 @@ __decorate([
     __metadata("design:type", Number)
 ], EducationalDetails.prototype, "yearGraduated", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    __metadata("design:type", String)
+], EducationalDetails.prototype, "stillStudying", void 0);
+__decorate([
     (0, typeorm_1.Column)({ nullable: true, default: false }),
     __metadata("design:type", Boolean)
 ], EducationalDetails.prototype, "attempted", void 0);
