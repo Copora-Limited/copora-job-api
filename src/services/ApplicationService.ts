@@ -106,7 +106,7 @@ static async getApplicantAttemptedData(applicationNo: string) {
           { contactDetails: contactDetails?.attempted || false },
           { generalInfo: generalInfo?.attempted || false },
           { nextOfKin: nextOfKin?.attempted || false },
-          { professionalDetails: professionalDetails.length > 0 ? professionalDetails.some(detail => detail.attempted) : false },
+          // { professionalDetails: professionalDetails.length > 0 ? professionalDetails.some(detail => detail.attempted) : false },
           { educationalDetails: educationalDetails.length > 0 ? educationalDetails.some(detail => detail.attempted) : false },
           { healthAndDisability: healthAndDisability?.attempted || false },
           { foodSafetyQuestionnaire: foodSafetyQuestionnaire?.attempted || false },

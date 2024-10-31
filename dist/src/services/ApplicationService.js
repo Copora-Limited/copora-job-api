@@ -119,7 +119,7 @@ class ApplicationService {
                     { contactDetails: (contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.attempted) || false },
                     { generalInfo: (generalInfo === null || generalInfo === void 0 ? void 0 : generalInfo.attempted) || false },
                     { nextOfKin: (nextOfKin === null || nextOfKin === void 0 ? void 0 : nextOfKin.attempted) || false },
-                    { professionalDetails: professionalDetails.length > 0 ? professionalDetails.some(detail => detail.attempted) : false },
+                    // { professionalDetails: professionalDetails.length > 0 ? professionalDetails.some(detail => detail.attempted) : false },
                     { educationalDetails: educationalDetails.length > 0 ? educationalDetails.some(detail => detail.attempted) : false },
                     { healthAndDisability: (healthAndDisability === null || healthAndDisability === void 0 ? void 0 : healthAndDisability.attempted) || false },
                     { foodSafetyQuestionnaire: (foodSafetyQuestionnaire === null || foodSafetyQuestionnaire === void 0 ? void 0 : foodSafetyQuestionnaire.attempted) || false },
