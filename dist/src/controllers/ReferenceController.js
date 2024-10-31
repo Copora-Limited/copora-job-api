@@ -109,8 +109,9 @@ class ReferenceController {
             try {
                 const { applicationNo } = req.params;
                 const reference = yield ReferenceService_1.ReferenceService.getByApplicationNo(applicationNo);
+                // If no reference is found, return an empty array with a 200 status
                 if (!reference) {
-                    return res.status(404).send({ message: 'Reference not found' });
+                    return res.status(200).send([]);
                 }
                 res.status(200).send(reference);
             }
