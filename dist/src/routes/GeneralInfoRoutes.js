@@ -128,7 +128,7 @@ router.post('/', multerConfig_1.default.fields([
  *       500:
  *         description: Internal server error.
  */
-router.get('/:id', GeneralInfoController_1.GeneralInfoController.getGeneralInfoByNo);
+router.get('/:applicationNo', GeneralInfoController_1.GeneralInfoController.getGeneralInfoByNo);
 // Route to update a GeneralInfo entry by ID
 router.put('/:id', GeneralInfoController_1.GeneralInfoController.updateGeneralInfoByNo);
 // Route to delete a GeneralInfo entry by ID

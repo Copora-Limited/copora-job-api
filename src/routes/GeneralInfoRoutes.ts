@@ -132,7 +132,7 @@ router.post('/', uploadDocumentsAndImages.fields([
  *       500:
  *         description: Internal server error.
  */
-router.get('/:id', GeneralInfoController.getGeneralInfoByNo);
+router.get('/:applicationNo', GeneralInfoController.getGeneralInfoByNo);
 
 // Route to update a GeneralInfo entry by ID
 router.put('/:id', GeneralInfoController.updateGeneralInfoByNo);

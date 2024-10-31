@@ -23,6 +23,8 @@ export class GeneralInfoController {
                 dbsDisclosureAndBarringService,
             } = req.body;
 
+            console.log("Data:", req.body);
+
             // Validate applicationNo
             if (!applicationNo) {
                 return res.status(400).json({ message: 'Application number is required' });
