@@ -54,7 +54,8 @@ AppDataSource.initialize()
         'http://localhost:8080', // Vue
         'http://localhost:4200', // Angular
         'http://localhost:5173',  // Vite
-        'https://coporasystem-fe.vercel.app' // Deployed Frontend
+        'https://coporasystem-fe.vercel.app', // Deployed Frontend
+        'https://coporajobs.netlify.app'
       ],
       credentials: true, // Allow credentials
     }));
@@ -66,7 +67,8 @@ AppDataSource.initialize()
         'http://localhost:8080',
         'http://localhost:4200',
         'http://localhost:5173',
-        'https://coporasystem-fe.vercel.app'
+        'https://coporasystem-fe.vercel.app',
+        'https://coporajobs.netlify.app'
       ],
       credentials: true,
     }));
