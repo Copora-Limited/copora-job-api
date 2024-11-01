@@ -25,6 +25,14 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
+], AgreementConsent.prototype, "firstName", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], AgreementConsent.prototype, "lastName", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
 ], AgreementConsent.prototype, "userConsent", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true, default: false }),

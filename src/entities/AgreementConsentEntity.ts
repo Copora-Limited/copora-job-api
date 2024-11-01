@@ -12,6 +12,11 @@ export class AgreementConsent {
     @Column({ unique: true })
     applicationNo: string;
 
+    @Column({ nullable: true})
+    firstName: string;
+
+    @Column({ nullable: true})
+    lastName: string;
 
     @Column({ nullable: true})
     userConsent: string;
