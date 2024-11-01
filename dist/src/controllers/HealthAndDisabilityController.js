@@ -43,9 +43,9 @@ class HealthAndDisabilityController {
                     return res.status(400).json({ statusCode: 400, message: 'Enter Health Issue is required' });
                 }
                 // Check if the user specified details when relevantHealthIssues is true
-                if (relevantHealthIssues && !relevantHealthIssuesDetails) {
-                    return res.status(400).json({ statusCode: 400, message: 'Please provide details about the relevant health issues.' });
-                }
+                // if (relevantHealthIssues && !relevantHealthIssuesDetails) {
+                //     return res.status(400).json({ statusCode: 400, message: 'Please provide details about the relevant health issues.' });
+                // }
                 // Check if the user specified details when majorIllnessTreatment is true
                 if (otherFields.majorIllnessTreatment && !otherFields.majorIllnessDetails) {
                     return res.status(400).json({ statusCode: 400, message: 'Please provide details about major illness treatment.' });

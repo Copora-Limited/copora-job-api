@@ -38,7 +38,7 @@ class GeneralInfoService {
         return __awaiter(this, void 0, void 0, function* () {
             const entry = yield this.getByApplicationNo(applicationNo);
             if (!entry) {
-                throw new Error('Personal details not found');
+                throw new Error('General details not found');
             }
             Object.assign(entry, data);
             return yield generalInfoRepository.save(entry);
@@ -49,9 +49,9 @@ class GeneralInfoService {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield generalInfoRepository.delete({ applicationNo });
             if (result.affected === 0) {
-                throw new Error('Personal details not found');
+                throw new Error('General details not found');
             }
-            return 'Personal details deleted';
+            return 'General details deleted';
         });
     }
 }

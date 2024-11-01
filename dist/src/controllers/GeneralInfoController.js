@@ -37,7 +37,7 @@ class GeneralInfoController {
                     { field: foodService, name: 'food service' },
                     { field: barista, name: 'barista' },
                     { field: supervising, name: 'supervising' },
-                    { field: personalLicenseHolder, name: 'personal license holder' },
+                    { field: personalLicenseHolder, name: 'General license holder' },
                     { field: dbsDisclosureAndBarringService, name: 'DBS Disclosure and Barring Service' },
                 ];
                 for (const { field, name } of requiredFields) {
@@ -95,8 +95,9 @@ class GeneralInfoController {
                 const { applicationNo } = req.params;
                 const entry = yield GeneralInfoService_1.GeneralInfoService.getByApplicationNo(applicationNo);
                 console.log("entry:", entry);
+                // Return an empty array if entry is not found
                 if (!entry) {
-                    return res.status(404).send({ message: 'Personal details not found' });
+                    return res.status(200).send([]);
                 }
                 res.status(200).send(entry);
             }
@@ -112,7 +113,7 @@ class GeneralInfoController {
                 const { applicationNo } = req.params;
                 const updatedEntry = yield GeneralInfoService_1.GeneralInfoService.updateByApplicationNo(applicationNo, req.body);
                 if (!updatedEntry) {
-                    return res.status(404).send({ message: 'Personal details not found' });
+                    return res.status(404).send({ message: 'General details not found' });
                 }
                 res.status(200).send(updatedEntry);
             }

@@ -24,7 +24,7 @@ export class GeneralInfoService {
     static async updateByApplicationNo(applicationNo: string, data: any) {
         const entry = await this.getByApplicationNo(applicationNo);
         if (!entry) {
-            throw new Error('Personal details not found');
+            throw new Error('General details not found');
         }
         Object.assign(entry, data);
         return await generalInfoRepository.save(entry);
@@ -34,8 +34,8 @@ export class GeneralInfoService {
     static async deleteByApplicationNo(applicationNo: string) {
         const result = await generalInfoRepository.delete({ applicationNo });
         if (result.affected === 0) {
-            throw new Error('Personal details not found');
+            throw new Error('General details not found');
         }
-        return 'Personal details deleted';
+        return 'General details deleted';
     }
 }

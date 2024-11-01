@@ -45,7 +45,7 @@ export class GeneralInfoController {
                 { field: foodService, name: 'food service' },
                 { field: barista, name: 'barista' },
                 { field: supervising, name: 'supervising' },
-                { field: personalLicenseHolder, name: 'personal license holder' },
+                { field: personalLicenseHolder, name: 'General license holder' },
                 { field: dbsDisclosureAndBarringService, name: 'DBS Disclosure and Barring Service' },
             ];
             for (const { field, name } of requiredFields) {
@@ -111,20 +111,23 @@ export class GeneralInfoController {
 
     // Get GeneralInfo by applicationNo
     public static async getGeneralInfoByNo(req: Request, res: Response) {
-        console.log("req:", req.params)
+        console.log("req:", req.params);
         try {
             const { applicationNo } = req.params;
             const entry = await GeneralInfoService.getByApplicationNo(applicationNo);
-            console.log("entry:", entry)
-
+            console.log("entry:", entry);
+    
+            // Return an empty array if entry is not found
             if (!entry) {
-                return res.status(404).send({ message: 'Personal details not found' });
+                return res.status(200).send([]);
             }
+            
             res.status(200).send(entry);
         } catch (error) {
             res.status(500).send({ message: 'Error fetching personal details', error: error.message });
         }
     }
+    
 
     // Update GeneralInfo by applicationNo
     public static async updateGeneralInfoByNo(req: Request, res: Response) {
@@ -132,7 +135,7 @@ export class GeneralInfoController {
             const { applicationNo } = req.params;
             const updatedEntry = await GeneralInfoService.updateByApplicationNo(applicationNo, req.body);
             if (!updatedEntry) {
-                return res.status(404).send({ message: 'Personal details not found' });
+                return res.status(404).send({ message: 'General details not found' });
             }
             res.status(200).send(updatedEntry);
         } catch (error) {

@@ -110,8 +110,8 @@ export class PersonalDetailsController {
             console.log("entry:", entry)
 
             if (!entry) {
-                return res.status(404).send({ message: 'Personal details not found' });
-            }
+              return res.status(200).send([]);
+          }
             res.status(200).send(entry);
         } catch (error) {
             res.status(500).send({ message: 'Error fetching personal details', error: error.message });
