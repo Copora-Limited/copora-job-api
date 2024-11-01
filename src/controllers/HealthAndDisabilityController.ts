@@ -19,9 +19,9 @@ export class HealthAndDisabilityController {
             if (!gpAddress) {
                 return res.status(400).json({ statusCode: 400, message: 'GP Address is required' });
             }
-            if (!otherFields.relevantHealthIssues && !otherFields.majorIllnessTreatment && !otherFields.healthRelatedAbsences && !otherFields.currentMedications) {
-                return res.status(400).json({ statusCode: 400, message: 'Enter Health Issue is required' });
-            }
+            // if (!otherFields.relevantHealthIssues && !otherFields.majorIllnessTreatment && !otherFields.healthRelatedAbsences && !otherFields.currentMedications) {
+            //     return res.status(400).json({ statusCode: 400, message: 'Enter Health Issue is required' });
+            // }
 
             // Check if the user specified details when relevantHealthIssues is true
             // if (relevantHealthIssues && !relevantHealthIssuesDetails) {
