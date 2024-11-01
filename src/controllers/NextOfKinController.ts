@@ -88,7 +88,7 @@ export class NextOfKinController {
             console.log("entry:", entry)
 
             if (!entry) {
-                return res.status(404).send({ message: 'Next of Kin not found' });
+                return res.status(200).send([]);
             }
             res.status(200).send(entry);
         } catch (error) {

@@ -75,7 +75,9 @@ export class BankDetailsController {
             const { applicationNo } = req.params;
             const bankDetails = await BankDetailsService.getBankDetailsByApplicationNo(applicationNo);
             if (!bankDetails) {
-                return res.status(404).send({ message: 'Bank Details not found' });
+                // return res.status(404).send({ message: 'Bank Details not found' });
+                return res.status(200).send([]);
+
             }
             res.status(200).send(bankDetails);
         } catch (error) {

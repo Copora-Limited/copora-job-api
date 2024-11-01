@@ -59,7 +59,9 @@ export class AgreementConsentController {
             const { applicationNo } = req.params;
             const agreementConsent = await AgreementConsentService.getByApplicationNo(applicationNo);
             if (!agreementConsent) {
-                return res.status(404).send({ message: 'Agreement Consent not found' });
+                // return res.status(404).send({ message: 'Agreement Consent not found' });
+                return res.status(200).send([]);
+
             }
             res.status(200).send(agreementConsent);
         } catch (error) {

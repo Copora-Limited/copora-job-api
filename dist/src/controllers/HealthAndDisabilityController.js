@@ -88,7 +88,8 @@ class HealthAndDisabilityController {
                 const { applicationNo } = req.params;
                 const entry = yield HealthAndDisabilityService_1.HealthAndDisabilityService.getByApplicationNo(applicationNo);
                 if (!entry) {
-                    return res.status(404).send({ message: 'Health and Disability entry not found' });
+                    // return res.status(404).send({ message: 'Health and Disability entry not found' });
+                    return res.status(200).send([]);
                 }
                 res.status(200).send(entry);
             }

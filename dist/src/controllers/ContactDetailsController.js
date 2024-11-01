@@ -72,7 +72,7 @@ class ContactDetailsController {
                 const { applicationNo } = req.params;
                 const contactDetails = yield ContactDetailsService_1.ContactDetailsService.getContactDetailsByApplicationNo(applicationNo);
                 if (!contactDetails) {
-                    return res.status(404).send({ message: 'Contact Details not found' });
+                    return res.status(200).send([]);
                 }
                 res.status(200).send(contactDetails);
             }

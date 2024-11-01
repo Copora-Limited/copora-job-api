@@ -44,7 +44,8 @@ class FoodSafetyQuestionnaireController {
                 const { applicationNo } = req.params;
                 const foodSafetyQuestionnaire = yield FoodSafetyQuestionnaireController.foodSafetyQuestionnaireService.getFoodSafetyQuestionnaireByApplicationNo(applicationNo);
                 if (!foodSafetyQuestionnaire) {
-                    return res.status(404).send({ message: 'Food Safety Questionnaire not found' });
+                    // return res.status(404).send({ message: 'Food Safety Questionnaire not found' });
+                    return res.status(200).send([]);
                 }
                 res.status(200).send(foodSafetyQuestionnaire);
             }

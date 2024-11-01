@@ -69,8 +69,9 @@ export class ContactDetailsController {
             const { applicationNo } = req.params;
             const contactDetails = await ContactDetailsService.getContactDetailsByApplicationNo(applicationNo);
             if (!contactDetails) {
-                return res.status(404).send({ message: 'Contact Details not found' });
+                return res.status(200).send([]);
             }
+            
             res.status(200).send(contactDetails);
         } catch (error) {
             res.status(500).send({ message: 'Error fetching contact details', error: error.message });

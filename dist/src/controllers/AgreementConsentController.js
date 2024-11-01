@@ -63,7 +63,8 @@ class AgreementConsentController {
                 const { applicationNo } = req.params;
                 const agreementConsent = yield AgreementConsentService_1.AgreementConsentService.getByApplicationNo(applicationNo);
                 if (!agreementConsent) {
-                    return res.status(404).send({ message: 'Agreement Consent not found' });
+                    // return res.status(404).send({ message: 'Agreement Consent not found' });
+                    return res.status(200).send([]);
                 }
                 res.status(200).send(agreementConsent);
             }
