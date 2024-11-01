@@ -54,6 +54,7 @@ AppDataSource.initialize()
         'http://localhost:8080', // Vue
         'http://localhost:4200', // Angular
         'http://localhost:5173',  // Vite
+        'http://localhost:5174',
         'https://coporasystem-fe.vercel.app', // Deployed Frontend
         'https://coporajobs.netlify.app'
       ],
@@ -67,6 +68,7 @@ AppDataSource.initialize()
         'http://localhost:8080',
         'http://localhost:4200',
         'http://localhost:5173',
+        'http://localhost:5174',
         'https://coporasystem-fe.vercel.app',
         'https://coporajobs.netlify.app'
       ],
