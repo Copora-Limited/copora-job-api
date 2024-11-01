@@ -27,7 +27,7 @@ const router = (0, express_1.Router)();
  *                 example: "APP12345"
  *               isAgreed:
  *                 type: string
- *                 example: true
+ *                 example: "Yes"
  *     responses:
  *       201:
  *         description: Agreement Consent created successfully
@@ -83,7 +83,7 @@ router.get('/:applicationNo', AgreementConsentController_1.AgreementConsentContr
  *                 example: "I agree to the updated terms and conditions."
  *               isAgreed:
  *                 type: string
- *                 example: true
+ *                 example: "Yes"
  *     responses:
  *       200:
  *         description: Agreement Consent updated successfully

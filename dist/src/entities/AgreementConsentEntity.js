@@ -23,9 +23,9 @@ __decorate([
     __metadata("design:type", String)
 ], AgreementConsent.prototype, "applicationNo", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true, default: false }),
-    __metadata("design:type", Boolean)
-], AgreementConsent.prototype, "isAgreed", void 0);
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], AgreementConsent.prototype, "userConsent", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true, default: false }),
     __metadata("design:type", Boolean)

@@ -51,8 +51,8 @@ export const AppDataSource = new DataSource({
     Group,           // New entity
     JobListing           // New entity
   ],
-  synchronize: false, // Set to true in development, false in production
-  logging: false,
+  synchronize: true, // Set to true in development, false in production
+  logging: true,
   migrations: [],
   subscribers: [],
   ssl: {

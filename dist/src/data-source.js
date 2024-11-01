@@ -54,8 +54,8 @@ exports.AppDataSource = new typeorm_1.DataSource({
         GroupEntity_1.Group, // New entity
         JobListingEntity_1.JobListing // New entity
     ],
-    synchronize: false, // Set to true in development, false in production
-    logging: false,
+    synchronize: true, // Set to true in development, false in production
+    logging: true,
     migrations: [],
     subscribers: [],
     ssl: {
