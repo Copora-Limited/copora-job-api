@@ -14,6 +14,7 @@ const PersonalDetailsService_1 = require("../services/PersonalDetailsService");
 const UserService_1 = require("../services/UserService");
 const cloudinary_1 = require("cloudinary");
 const date_fns_1 = require("date-fns"); // Use date-fns or similar library to calculate age
+const uploadToSpace_1 = require("../utils/uploadToSpace"); // Adjust the import path as necessary
 // Configure Cloudinary
 cloudinary_1.v2.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -75,7 +76,7 @@ class PersonalDetailsController {
                 // Preserve existing passport photo if no new file is uploaded
                 let passportPhoto = (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.passportPhoto) || '';
                 if (file) {
-                    passportPhoto = yield PersonalDetailsController.uploadPassportPhoto(file);
+                    passportPhoto = yield (0, uploadToSpace_1.handleFileUpload)(file);
                 }
                 // Merge the new data with the existing data, updating only fields that are provided
                 const dataToSave = Object.assign(Object.assign(Object.assign({}, existingEntry), req.body), { passportPhoto: passportPhoto || (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.passportPhoto), attempted: true });

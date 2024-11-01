@@ -4,6 +4,7 @@ import { PersonalDetailsService } from '../services/PersonalDetailsService';
 import { UserService } from '../services/UserService';
 import { v2 as cloudinary } from 'cloudinary';
 import { differenceInYears } from 'date-fns'; // Use date-fns or similar library to calculate age
+import { handleFileUpload } from '../utils/uploadToSpace'; // Adjust the import path as necessary
 
 
 // Configure Cloudinary
@@ -74,7 +75,7 @@ export class PersonalDetailsController {
       let passportPhoto = existingEntry?.passportPhoto || '';
 
       if (file) {
-        passportPhoto = await PersonalDetailsController.uploadPassportPhoto(file);
+        passportPhoto = await handleFileUpload(file);
       }
 
       // Merge the new data with the existing data, updating only fields that are provided
