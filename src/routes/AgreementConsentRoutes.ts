@@ -26,9 +26,9 @@ const router = Router();
  *               applicationNo:
  *                 type: string
  *                 example: "APP12345"
- *               userConsent:
+ *               isAgreed:
  *                 type: string
- *                 example: "Yes"
+ *                 example: true
  *     responses:
  *       201:
  *         description: Agreement Consent created successfully
@@ -84,9 +84,9 @@ router.get('/:applicationNo', AgreementConsentController.getAgreementConsentByNo
  *               declarationAgreement:
  *                 type: string
  *                 example: "I agree to the updated terms and conditions."
- *               userConsent:
+ *               isAgreed:
  *                 type: string
- *                 example: "Yes"
+ *                 example: true
  *     responses:
  *       200:
  *         description: Agreement Consent updated successfully

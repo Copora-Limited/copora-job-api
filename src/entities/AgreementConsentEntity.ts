@@ -13,8 +13,8 @@ export class AgreementConsent {
     applicationNo: string;
 
 
-    @Column({ nullable: true})
-    userConsent: string;
+    @Column({ nullable: true, default: false})
+    isAgreed: boolean;
 
     @Column({nullable: true, default: false})
     attempted: boolean;
