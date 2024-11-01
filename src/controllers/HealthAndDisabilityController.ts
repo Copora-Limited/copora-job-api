@@ -19,29 +19,28 @@ export class HealthAndDisabilityController {
             if (!gpAddress) {
                 return res.status(400).json({ statusCode: 400, message: 'GP Address is required' });
             }
-            // if (!otherFields.relevantHealthIssues && !otherFields.majorIllnessTreatment && !otherFields.healthRelatedAbsences && !otherFields.currentMedications) {
-            //     return res.status(400).json({ statusCode: 400, message: 'Enter Health Issue is required' });
-            // }
+            // console.log("otherFields", otherFields)
+
 
             // Check if the user specified details when relevantHealthIssues is true
-            // if (relevantHealthIssues && !relevantHealthIssuesDetails) {
-            //     return res.status(400).json({ statusCode: 400, message: 'Please provide details about the relevant health issues.' });
-            // }
+            if (relevantHealthIssues && !relevantHealthIssuesDetails){
+                return res.status(400).json({ statusCode: 400, message: 'Please provide details about health issues or a disability' });
+            }
 
             // Check if the user specified details when majorIllnessTreatment is true
-            // if (otherFields.majorIllnessTreatment && !otherFields.majorIllnessDetails) {
-            //     return res.status(400).json({ statusCode: 400, message: 'Please provide details about major illness treatment.' });
-            // }
+            if (otherFields.majorIllnessTreatment && !otherFields.majorIllnessDetails) {
+                return res.status(400).json({ statusCode: 400, message: 'Please provide details about major illness treatment.' });
+            }
 
-            // // Check if the user specified details when healthRelatedAbsences is true
-            // if (otherFields.healthRelatedAbsences && !otherFields.healthRelatedAbsencesDetails) {
-            //     return res.status(400).json({ statusCode: 400, message: 'Please provide details about health-related absences.' });
-            // }
+            // Check if the user specified details when healthRelatedAbsences is true
+            if (otherFields.healthRelatedAbsences && !otherFields.healthRelatedAbsencesDetails) {
+                return res.status(400).json({ statusCode: 400, message: 'Please provide details about health-related absences.' });
+            }
 
             // // Check if the user specified details when currentMedications is true
-            // if (otherFields.currentMedications && !otherFields.medicationDetails) {
-            //     return res.status(400).json({ statusCode: 400, message: 'Please provide details about current medications.' });
-            // }
+            if (otherFields.currentMedications && !otherFields.medicationDetails) {
+                return res.status(400).json({ statusCode: 400, message: 'Please provide details about current medications.' });
+            }
 
             // Check if the HealthAndDisability with the given applicationNo exists
             const existingEntry = await HealthAndDisabilityService.getByApplicationNo(applicationNo);
