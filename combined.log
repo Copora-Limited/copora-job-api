@@ -99,3 +99,10 @@
 2024-11-01T15:52:32.649Z [[32minfo[39m]: HTTP GET /personal-details/APP-1D9E5E54
 2024-11-01T15:52:32.858Z [[32minfo[39m]: HTTP GET /personal-details/APP-1D9E5E54
 2024-11-01T15:52:34.051Z [[32minfo[39m]: HTTP GET /personal-details/APP-1D9E5E54
+2024-11-01T15:57:31.194Z [[32minfo[39m]: HTTP GET /personal-details/APP-1D9E5E54
+2024-11-01T15:57:42.783Z [[32minfo[39m]: HTTP GET /personal-details/APP-1D9E5E54
+2024-11-01T15:58:34.519Z [[32minfo[39m]: HTTP GET /personal-details/APP-1D9E5E54
+2024-11-01T15:59:14.386Z [[32minfo[39m]: HTTP POST /personal-details
+2024-11-01T15:59:15.166Z [[32minfo[39m]: HTTP PATCH /auth/users/update-onboarding-step
+2024-11-01T15:59:15.448Z [[32minfo[39m]: HTTP GET /contact-details/APP-1D9E5E54
+2024-11-01T15:59:15.666Z [[32minfo[39m]: HTTP GET /contact-details/APP-1D9E5E54

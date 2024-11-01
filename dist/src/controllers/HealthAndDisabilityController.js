@@ -47,17 +47,17 @@ class HealthAndDisabilityController {
                 //     return res.status(400).json({ statusCode: 400, message: 'Please provide details about the relevant health issues.' });
                 // }
                 // Check if the user specified details when majorIllnessTreatment is true
-                if (otherFields.majorIllnessTreatment && !otherFields.majorIllnessDetails) {
-                    return res.status(400).json({ statusCode: 400, message: 'Please provide details about major illness treatment.' });
-                }
-                // Check if the user specified details when healthRelatedAbsences is true
-                if (otherFields.healthRelatedAbsences && !otherFields.healthRelatedAbsencesDetails) {
-                    return res.status(400).json({ statusCode: 400, message: 'Please provide details about health-related absences.' });
-                }
-                // Check if the user specified details when currentMedications is true
-                if (otherFields.currentMedications && !otherFields.medicationDetails) {
-                    return res.status(400).json({ statusCode: 400, message: 'Please provide details about current medications.' });
-                }
+                // if (otherFields.majorIllnessTreatment && !otherFields.majorIllnessDetails) {
+                //     return res.status(400).json({ statusCode: 400, message: 'Please provide details about major illness treatment.' });
+                // }
+                // // Check if the user specified details when healthRelatedAbsences is true
+                // if (otherFields.healthRelatedAbsences && !otherFields.healthRelatedAbsencesDetails) {
+                //     return res.status(400).json({ statusCode: 400, message: 'Please provide details about health-related absences.' });
+                // }
+                // // Check if the user specified details when currentMedications is true
+                // if (otherFields.currentMedications && !otherFields.medicationDetails) {
+                //     return res.status(400).json({ statusCode: 400, message: 'Please provide details about current medications.' });
+                // }
                 // Check if the HealthAndDisability with the given applicationNo exists
                 const existingEntry = yield HealthAndDisabilityService_1.HealthAndDisabilityService.getByApplicationNo(applicationNo);
                 // Add attempted: true to the data being saved
