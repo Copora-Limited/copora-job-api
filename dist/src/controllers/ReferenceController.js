@@ -51,28 +51,37 @@ class ReferenceController {
                 const newEntries = [];
                 for (const entry of entries) {
                     if (entry && typeof entry === 'object') {
-                        const { employerName, jobTitle, contactName, phone, email, startDate, endDate } = entry, restOfEntry = __rest(entry, ["employerName", "jobTitle", "contactName", "phone", "email", "startDate", "endDate"]);
+                        const { employerName, jobTitle, contactName, phone, email, startDate, endDate, address, responsibilities } = entry, restOfEntry = __rest(entry, ["employerName", "jobTitle", "contactName", "phone", "email", "startDate", "endDate", "address", "responsibilities"]);
                         // Validate required fields
-                        if (!employerName) {
-                            return res.status(400).json({ statusCode: 400, message: 'Employer Name is required' });
+                        if (!employerName || employerName.trim() === "") {
+                            return res.status(400).json({ statusCode: 400, message: 'Enter employer/company name (e.g., ABC Company Limited) or "NA" if not applicable' });
                         }
-                        if (!jobTitle) {
-                            return res.status(400).json({ statusCode: 400, message: 'Job Title is required' });
+                        if (!jobTitle || jobTitle.trim() === "") {
+                            return res.status(400).json({ statusCode: 400, message: 'Enter Job title or "NA" if not applicable' });
                         }
-                        if (!contactName) {
-                            return res.status(400).json({ statusCode: 400, message: 'Contact Name is required' });
+                        if (!contactName || contactName.trim() === "") {
+                            return res.status(400).json({ statusCode: 400, message: 'Enter Contact Name (e.g., John Doe)' });
                         }
-                        if (!phone) {
-                            return res.status(400).json({ statusCode: 400, message: 'Phone Number is required' });
+                        if (!phone || phone.trim() === "") {
+                            return res.status(400).json({ statusCode: 400, message: 'Enter Phone Number (e.g., +44 123 456 7890)' });
                         }
-                        if (!email) {
-                            return res.status(400).json({ statusCode: 400, message: 'Email is required' });
+                        if (!email || email.trim() === "") {
+                            return res.status(400).json({ statusCode: 400, message: 'Enter Email (e.g., example@mail.com)' });
                         }
-                        if (!startDate) {
-                            return res.status(400).json({ statusCode: 400, message: 'Start Date is required' });
+                        if (!/\S+@\S+\.\S+/.test(email)) {
+                            return res.status(400).json({ statusCode: 400, message: 'Enter a valid email address' });
                         }
-                        if (!endDate) {
-                            return res.status(400).json({ statusCode: 400, message: 'End Date is required' });
+                        if (!startDate || startDate.trim() === "") {
+                            return res.status(400).json({ statusCode: 400, message: 'Enter Start Date (DD/MM/YYYY) or select today\'s date if not applicable' });
+                        }
+                        if (!endDate || endDate.trim() === "") {
+                            return res.status(400).json({ statusCode: 400, message: 'Enter End Date (DD/MM/YYYY) or select today\'s date if not applicable' });
+                        }
+                        if (!address || address.trim() === "") {
+                            return res.status(400).json({ statusCode: 400, message: 'Enter Address or enter "NA" if not applicable' });
+                        }
+                        if (!responsibilities || responsibilities.trim() === "") {
+                            return res.status(400).json({ statusCode: 400, message: 'Enter Responsibilities or enter "NA" if not applicable' });
                         }
                         // Ensure startDate is not greater than endDate
                         if (new Date(startDate) > new Date(endDate)) {
