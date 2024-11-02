@@ -10,23 +10,40 @@ export class AgreementConsentController {
     // Create or update an AgreementConsent
     static async create(req: Request, res: Response) {
         try {
-            const { applicationNo } = req.body;
-
+            const { applicationNo, firstName, lastName, address, userConsent } = req.body;
+    
+            // Validate required fields
+            if (!applicationNo) {
+                return res.status(400).json({ statusCode: 400, message: 'Application number is required' });
+            }
+            if (!firstName) {
+                return res.status(400).json({ statusCode: 400, message: 'First name is required' });
+            }
+            if (!lastName) {
+                return res.status(400).json({ statusCode: 400, message: 'Last name is required' });
+            }
+            if (!address) {
+                return res.status(400).json({ statusCode: 400, message: 'Address is required' });
+            }
+            if (!userConsent || !userConsent == undefined || null) {
+                return res.status(400).json({ statusCode: 400, message: 'Please check the User consent before proceeding' });
+            }
+    
             // Get the applicant's details by application number
             const existingApplicant = await UserService.findApplicationNo(applicationNo);
-
+    
             if (!existingApplicant) {
                 return res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
             }
-
+    
             // Check if the AgreementConsent with the given applicationNo exists
             const existingAgreementConsent = await AgreementConsentService.getByApplicationNo(applicationNo);
-
+    
             let agreementConsent: AgreementConsent | AgreementConsent[];
-
+    
             if (existingAgreementConsent) {
                 // If it exists, update the existing record
-                const updateData = {...req.body, attempted: true};
+                const updateData = { ...req.body, attempted: true };
                 agreementConsent = await AgreementConsentService.updateByApplicationNo(applicationNo, updateData);
                 res.status(200).send({ message: 'Agreement Consent updated', data: agreementConsent });
             } else {
@@ -35,11 +52,10 @@ export class AgreementConsentController {
                 agreementConsent = await AgreementConsentService.create(agreementConsentData);
                 res.status(201).send({ message: 'Agreement Consent created', data: agreementConsent });
             }
-
+    
             // Update the user's onboarding status to "OnboardingCompleted"
-            // existingApplicant.onboardingStatus = OnboardingStatus.OnboardingCompleted;
             await UserService.updateOnboardingStatus(applicationNo, OnboardingStatus.OnboardingCompleted);
-
+    
             // Fetch the user's email and send the onboarding completion email
             const userEmail = existingApplicant.email;
             const emailData = {
@@ -47,11 +63,12 @@ export class AgreementConsentController {
                 email: userEmail,
             };
             await sendOnboardingCompletionEmail(emailData);
-
+    
         } catch (error) {
             res.status(500).send({ message: 'Error creating or updating Agreement Consent', error: error.message });
         }
     }
+    
 
     // Get AgreementConsent by applicationNo
     static async getAgreementConsentByNo(req: Request, res: Response) {

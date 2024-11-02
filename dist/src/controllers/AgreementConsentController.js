@@ -19,7 +19,23 @@ class AgreementConsentController {
     static create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { applicationNo } = req.body;
+                const { applicationNo, firstName, lastName, address, userConsent } = req.body;
+                // Validate required fields
+                if (!applicationNo) {
+                    return res.status(400).json({ statusCode: 400, message: 'Application number is required' });
+                }
+                if (!firstName) {
+                    return res.status(400).json({ statusCode: 400, message: 'First name is required' });
+                }
+                if (!lastName) {
+                    return res.status(400).json({ statusCode: 400, message: 'Last name is required' });
+                }
+                if (!address) {
+                    return res.status(400).json({ statusCode: 400, message: 'Address is required' });
+                }
+                if (!userConsent || !userConsent == undefined || null) {
+                    return res.status(400).json({ statusCode: 400, message: 'Please check the User consent before proceeding' });
+                }
                 // Get the applicant's details by application number
                 const existingApplicant = yield UserService_1.UserService.findApplicationNo(applicationNo);
                 if (!existingApplicant) {
@@ -41,7 +57,6 @@ class AgreementConsentController {
                     res.status(201).send({ message: 'Agreement Consent created', data: agreementConsent });
                 }
                 // Update the user's onboarding status to "OnboardingCompleted"
-                // existingApplicant.onboardingStatus = OnboardingStatus.OnboardingCompleted;
                 yield UserService_1.UserService.updateOnboardingStatus(applicationNo, constants_1.OnboardingStatus.OnboardingCompleted);
                 // Fetch the user's email and send the onboarding completion email
                 const userEmail = existingApplicant.email;

@@ -36,8 +36,8 @@ export class BankDetailsController {
             if (!accountName) {
                 return res.status(400).json({ statusCode: 400, message: 'Account Name is required' });
             }
-            if (!studentLoanStatus) {
-                return res.status(400).json({ statusCode: 400, message: 'Please Tick One of the options' });
+            if (!employmentStatusDeclaration) {
+                return res.status(400).json({ statusCode: 400, message: 'Declare your employment status' });
             }
 
             // Check for the removal of Student Loans if one of the statements is ticked
