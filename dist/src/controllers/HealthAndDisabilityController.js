@@ -27,7 +27,7 @@ class HealthAndDisabilityController {
     static createHealthAndDisability(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const _a = req.body, { applicationNo, gpName, gpAddress, relevantHealthIssues, relevantHealthIssuesDetails } = _a, otherFields = __rest(_a, ["applicationNo", "gpName", "gpAddress", "relevantHealthIssues", "relevantHealthIssuesDetails"]);
+                const _a = req.body, { applicationNo, gpName, gpAddress, relevantHealthIssues, relevantHealthIssuesDetails, agreementCertification } = _a, otherFields = __rest(_a, ["applicationNo", "gpName", "gpAddress", "relevantHealthIssues", "relevantHealthIssuesDetails", "agreementCertification"]);
                 // Validate applicationNo
                 if (!applicationNo) {
                     return res.status(400).json({ statusCode: 400, message: 'Application number is required' });
@@ -56,13 +56,23 @@ class HealthAndDisabilityController {
                 if (otherFields.currentMedications && !otherFields.medicationDetails) {
                     return res.status(400).json({ statusCode: 400, message: 'Please provide details about current medications.' });
                 }
+                if (otherFields.physicalLimitations && !otherFields.limitationsDetails) {
+                    return res.status(400).json({ statusCode: 400, message: 'Please provide details limitaion.' });
+                }
+                if (otherFields.colorVisionDefects && !otherFields.colorVisionDefectsDetails) {
+                    return res.status(400).json({ statusCode: 400, message: 'Please provide details about color vision defection.' });
+                }
+                if (!agreementCertification) {
+                    return res.status(400).json({ statusCode: 400, message: 'Please certify the agreement before proceeding.' });
+                }
                 // Check if the HealthAndDisability with the given applicationNo exists
                 const existingEntry = yield HealthAndDisabilityService_1.HealthAndDisabilityService.getByApplicationNo(applicationNo);
                 // Add attempted: true to the data being saved
                 const dataToSave = Object.assign(Object.assign({ gpName,
                     gpAddress,
                     relevantHealthIssues,
-                    relevantHealthIssuesDetails }, otherFields), { applicationNo, attempted: true });
+                    relevantHealthIssuesDetails,
+                    agreementCertification, agreementToReportInfection: true }, otherFields), { applicationNo, attempted: true });
                 if (existingEntry) {
                     // If it exists, update the existing record
                     const updatedEntry = yield HealthAndDisabilityService_1.HealthAndDisabilityService.updateByApplicationNo(applicationNo, dataToSave);

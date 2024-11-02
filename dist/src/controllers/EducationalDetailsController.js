@@ -50,24 +50,24 @@ class EducationalDetailsController {
                 }
                 const updatedEntries = [];
                 const newEntries = [];
-                for (const entry of entries) {
+                for (const [index, entry] of entries.entries()) {
                     if (entry && typeof entry === 'object') {
                         const { schoolName, certificateObtained, courseOfStudy, yearAdmitted, yearGraduated } = entry, restOfEntry = __rest(entry, ["schoolName", "certificateObtained", "courseOfStudy", "yearAdmitted", "yearGraduated"]);
                         // Validate required fields
                         if (!schoolName) {
-                            return res.status(400).json({ statusCode: 400, message: 'Name of School / College / University is required' });
+                            return res.status(400).json({ statusCode: 400, message: `At Row ${index + 1}: Name of School / College / University is required` });
                         }
                         if (!certificateObtained) {
-                            return res.status(400).json({ statusCode: 400, message: 'Select Qualifications is required' });
+                            return res.status(400).json({ statusCode: 400, message: `At Row ${index + 1}: Select Qualifications is required` });
                         }
                         if (!courseOfStudy) {
-                            return res.status(400).json({ statusCode: 400, message: 'Subject Studied is required' });
+                            return res.status(400).json({ statusCode: 400, message: `At Row ${index + 1}: Subject Studied is required` });
                         }
                         if (yearAdmitted === undefined) {
-                            return res.status(400).json({ statusCode: 400, message: 'Year Admitted is required' });
+                            return res.status(400).json({ statusCode: 400, message: `At Row ${index + 1}: Year Admitted is required` });
                         }
                         if (yearGraduated === undefined) {
-                            return res.status(400).json({ statusCode: 400, message: 'Date of Completion is required' });
+                            return res.status(400).json({ statusCode: 400, message: `At Row ${index + 1}: Date of Completion is required` });
                         }
                         // Check for existing entry by courseOfStudy
                         const existingEntry = yield EducationalDetailsService_1.EducationalDetailsService.findByApplicationNoAndCourseOfStudy(applicationNo, courseOfStudy);

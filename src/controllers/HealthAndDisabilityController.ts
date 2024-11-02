@@ -5,7 +5,7 @@ export class HealthAndDisabilityController {
     // Create or update a HealthAndDisability entry
     static async createHealthAndDisability(req: Request, res: Response) {
         try {
-            const { applicationNo, gpName, gpAddress, relevantHealthIssues, relevantHealthIssuesDetails, ...otherFields } = req.body;
+            const { applicationNo, gpName, gpAddress, relevantHealthIssues, relevantHealthIssuesDetails, agreementCertification, ...otherFields } = req.body;
 
             // Validate applicationNo
             if (!applicationNo) {
@@ -42,6 +42,18 @@ export class HealthAndDisabilityController {
                 return res.status(400).json({ statusCode: 400, message: 'Please provide details about current medications.' });
             }
 
+            if (otherFields.physicalLimitations && !otherFields.limitationsDetails) {
+                return res.status(400).json({ statusCode: 400, message: 'Please provide details limitaion.' });
+            }
+
+            if (otherFields.colorVisionDefects && !otherFields.colorVisionDefectsDetails) {
+                return res.status(400).json({ statusCode: 400, message: 'Please provide details about color vision defection.' });
+            }
+
+            if (!agreementCertification) {
+                return res.status(400).json({ statusCode: 400, message: 'Please certify the agreement before proceeding.' });
+            }
+
             // Check if the HealthAndDisability with the given applicationNo exists
             const existingEntry = await HealthAndDisabilityService.getByApplicationNo(applicationNo);
 
@@ -51,6 +63,8 @@ export class HealthAndDisabilityController {
                 gpAddress,
                 relevantHealthIssues,
                 relevantHealthIssuesDetails,
+                agreementCertification,
+                agreementToReportInfection: true,
                 ...otherFields,
                 applicationNo,
                 attempted: true, // Set attempted to true
