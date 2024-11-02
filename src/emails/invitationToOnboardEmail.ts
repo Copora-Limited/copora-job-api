@@ -1,7 +1,7 @@
 import { emailHeader } from './emailHeader';
 import { emailFooter } from './emailFooter';
 
-export default function invitationToOnboardEmail(user: { firstName: string; email: string; loginLink: string; temporaryPassword: string; }) {
+export default function invitationToOnboardEmail(user) {
   return `
   <div style="font-family: Arial, sans-serif;  background-color: #f0f3f7;">
     <div style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #fff;">
