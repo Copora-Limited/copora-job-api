@@ -1,4 +1,2 @@
-2024-11-04T06:06:55.016Z [[32minfo[39m]: HTTP POST /users/test-email
-2024-11-04T06:08:01.878Z [[32minfo[39m]: HTTP POST /users/test-email
-2024-11-04T06:08:58.064Z [[32minfo[39m]: HTTP POST /users/test-email
-2024-11-04T06:10:04.838Z [[32minfo[39m]: HTTP POST /users/test-email
+2024-11-04 07:36:58 [[32minfo[39m]: [90mPOST /personal-details[39m [33m400[39m [90m13ms[39m
+2024-11-04 07:38:27 [[32minfo[39m]: HTTP POST /personal-details

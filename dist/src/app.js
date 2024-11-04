@@ -80,7 +80,7 @@ data_source_1.AppDataSource.initialize()
         winstonInstance: logger_1.default,
         meta: true,
         msg: "HTTP {{req.method}} {{req.url}}",
-        colorize: true,
+        colorize: false,
         ignoreRoute: function (req, res) { return false; }
     }));
     // API routes
