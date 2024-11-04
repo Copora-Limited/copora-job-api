@@ -60,9 +60,12 @@ export function emailHeader(headerType: string) {
   const imageUrl = HEADER_IMAGES[headerType] || HEADER_IMAGES['others'];
 
   return `
+    <div style="font-family: Arial, sans-serif;  background-color: #f0f3f7;">
+      <div style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #fff;">
           <div style="text-align: center; margin-bottom: 20px;">
               <img src="${imageUrl}" alt="Company Logo" style="width: 100%;"/>
           </div>
+          
       `;
 }
 

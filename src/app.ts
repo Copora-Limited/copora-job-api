@@ -85,7 +85,7 @@ AppDataSource.initialize()
       winstonInstance: logger,
       meta: true,
       msg: "HTTP {{req.method}} {{req.url}}",
-      colorize: false,
+      colorize: true,
       ignoreRoute: function (req, res) { return false; }
     }));
 
