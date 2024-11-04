@@ -31,7 +31,7 @@ __decorate([
     __metadata("design:type", String)
 ], ContactDetails.prototype, "address_line_1", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], ContactDetails.prototype, "address_line_2", void 0);
 __decorate([

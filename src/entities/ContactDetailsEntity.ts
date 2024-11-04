@@ -17,7 +17,7 @@ export class ContactDetails {
     @Column()
     address_line_1: string;
 
-    @Column()
+    @Column({nullable: true})
     address_line_2: string;
 
     @Column()
