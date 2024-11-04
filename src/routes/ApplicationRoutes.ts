@@ -361,6 +361,35 @@ router.get('/download/:applicationNo/pdf', ApplicationController.downloadApplica
    */
 router.post('/autofill-from-resume', uploadDocumentsAndImages.single('resume'), ApplicationController.autoFillApplicationFormWithUploadedResume);
 
+/**
+ * @swagger
+ * /applicant/{applicationNo}:
+ *   delete:
+ *     summary: Delete applicant data by application number except Authentication details
+ *     tags: [Applicants]
+ *     parameters:
+ *       - in: path
+ *         name: applicationNo
+ *         required: true
+ *         description: The application number of the applicant to delete
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Confirmation that the applicant data has been deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: All data for application number 12345 has been deleted successfully.
+ *       500:
+ *         description: Internal server error
+ */
+router.delete('/:applicationNo', ApplicationController.deleteApplicant);
+
 
 // Single file upload (can be either image or document)
 // router.post('/upload-file', uploadDocumentsAndImages.single('file'), async (req, res) => {

@@ -22,9 +22,7 @@ export class ApplicationService {
     // Implementation for updating an application by its number
   }
 
-  static async deleteApplicationByNo(applicationNo: string) {
-    // Implementation for deleting an application by its number
-  }
+ 
 
   
   static async getApplicationByNo(applicationNo: string) {
@@ -83,44 +81,44 @@ export class ApplicationService {
   }
   
   // Services
-static async getApplicantAttemptedData(applicationNo: string) {
-  try {
-      // Fetch `attempted` status from each table
-      const user = await AppDataSource.getRepository(User).findOneBy({ applicationNo });
-      const personalDetails = await AppDataSource.getRepository(PersonalDetails).findOneBy({ applicationNo });
-      const contactDetails = await AppDataSource.getRepository(ContactDetails).findOneBy({ applicationNo });
-      const professionalDetails = await AppDataSource.getRepository(ProfessionalDetails).find({ where: { applicationNo } });
-      const educationalDetails = await AppDataSource.getRepository(EducationalDetails).find({ where: { applicationNo } });
-      const healthAndDisability = await AppDataSource.getRepository(HealthAndDisability).findOneBy({ applicationNo });
-      const generalInfo = await AppDataSource.getRepository(GeneralInfo).findOneBy({ applicationNo });
-      const nextOfKin = await AppDataSource.getRepository(NextOfKin).findOneBy({ applicationNo });
-      const foodSafetyQuestionnaire = await AppDataSource.getRepository(FoodSafetyQuestionnaire).findOneBy({ applicationNo });
-      const bankDetails = await AppDataSource.getRepository(BankDetails).findOneBy({ applicationNo });
-      const agreementConsent = await AppDataSource.getRepository(AgreementConsent).findOneBy({ applicationNo });
-      const reference = await AppDataSource.getRepository(Reference).find({ where: { applicationNo } });
+  static async getApplicantAttemptedData(applicationNo: string) {
+    try {
+        // Fetch `attempted` status from each table
+        const user = await AppDataSource.getRepository(User).findOneBy({ applicationNo });
+        const personalDetails = await AppDataSource.getRepository(PersonalDetails).findOneBy({ applicationNo });
+        const contactDetails = await AppDataSource.getRepository(ContactDetails).findOneBy({ applicationNo });
+        const professionalDetails = await AppDataSource.getRepository(ProfessionalDetails).find({ where: { applicationNo } });
+        const educationalDetails = await AppDataSource.getRepository(EducationalDetails).find({ where: { applicationNo } });
+        const healthAndDisability = await AppDataSource.getRepository(HealthAndDisability).findOneBy({ applicationNo });
+        const generalInfo = await AppDataSource.getRepository(GeneralInfo).findOneBy({ applicationNo });
+        const nextOfKin = await AppDataSource.getRepository(NextOfKin).findOneBy({ applicationNo });
+        const foodSafetyQuestionnaire = await AppDataSource.getRepository(FoodSafetyQuestionnaire).findOneBy({ applicationNo });
+        const bankDetails = await AppDataSource.getRepository(BankDetails).findOneBy({ applicationNo });
+        const agreementConsent = await AppDataSource.getRepository(AgreementConsent).findOneBy({ applicationNo });
+        const reference = await AppDataSource.getRepository(Reference).find({ where: { applicationNo } });
 
-      // Consolidate all `attempted` values into a single array
-      const result = [
-          // { user: user?.attempted || false },
-          { personalDetails: personalDetails?.attempted || false },
-          { contactDetails: contactDetails?.attempted || false },
-          { generalInfo: generalInfo?.attempted || false },
-          { nextOfKin: nextOfKin?.attempted || false },
-          // { professionalDetails: professionalDetails.length > 0 ? professionalDetails.some(detail => detail.attempted) : false },
-          { reference: reference.length > 0 ? reference.some(ref => ref.attempted) : false },
-          { educationalDetails: educationalDetails.length > 0 ? educationalDetails.some(detail => detail.attempted) : false },
-          { healthAndDisability: healthAndDisability?.attempted || false },
-          { foodSafetyQuestionnaire: foodSafetyQuestionnaire?.attempted || false },
-          { bankDetails: bankDetails?.attempted || false },
-          { agreementConsent: agreementConsent?.attempted || false },
-          
-      ];
+        // Consolidate all `attempted` values into a single array
+        const result = [
+            // { user: user?.attempted || false },
+            { personalDetails: personalDetails?.attempted || false },
+            { contactDetails: contactDetails?.attempted || false },
+            { generalInfo: generalInfo?.attempted || false },
+            { nextOfKin: nextOfKin?.attempted || false },
+            // { professionalDetails: professionalDetails.length > 0 ? professionalDetails.some(detail => detail.attempted) : false },
+            { reference: reference.length > 0 ? reference.some(ref => ref.attempted) : false },
+            { educationalDetails: educationalDetails.length > 0 ? educationalDetails.some(detail => detail.attempted) : false },
+            { healthAndDisability: healthAndDisability?.attempted || false },
+            { foodSafetyQuestionnaire: foodSafetyQuestionnaire?.attempted || false },
+            { bankDetails: bankDetails?.attempted || false },
+            { agreementConsent: agreementConsent?.attempted || false },
+            
+        ];
 
-      return result;
-  } catch (error) {
-      throw new Error(`Error retrieving applicant data: ${error.message}`);
+        return result;
+    } catch (error) {
+        throw new Error(`Error retrieving applicant data: ${error.message}`);
+    }
   }
-}
 
 
 
@@ -179,4 +177,31 @@ static async getApplicantAttemptedData(applicationNo: string) {
       throw new Error(`Error retrieving all applicants: ${error.message}`);
     }
   }
+
+
+  static async deleteApplicantData(applicationNo: string) {
+    try {
+        // Delete records from each table associated with the given application number
+        // await AppDataSource.getRepository(User).delete({ applicationNo });
+        await AppDataSource.getRepository(PersonalDetails).delete({ applicationNo });
+        await AppDataSource.getRepository(ContactDetails).delete({ applicationNo });
+        await AppDataSource.getRepository(ProfessionalDetails).delete({ applicationNo });
+        await AppDataSource.getRepository(EducationalDetails).delete({ applicationNo });
+        await AppDataSource.getRepository(HealthAndDisability).delete({ applicationNo });
+        await AppDataSource.getRepository(GeneralInfo).delete({ applicationNo });
+        await AppDataSource.getRepository(NextOfKin).delete({ applicationNo });
+        await AppDataSource.getRepository(FoodSafetyQuestionnaire).delete({ applicationNo });
+        await AppDataSource.getRepository(BankDetails).delete({ applicationNo });
+        await AppDataSource.getRepository(AgreementConsent).delete({ applicationNo });
+        await AppDataSource.getRepository(Reference).delete({ applicationNo });
+  
+        // Return a confirmation message after successful deletion
+        return { message: `All data for application number ${applicationNo} has been deleted successfully.` };
+    } catch (error) {
+        throw new Error(`Error deleting applicant data: ${error.message}`);
+    }
+  }
+
+  
+  
 }

@@ -35,11 +35,6 @@ class ApplicationService {
             // Implementation for updating an application by its number
         });
     }
-    static deleteApplicationByNo(applicationNo) {
-        return __awaiter(this, void 0, void 0, function* () {
-            // Implementation for deleting an application by its number
-        });
-    }
     static getApplicationByNo(applicationNo) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -185,6 +180,30 @@ class ApplicationService {
             }
             catch (error) {
                 throw new Error(`Error retrieving all applicants: ${error.message}`);
+            }
+        });
+    }
+    static deleteApplicantData(applicationNo) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                // Delete records from each table associated with the given application number
+                // await AppDataSource.getRepository(User).delete({ applicationNo });
+                yield data_source_1.AppDataSource.getRepository(PersonalDetailsEntity_1.PersonalDetails).delete({ applicationNo });
+                yield data_source_1.AppDataSource.getRepository(ContactDetailsEntity_1.ContactDetails).delete({ applicationNo });
+                yield data_source_1.AppDataSource.getRepository(ProfessionalDetailsEntity_1.ProfessionalDetails).delete({ applicationNo });
+                yield data_source_1.AppDataSource.getRepository(EducationalDetailsEntity_1.EducationalDetails).delete({ applicationNo });
+                yield data_source_1.AppDataSource.getRepository(HealthAndDisabilityEntity_1.HealthAndDisability).delete({ applicationNo });
+                yield data_source_1.AppDataSource.getRepository(GeneralInfoEntity_1.GeneralInfo).delete({ applicationNo });
+                yield data_source_1.AppDataSource.getRepository(NextOfKinEntity_1.NextOfKin).delete({ applicationNo });
+                yield data_source_1.AppDataSource.getRepository(FoodSafetyQuestionnaireEntity_1.FoodSafetyQuestionnaire).delete({ applicationNo });
+                yield data_source_1.AppDataSource.getRepository(BankDetailsEntity_1.BankDetails).delete({ applicationNo });
+                yield data_source_1.AppDataSource.getRepository(AgreementConsentEntity_1.AgreementConsent).delete({ applicationNo });
+                yield data_source_1.AppDataSource.getRepository(ReferenceEntity_1.Reference).delete({ applicationNo });
+                // Return a confirmation message after successful deletion
+                return { message: `All data for application number ${applicationNo} has been deleted successfully.` };
+            }
+            catch (error) {
+                throw new Error(`Error deleting applicant data: ${error.message}`);
             }
         });
     }

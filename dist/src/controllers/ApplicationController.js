@@ -62,17 +62,6 @@ class ApplicationController {
             }
         });
     }
-    static deleteApplicationByNo(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                yield ApplicationService_1.ApplicationService.deleteApplicationByNo(req.params.applicationNo);
-                res.status(204).send();
-            }
-            catch (error) {
-                res.status(400).json({ error: error.message });
-            }
-        });
-    }
     static getApplicantData(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -427,6 +416,19 @@ class ApplicationController {
             }
             catch (error) {
                 return res.status(500).json({ error: error.message });
+            }
+        });
+    }
+    // Delete applicant record from all table
+    static deleteApplicant(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { applicationNo } = req.params; // Extract application number from the request parameters
+                const result = yield ApplicationService_1.ApplicationService.deleteApplicantData(applicationNo);
+                res.status(200).json(result);
+            }
+            catch (error) {
+                res.status(500).json({ error: error.message });
             }
         });
     }

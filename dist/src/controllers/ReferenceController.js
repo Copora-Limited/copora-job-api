@@ -54,38 +54,38 @@ class ReferenceController {
                         const { employerName, jobTitle, contactName, phone, email, startDate, endDate, address, responsibilities } = entry, restOfEntry = __rest(entry, ["employerName", "jobTitle", "contactName", "phone", "email", "startDate", "endDate", "address", "responsibilities"]);
                         // Validate required fields with index in the error message
                         if (!employerName || employerName.trim() === "") {
-                            return res.status(400).json({ statusCode: 400, message: `At form Row ${index + 1}: Enter employer/company name (e.g., ABC Company Limited) or "NA" if not applicable` });
+                            return res.status(400).json({ statusCode: 400, message: `Row ${index + 1}: Enter employer/company name (e.g., ABC Company Limited) or "NA" if not applicable` });
                         }
                         if (!jobTitle || jobTitle.trim() === "") {
-                            return res.status(400).json({ statusCode: 400, message: `At form Row ${index + 1}: Enter Job title or "NA" if not applicable` });
+                            return res.status(400).json({ statusCode: 400, message: `Row ${index + 1}: Enter Job title or "NA" if not applicable` });
                         }
                         if (!contactName || contactName.trim() === "") {
-                            return res.status(400).json({ statusCode: 400, message: `At form Row ${index + 1}: Enter Contact Name (e.g., John Doe)` });
+                            return res.status(400).json({ statusCode: 400, message: `Row ${index + 1}: Enter Contact Name (e.g., John Doe)` });
                         }
                         if (!phone || phone.trim() === "") {
-                            return res.status(400).json({ statusCode: 400, message: `At form Row ${index + 1}: Enter Phone Number (e.g., +44 123 456 7890)` });
+                            return res.status(400).json({ statusCode: 400, message: `Row ${index + 1}: Enter Phone Number (e.g., +44 123 456 7890)` });
                         }
                         if (!email || email.trim() === "") {
-                            return res.status(400).json({ statusCode: 400, message: `At form Row ${index + 1}: Enter Email (e.g., example@mail.com)` });
+                            return res.status(400).json({ statusCode: 400, message: `Row ${index + 1}: Enter Email (e.g., example@mail.com)` });
                         }
                         if (!/\S+@\S+\.\S+/.test(email)) {
-                            return res.status(400).json({ statusCode: 400, message: `At form Row ${index + 1}: Enter a valid email address` });
+                            return res.status(400).json({ statusCode: 400, message: `Row ${index + 1}: Enter a valid email address` });
                         }
                         if (!startDate || startDate.trim() === "") {
-                            return res.status(400).json({ statusCode: 400, message: `At form Row ${index + 1}: Enter Start Date (DD/MM/YYYY) or select today's date if not applicable` });
+                            return res.status(400).json({ statusCode: 400, message: `Row ${index + 1}: Enter Start Date (DD/MM/YYYY) or select today's date if not applicable` });
                         }
                         if (!endDate || endDate.trim() === "") {
-                            return res.status(400).json({ statusCode: 400, message: `At form Row ${index + 1}: Enter End Date (DD/MM/YYYY) or select today's date if not applicable` });
+                            return res.status(400).json({ statusCode: 400, message: `Row ${index + 1}: Enter End Date (DD/MM/YYYY) or select today's date if not applicable` });
                         }
                         if (!address || address.trim() === "") {
-                            return res.status(400).json({ statusCode: 400, message: `At form Row ${index + 1}: Enter Address or enter "NA" if not applicable` });
+                            return res.status(400).json({ statusCode: 400, message: `Row ${index + 1}: Enter Address or enter "NA" if not applicable` });
                         }
                         if (!responsibilities || responsibilities.trim() === "") {
-                            return res.status(400).json({ statusCode: 400, message: `At form Row ${index + 1}: Enter Responsibilities or enter "NA" if not applicable` });
+                            return res.status(400).json({ statusCode: 400, message: `Row ${index + 1}: Enter Responsibilities or enter "NA" if not applicable` });
                         }
                         // Ensure startDate is not greater than endDate
                         if (new Date(startDate) > new Date(endDate)) {
-                            return res.status(400).json({ statusCode: 400, message: `At form Row ${index + 1}: Start Date cannot be later than End Date` });
+                            return res.status(400).json({ statusCode: 400, message: `Row ${index + 1}: Start Date cannot be later than End Date` });
                         }
                         // Check for existing reference by phone
                         const existingReference = yield ReferenceService_1.ReferenceService.findByApplicationNoAndPhone(applicationNo, phone, email);
