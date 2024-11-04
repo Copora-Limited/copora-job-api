@@ -12,49 +12,57 @@ export class FoodSafetyQuestionnaire {
     @Column({ unique: true })
     applicationNo: string;
 
-    // Question 1: Cleaning chopping boards/utensils after using them for raw meat
+    // Updated: Cleaning chopping boards/utensils after using them for raw meat
     @Column({ nullable: true })
-    cleaningRawMeatUtensilsRequired: boolean;
+    cleaningRawMeatUtensilsRequired: string;
 
-    // Question 2: The Food Safety Act 1990 description
+    // New: Clean hands when they are dirty
     @Column({ nullable: true })
-    foodSafetyAct1990Description: boolean;
+    cleanHandsWhenDirty: string;
 
-    // Question 3: When to clean hands and kitchen surfaces
-    @Column({ nullable: true })
-    cleaningRequirement: string;
-
-    // Question 4: Characteristics of food contaminated with bacteria
+    // Updated: Characteristics of food contaminated with bacteria
     @Column({ nullable: true })
     contaminatedFoodCharacteristics: string;
 
-    // Question 5: Facts about bacteria growth and freezing
-    @Column({ nullable: true })
-    bacteriaFactTrue: string;
+    // Updated: True statement about bacteria
+    // @Column({ nullable: true })
+    // trueStatementAboutBacteria: string;
 
-    // Question 6: Where high-risk food should be stored in a refrigerator
+    // Updated: High-risk food storage
     @Column({ nullable: true })
-    highRiskFoodStoragePosition: string;
+    highRiskFoodStorage: string;
 
-    // Question 7: Temperature danger zone for food safety
+    // Updated: Temperature danger zone
     @Column({ nullable: true })
     temperatureDangerZone: string;
 
-    // Question 8: Scenarios for when to wash hands at work
+    // Updated: Scenarios for when to wash hands at work
     @Column("simple-array", { nullable: true })
     handWashingScenarios: string[];
 
-    // Question 9: What is an allergen?
+    // New: Food Safety Act true or false statement
+    // @Column({ nullable: true })
+    // foodSafetyActTrueOrFalse: string;
+
+    // Updated: Allergen definition
     @Column({ nullable: true })
     allergenDefinition: string;
 
-    // Question 10: Examples of high-risk foods
+    // Updated: High-risk foods
     @Column({ nullable: true })
-    highRiskFoodsExamples: string;
+    highRiskFoods: string;
 
-    // Question 11: Offense under the Food Safety Act 1990
+    // New: Bacteria facts (first)
     @Column({ nullable: true })
-    foodSafetyActOffense: string;
+    bacteriaFactOne: string;
+
+    // New: Bacteria facts (second)
+    @Column({ nullable: true })
+    bacteriaFactTwo: string;
+
+    // Updated: Food Safety Act offense
+    @Column({ nullable: true })
+    foodSafetyActOffence: string;
 
     // Additional column: Agreement to licensing regulations
     @Column({ nullable: true })

@@ -24,16 +24,12 @@ __decorate([
 ], FoodSafetyQuestionnaire.prototype, "applicationNo", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", Boolean)
+    __metadata("design:type", String)
 ], FoodSafetyQuestionnaire.prototype, "cleaningRawMeatUtensilsRequired", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", Boolean)
-], FoodSafetyQuestionnaire.prototype, "foodSafetyAct1990Description", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], FoodSafetyQuestionnaire.prototype, "cleaningRequirement", void 0);
+], FoodSafetyQuestionnaire.prototype, "cleanHandsWhenDirty", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
@@ -41,11 +37,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], FoodSafetyQuestionnaire.prototype, "bacteriaFactTrue", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], FoodSafetyQuestionnaire.prototype, "highRiskFoodStoragePosition", void 0);
+], FoodSafetyQuestionnaire.prototype, "highRiskFoodStorage", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
@@ -61,11 +53,19 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], FoodSafetyQuestionnaire.prototype, "highRiskFoodsExamples", void 0);
+], FoodSafetyQuestionnaire.prototype, "highRiskFoods", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], FoodSafetyQuestionnaire.prototype, "foodSafetyActOffense", void 0);
+], FoodSafetyQuestionnaire.prototype, "bacteriaFactOne", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], FoodSafetyQuestionnaire.prototype, "bacteriaFactTwo", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], FoodSafetyQuestionnaire.prototype, "foodSafetyActOffence", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Boolean)

@@ -7,7 +7,7 @@ export class FoodSafetyQuestionnaireController {
     // Create a new Food Safety Questionnaire or update if it already exists
     static async createFoodSafetyQuestionnaire(req: Request, res: Response) {
         try {
-            const { applicationNo, cleaningRawMeatUtensilsRequired, foodSafetyAct1990Description, cleaningRequirement, contaminatedFoodCharacteristics, bacteriaFactTrue, highRiskFoodStoragePosition, temperatureDangerZone, handWashingScenarios, allergenDefinition, highRiskFoodsExamples, foodSafetyActOffense, licensingRegulationAgreement } = req.body;
+            const { applicationNo, ...otherFields  } = req.body;
     
             // Validate required fields
             if (!applicationNo) {
@@ -17,52 +17,57 @@ export class FoodSafetyQuestionnaireController {
             // Additional validation for specific fields can be added here
             // e.g., if certain questions must be answered:
             
-            if (cleaningRawMeatUtensilsRequired === null) {
+            if (otherFields.cleaningRawMeatUtensilsRequired === null || otherFields.cleaningRawMeatUtensilsRequired === "") {
                 return res.status(400).json({ message: 'Answer for "Cleaning raw meat utensils" is required.' });
             }
-
-            if (foodSafetyAct1990Description === null) {
-                return res.status(400).json({ message: 'Answer for "Food Safety Act 1990 description" is required.' });
+            
+            if (otherFields.cleanHandsWhenDirty === null || otherFields.cleanHandsWhenDirty === "") {
+                return res.status(400).json({ message: 'Answer for "Clean hands when dirty" is required.' });
             }
             
-            if (cleaningRequirement === null) {
-                return res.status(400).json({ message: 'Answer for "Cleaning requirement" is required.' });
+            if (otherFields.contaminatedFoodCharacteristics === null || otherFields.contaminatedFoodCharacteristics === "") {
+                return res.status(400).json({ message: 'Answer for "Contaminated food appearance" is required.' });
             }
             
-            if (contaminatedFoodCharacteristics === null) {
-                return res.status(400).json({ message: 'Answer for "Contaminated food characteristics" is required.' });
+            if (otherFields.highRiskFoodStorage === null || otherFields.highRiskFoodStorage === "") {
+                return res.status(400).json({ message: 'Answer for "High-risk food storage" is required.' });
             }
             
-            if (bacteriaFactTrue === null) {
-                return res.status(400).json({ message: 'Answer for "Bacteria fact true" is required.' });
-            }
-            
-            if (highRiskFoodStoragePosition === null) {
-                return res.status(400).json({ message: 'Answer for "High-risk food storage position" is required.' });
-            }
-            
-            if (temperatureDangerZone === null) {
+            if (otherFields.temperatureDangerZone === null || otherFields.temperatureDangerZone === "") {
                 return res.status(400).json({ message: 'Answer for "Temperature danger zone" is required.' });
             }
             
-            if (handWashingScenarios === null) {
+            if (otherFields.handWashingScenarios === null || otherFields.handWashingScenarios.length === 0) {
                 return res.status(400).json({ message: 'Answer for "Hand washing scenarios" is required.' });
             }
             
-            if (allergenDefinition === null) {
+            // if (otherFields.foodSafetyActTrueOrFalse === null || otherFields.foodSafetyActTrueOrFalse === "") {
+            //     return res.status(400).json({ message: 'Answer for "Food Safety Act true or false" is required.' });
+            // }
+            
+            if (otherFields.allergenDefinition === null || otherFields.allergenDefinition === "") {
                 return res.status(400).json({ message: 'Answer for "Allergen definition" is required.' });
             }
             
-            if (highRiskFoodsExamples === null) {
-                return res.status(400).json({ message: 'Answer for "High-risk foods examples" is required.' });
+            if (otherFields.highRiskFoods === null || otherFields.highRiskFoods === "") {
+                return res.status(400).json({ message: 'Answer for "High-risk foods" is required.' });
             }
             
-            if (foodSafetyActOffense === null) {
+            if (otherFields.bacteriaFactOne === null || otherFields.bacteriaFactOne === "") {
+                return res.status(400).json({ message: 'Answer for "Bacteria facts (first)" is required.' });
+            }
+            
+            if (otherFields.bacteriaFactTwo === null || otherFields.bacteriaFactTwo === "") {
+                return res.status(400).json({ message: 'Answer for "Bacteria facts (second)" is required.' });
+            }
+            
+            if (otherFields.foodSafetyActOffence === null || otherFields.foodSafetyActOffence === "") {
                 return res.status(400).json({ message: 'Answer for "Food Safety Act offense" is required.' });
             }
             
+            
 
-            // if (licensingRegulationAgreement === null) {
+            // if (otherFields.licensingRegulationAgreement === null) {
             //     return res.status(400).json({ message: 'Please accept the agreement to proceed.' });
             // }
 
