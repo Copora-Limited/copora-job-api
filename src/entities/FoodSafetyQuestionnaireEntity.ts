@@ -14,11 +14,11 @@ export class FoodSafetyQuestionnaire {
 
     // Updated: Cleaning chopping boards/utensils after using them for raw meat
     @Column({ nullable: true })
-    cleaningRawMeatUtensilsRequired: string;
+    cleaningRawMeatUtensilsRequired: boolean;
 
     // New: Clean hands when they are dirty
     @Column({ nullable: true })
-    cleanHandsWhenDirty: string;
+    cleanHandsWhenDirty: boolean;
 
     // Updated: Characteristics of food contaminated with bacteria
     @Column({ nullable: true })

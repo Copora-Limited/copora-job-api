@@ -24,11 +24,11 @@ __decorate([
 ], FoodSafetyQuestionnaire.prototype, "applicationNo", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
+    __metadata("design:type", Boolean)
 ], FoodSafetyQuestionnaire.prototype, "cleaningRawMeatUtensilsRequired", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
+    __metadata("design:type", Boolean)
 ], FoodSafetyQuestionnaire.prototype, "cleanHandsWhenDirty", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
