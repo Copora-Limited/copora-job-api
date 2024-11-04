@@ -17,6 +17,7 @@ import ContactDetailsRoutes from './routes/ContactDetailsRoutes';
 import EducationalDetailsRoutes from './routes/EducationalDetailsRoutes'; 
 import FoodSafetyQuestionnaireRoutes from './routes/FoodSafetyQuestionnaireRoutes';
 import HealthAndDisabilityRoutes from './routes/HealthAndDisabilityRoutes';
+
 import personalDetailsRoutes from './routes/personalDetailsRoutes';
 import ProfessionalDetailsRoutes from './routes/ProfessionalDetailsRoutes';
 import ReferenceRoutes from './routes/ReferenceRoutes';
@@ -102,7 +103,10 @@ AppDataSource.initialize()
     app.use(`/general-info`, GeneralInfoRoutes);
     app.use(`/educational-details`, EducationalDetailsRoutes);
     app.use(`/food-safety-questionnaire`, FoodSafetyQuestionnaireRoutes);
+    app.use(`/licensing-regulation`, FoodSafetyQuestionnaireRoutes);
     app.use(`/health-and-disability`, HealthAndDisabilityRoutes);
+    app.use(`/agreement-to-report-infection`, HealthAndDisabilityRoutes);
+  
     app.use(`/personal-details`, personalDetailsRoutes);
     app.use(`/professional-details`, ProfessionalDetailsRoutes);
     app.use(`/reference`, ReferenceRoutes);

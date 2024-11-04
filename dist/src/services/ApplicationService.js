@@ -24,6 +24,7 @@ const AgreementConsentEntity_1 = require("../entities/AgreementConsentEntity");
 const ReferenceEntity_1 = require("../entities/ReferenceEntity");
 const GeneralInfoEntity_1 = require("../entities/GeneralInfoEntity");
 const NextOfKinEntity_1 = require("../entities/NextOfKinEntity");
+const constants_1 = require("../constants");
 class ApplicationService {
     static createApplication(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -201,6 +202,35 @@ class ApplicationService {
                 yield data_source_1.AppDataSource.getRepository(ReferenceEntity_1.Reference).delete({ applicationNo });
                 // Return a confirmation message after successful deletion
                 return { message: `All data for application number ${applicationNo} has been deleted successfully.` };
+            }
+            catch (error) {
+                throw new Error(`Error deleting applicant data: ${error.message}`);
+            }
+        });
+    }
+    static deleteAllApplicantData() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                // Assuming there's a User repository to check roles
+                const applicants = yield data_source_1.AppDataSource.getRepository(UserEntity_1.User).find({ where: { role: constants_1.UserRole.Applicant } });
+                // Extract application numbers of applicants
+                const applicationNo = applicants.map(applicant => applicant.applicationNo);
+                // Only proceed if there are applicants
+                if (applicationNo.length > 0) {
+                    yield data_source_1.AppDataSource.getRepository(PersonalDetailsEntity_1.PersonalDetails).clear();
+                    yield data_source_1.AppDataSource.getRepository(ContactDetailsEntity_1.ContactDetails).clear();
+                    yield data_source_1.AppDataSource.getRepository(ProfessionalDetailsEntity_1.ProfessionalDetails).clear();
+                    yield data_source_1.AppDataSource.getRepository(EducationalDetailsEntity_1.EducationalDetails).clear();
+                    yield data_source_1.AppDataSource.getRepository(HealthAndDisabilityEntity_1.HealthAndDisability).clear();
+                    yield data_source_1.AppDataSource.getRepository(GeneralInfoEntity_1.GeneralInfo).clear();
+                    yield data_source_1.AppDataSource.getRepository(NextOfKinEntity_1.NextOfKin).clear();
+                    yield data_source_1.AppDataSource.getRepository(FoodSafetyQuestionnaireEntity_1.FoodSafetyQuestionnaire).clear();
+                    yield data_source_1.AppDataSource.getRepository(BankDetailsEntity_1.BankDetails).clear();
+                    yield data_source_1.AppDataSource.getRepository(AgreementConsentEntity_1.AgreementConsent).clear();
+                    yield data_source_1.AppDataSource.getRepository(ReferenceEntity_1.Reference).clear();
+                }
+                // Return a confirmation message after successful deletion
+                return { message: "All applicant data for roles 'applicant' has been deleted successfully." };
             }
             catch (error) {
                 throw new Error(`Error deleting applicant data: ${error.message}`);

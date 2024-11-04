@@ -16,24 +16,66 @@ class FoodSafetyQuestionnaireController {
     static createFoodSafetyQuestionnaire(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { applicationNo } = req.body;
-                // Check if the FoodSafetyQuestionnaire with the given applicationNo exists
+                const { applicationNo, cleaningRawMeatUtensilsRequired, foodSafetyAct1990Description, cleaningRequirement, contaminatedFoodCharacteristics, bacteriaFactTrue, highRiskFoodStoragePosition, temperatureDangerZone, handWashingScenarios, allergenDefinition, highRiskFoodsExamples, foodSafetyActOffense, licensingRegulationAgreement } = req.body;
+                // Validate required fields
+                if (!applicationNo) {
+                    return res.status(400).json({ message: 'Application number is required.' });
+                }
+                // Additional validation for specific fields can be added here
+                // e.g., if certain questions must be answered:
+                if (cleaningRawMeatUtensilsRequired === null) {
+                    return res.status(400).json({ message: 'Answer for "Cleaning raw meat utensils" is required.' });
+                }
+                if (foodSafetyAct1990Description === null) {
+                    return res.status(400).json({ message: 'Answer for "Food Safety Act 1990 description" is required.' });
+                }
+                if (cleaningRequirement === null) {
+                    return res.status(400).json({ message: 'Answer for "Cleaning requirement" is required.' });
+                }
+                if (contaminatedFoodCharacteristics === null) {
+                    return res.status(400).json({ message: 'Answer for "Contaminated food characteristics" is required.' });
+                }
+                if (bacteriaFactTrue === null) {
+                    return res.status(400).json({ message: 'Answer for "Bacteria fact true" is required.' });
+                }
+                if (highRiskFoodStoragePosition === null) {
+                    return res.status(400).json({ message: 'Answer for "High-risk food storage position" is required.' });
+                }
+                if (temperatureDangerZone === null) {
+                    return res.status(400).json({ message: 'Answer for "Temperature danger zone" is required.' });
+                }
+                if (handWashingScenarios === null) {
+                    return res.status(400).json({ message: 'Answer for "Hand washing scenarios" is required.' });
+                }
+                if (allergenDefinition === null) {
+                    return res.status(400).json({ message: 'Answer for "Allergen definition" is required.' });
+                }
+                if (highRiskFoodsExamples === null) {
+                    return res.status(400).json({ message: 'Answer for "High-risk foods examples" is required.' });
+                }
+                if (foodSafetyActOffense === null) {
+                    return res.status(400).json({ message: 'Answer for "Food Safety Act offense" is required.' });
+                }
+                // if (licensingRegulationAgreement === null) {
+                //     return res.status(400).json({ message: 'Please accept the agreement to proceed.' });
+                // }
+                // Check if the Food Safety Questionnaire with the given applicationNo exists
                 const existingFoodSafetyQuestionnaire = yield FoodSafetyQuestionnaireController.foodSafetyQuestionnaireService.getFoodSafetyQuestionnaireByApplicationNo(applicationNo);
                 if (existingFoodSafetyQuestionnaire) {
                     // If it exists, update the existing record
                     const updateData = Object.assign(Object.assign({}, req.body), { attempted: true });
                     const updatedFoodSafetyQuestionnaire = yield FoodSafetyQuestionnaireController.foodSafetyQuestionnaireService.updateFoodSafetyQuestionnaireByApplicationNo(applicationNo, updateData);
-                    return res.status(200).send({ message: 'Food Safety Questionnaire updated', data: updatedFoodSafetyQuestionnaire });
+                    return res.status(200).json({ message: 'Food Safety Questionnaire updated', data: updatedFoodSafetyQuestionnaire });
                 }
                 else {
                     // If it does not exist, create a new record with attempted set to true
                     const foodSafetyData = Object.assign(Object.assign({}, req.body), { attempted: true });
                     const newFoodSafetyQuestionnaire = yield FoodSafetyQuestionnaireController.foodSafetyQuestionnaireService.createFoodSafetyQuestionnaire(foodSafetyData);
-                    return res.status(201).send({ message: 'Food Safety Questionnaire created', data: newFoodSafetyQuestionnaire });
+                    return res.status(201).json({ message: 'Food Safety Questionnaire created', data: newFoodSafetyQuestionnaire });
                 }
             }
             catch (error) {
-                res.status(500).send({ message: 'Error creating or updating food safety questionnaire', error: error.message });
+                res.status(500).json({ message: 'Error creating or updating food safety questionnaire', error: error.message });
             }
         });
     }

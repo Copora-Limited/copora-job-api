@@ -376,6 +376,27 @@ router.post('/autofill-from-resume', multerConfig_1.default.single('resume'), Ap
  *         description: Internal server error
  */
 router.delete('/:applicationNo', ApplicationController_1.ApplicationController.deleteApplicant);
+/**
+ * @swagger
+ * /applicants:
+ *   delete:
+ *     summary: Delete all applicant data except Admins
+ *     tags: [Applicants]
+ *     responses:
+ *       200:
+ *         description: Confirmation that all applicant data has been deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: All applicant data for roles 'applicant' has been deleted successfully.
+ *       500:
+ *         description: Internal server error
+ */
+router.delete('/', ApplicationController_1.ApplicationController.deleteApplicants);
 // Single file upload (can be either image or document)
 // router.post('/upload-file', uploadDocumentsAndImages.single('file'), async (req, res) => {
 //     // Handle the uploaded file in your controller logic

@@ -96,7 +96,9 @@ data_source_1.AppDataSource.initialize()
     app.use(`/general-info`, GeneralInfoRoutes_1.default);
     app.use(`/educational-details`, EducationalDetailsRoutes_1.default);
     app.use(`/food-safety-questionnaire`, FoodSafetyQuestionnaireRoutes_1.default);
+    app.use(`/licensing-regulation`, FoodSafetyQuestionnaireRoutes_1.default);
     app.use(`/health-and-disability`, HealthAndDisabilityRoutes_1.default);
+    app.use(`/agreement-to-report-infection`, HealthAndDisabilityRoutes_1.default);
     app.use(`/personal-details`, personalDetailsRoutes_1.default);
     app.use(`/professional-details`, ProfessionalDetailsRoutes_1.default);
     app.use(`/reference`, ReferenceRoutes_1.default);

@@ -430,6 +430,16 @@ export class ApplicationController {
     }
   }
 
+   // Delete applicant data from all tables for users with the 'applicant' role
+   static async deleteApplicants(res: Response) {
+    try {
+      const result = await ApplicationService.deleteAllApplicantData();
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
   
   
 

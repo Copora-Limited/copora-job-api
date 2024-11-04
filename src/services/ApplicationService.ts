@@ -12,6 +12,7 @@ import { AgreementConsent } from '../entities/AgreementConsentEntity';
 import { Reference } from '../entities/ReferenceEntity';
 import { GeneralInfo } from '../entities/GeneralInfoEntity';
 import { NextOfKin } from '../entities/NextOfKinEntity';
+import { UserRole } from '../constants';
 
 export class ApplicationService {
   static async createApplication(data: any) {
@@ -197,6 +198,36 @@ export class ApplicationService {
   
         // Return a confirmation message after successful deletion
         return { message: `All data for application number ${applicationNo} has been deleted successfully.` };
+    } catch (error) {
+        throw new Error(`Error deleting applicant data: ${error.message}`);
+    }
+  }
+
+  static async deleteAllApplicantData() {
+    try {
+        // Assuming there's a User repository to check roles
+        const applicants = await AppDataSource.getRepository(User).find({ where: { role: UserRole.Applicant } });
+
+        // Extract application numbers of applicants
+        const applicationNo = applicants.map(applicant => applicant.applicationNo);
+
+        // Only proceed if there are applicants
+        if (applicationNo.length > 0) {
+            await AppDataSource.getRepository(PersonalDetails).clear();
+            await AppDataSource.getRepository(ContactDetails).clear();
+            await AppDataSource.getRepository(ProfessionalDetails).clear();
+            await AppDataSource.getRepository(EducationalDetails).clear();
+            await AppDataSource.getRepository(HealthAndDisability).clear();
+            await AppDataSource.getRepository(GeneralInfo).clear();
+            await AppDataSource.getRepository(NextOfKin).clear();
+            await AppDataSource.getRepository(FoodSafetyQuestionnaire).clear();
+            await AppDataSource.getRepository(BankDetails).clear();
+            await AppDataSource.getRepository(AgreementConsent).clear();
+            await AppDataSource.getRepository(Reference).clear();
+        }
+
+        // Return a confirmation message after successful deletion
+        return { message: "All applicant data for roles 'applicant' has been deleted successfully." };
     } catch (error) {
         throw new Error(`Error deleting applicant data: ${error.message}`);
     }

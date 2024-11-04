@@ -432,5 +432,17 @@ class ApplicationController {
             }
         });
     }
+    // Delete applicant data from all tables for users with the 'applicant' role
+    static deleteApplicants(res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield ApplicationService_1.ApplicationService.deleteAllApplicantData();
+                res.status(200).json(result);
+            }
+            catch (error) {
+                res.status(500).json({ error: error.message });
+            }
+        });
+    }
 }
 exports.ApplicationController = ApplicationController;
