@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const HealthAndDisabilityController_1 = require("../controllers/HealthAndDisabilityController");
+const AgreementToReportInfectionController_1 = require("../controllers/AgreementToReportInfectionController");
 const router = (0, express_1.Router)();
 /**
  * @swagger
- * /health-and-disability:
+ * /agreement-to-report-infection:
  *   post:
  *     summary: Create a new Health and Disability record
  *     tags: [HealthAndDisability]
@@ -28,4 +28,5 @@ const router = (0, express_1.Router)();
  *       400:
  *         description: Bad request
  */
-router.post('/', HealthAndDisabilityController_1.HealthAndDisabilityController.createHealthAndDisability);
+router.post('/', AgreementToReportInfectionController_1.AgreementToReportInfectionController.updateOrCreate);
+exports.default = router;

@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { HealthAndDisabilityController } from '../controllers/HealthAndDisabilityController';
+import { AgreementToReportInfectionController } from '../controllers/AgreementToReportInfectionController';
 
 const router = Router();
 
 /**
  * @swagger
- * /health-and-disability:
+ * /agreement-to-report-infection:
  *   post:
  *     summary: Create a new Health and Disability record
  *     tags: [HealthAndDisability]
@@ -28,4 +28,5 @@ const router = Router();
  *       400:
  *         description: Bad request
  */
-router.post('/', HealthAndDisabilityController.createHealthAndDisability);
+router.post('/', AgreementToReportInfectionController.updateOrCreate);
+export default router;

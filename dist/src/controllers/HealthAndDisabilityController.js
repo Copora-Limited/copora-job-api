@@ -93,7 +93,7 @@ class HealthAndDisabilityController {
                 if (otherFields.colorVisionDefects && !otherFields.colorVisionDefectsDetails) {
                     return res.status(400).json({ statusCode: 400, message: 'Please provide details about color Vision Defects.' });
                 }
-                if (agreementCertification === null) {
+                if (!agreementCertification || agreementCertification === null) {
                     return res.status(400).json({ statusCode: 400, message: 'Please certify the agreement before you proceed' });
                 }
                 // Check if the HealthAndDisability with the given applicationNo exists
@@ -143,6 +143,7 @@ class HealthAndDisabilityController {
     // Update HealthAndDisability entry by applicationNo
     static updateHealthAndDisabilityByNo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body);
             try {
                 const { applicationNo } = req.params;
                 const updatedEntry = yield HealthAndDisabilityService_1.HealthAndDisabilityService.updateByApplicationNo(applicationNo, req.body);

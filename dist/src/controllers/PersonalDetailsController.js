@@ -100,7 +100,7 @@ class PersonalDetailsController {
     // Get PersonalDetails by applicationNo
     static getPersonalDetailsByNo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("req:", req.params);
+            // console.log("req:", req.params)
             try {
                 const { applicationNo } = req.params;
                 const entry = yield PersonalDetailsService_1.PersonalDetailsService.getByApplicationNo(applicationNo);

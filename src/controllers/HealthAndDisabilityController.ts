@@ -88,7 +88,7 @@ export class HealthAndDisabilityController {
                 return res.status(400).json({ statusCode: 400, message: 'Please provide details about color Vision Defects.' });
             }
 
-            if (agreementCertification === null) {
+            if (!agreementCertification || agreementCertification === null) {
                 return res.status(400).json({ statusCode: 400, message: 'Please certify the agreement before you proceed' });
             }
 
@@ -142,6 +142,7 @@ export class HealthAndDisabilityController {
 
     // Update HealthAndDisability entry by applicationNo
     static async updateHealthAndDisabilityByNo(req: Request, res: Response) {
+        console.log(req.body);
         try {
             const { applicationNo } = req.params;
             const updatedEntry = await HealthAndDisabilityService.updateByApplicationNo(applicationNo, req.body);

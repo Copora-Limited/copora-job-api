@@ -22,6 +22,7 @@ const ContactDetailsRoutes_1 = __importDefault(require("./routes/ContactDetailsR
 const EducationalDetailsRoutes_1 = __importDefault(require("./routes/EducationalDetailsRoutes"));
 const FoodSafetyQuestionnaireRoutes_1 = __importDefault(require("./routes/FoodSafetyQuestionnaireRoutes"));
 const HealthAndDisabilityRoutes_1 = __importDefault(require("./routes/HealthAndDisabilityRoutes"));
+const AgreementToReportInfection_1 = __importDefault(require("./routes/AgreementToReportInfection"));
 const personalDetailsRoutes_1 = __importDefault(require("./routes/personalDetailsRoutes"));
 const ProfessionalDetailsRoutes_1 = __importDefault(require("./routes/ProfessionalDetailsRoutes"));
 const ReferenceRoutes_1 = __importDefault(require("./routes/ReferenceRoutes"));
@@ -98,7 +99,7 @@ data_source_1.AppDataSource.initialize()
     app.use(`/food-safety-questionnaire`, FoodSafetyQuestionnaireRoutes_1.default);
     app.use(`/licensing-regulation`, FoodSafetyQuestionnaireRoutes_1.default);
     app.use(`/health-and-disability`, HealthAndDisabilityRoutes_1.default);
-    app.use(`/agreement-to-report-infection`, HealthAndDisabilityRoutes_1.default);
+    app.use(`/agreement-to-report-infection`, AgreementToReportInfection_1.default);
     app.use(`/personal-details`, personalDetailsRoutes_1.default);
     app.use(`/professional-details`, ProfessionalDetailsRoutes_1.default);
     app.use(`/reference`, ReferenceRoutes_1.default);

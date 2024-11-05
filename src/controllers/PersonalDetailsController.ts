@@ -104,7 +104,7 @@ export class PersonalDetailsController {
 
     // Get PersonalDetails by applicationNo
     static async getPersonalDetailsByNo(req: Request, res: Response) {
-        console.log("req:", req.params)
+        // console.log("req:", req.params)
         try {
             const { applicationNo } = req.params;
             const entry = await PersonalDetailsService.getByApplicationNo(applicationNo);
