@@ -378,7 +378,7 @@ router.post('/autofill-from-resume', multerConfig_1.default.single('resume'), Ap
 router.delete('/:applicationNo', ApplicationController_1.ApplicationController.deleteApplicant);
 /**
  * @swagger
- * /applicants:
+ * /applicant:
  *   delete:
  *     summary: Delete all applicant data except Admins
  *     tags: [Applicants]

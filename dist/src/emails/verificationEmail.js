@@ -6,21 +6,27 @@ const emailFooter_1 = require("./emailFooter");
 const config_1 = require("../config");
 // emails/verificationEmail.ts
 function verificationEmail(user, verificationToken) {
-    const verificationUrl = `${config_1.FRONTEND_URL}/verify-email?token=${verificationToken}`;
+    // const verificationUrl = `${FRONTEND_URL}/verify-email?token=${verificationToken}`;
+    const loginUrl = `${config_1.FRONTEND_URL}`;
     return `
         ${(0, emailHeader_1.emailHeader)('others')}
+        
+
         <div>
-          <h2 style="text-align: center;">Verify and sign in</h2>
+          <h2 style="text-align: center;">Welcome to ${process.env.APP_COMPANY}</h2>
           <p>Hello ${user.firstName || 'User'},</p>
-          <p>An admin account account has been  ${process.env.APP_COMPANY} account for <strong>${user.email}</strong>.</p>
-          <p>Your password is: <strong>${user.temporaryPassword}</strong></p>
-          <p>The link can only be used once and expires in 10 minutes if you don’t use it.</p>
-          <a href="${verificationUrl}" style="display: inline-block; background-color: #211c1c; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Verify me</a>
-          <h3>How does this work?</h3>
-          <p>This secure, one-time URL lets you confirm your identity without a password. If you already have a password, this won’t replace it, so you can still sign in with it later.</p>
-          <p>If you didn't request this verification link, you can safely ignore this email.</p>
-          <p>Don’t see a button above? <a href="${verificationUrl}" style="color: #211c1c; text-decoration: none;">Verify yourself here</a></p>
+          <p>An admin account has been created for you at ${process.env.APP_COMPANY} using <strong>${user.email}</strong>.</p>
+          <p>Your temporary password is: <strong>${user.temporaryPassword}</strong></p>
+          <p>Please use this password to log in for the first time. We recommend changing it upon signing in to ensure your account security.</p>
+          
+          <a href="${loginUrl}" style="display: inline-block; background-color: #211c1c; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Sign in to your account</a>
+          
+          <h3>Need help?</h3>
+          <p>If you have any questions or need assistance with your account, feel free to contact our support team.</p>
+          
+          <p>Don’t see a button above? <a href="${loginUrl}" style="color: #211c1c; text-decoration: none;">Click here to sign in</a></p>
         </div>
+
         ${(0, emailFooter_1.emailFooter)()}
   `;
 }

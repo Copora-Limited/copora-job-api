@@ -25,6 +25,7 @@ const ReferenceEntity_1 = require("../entities/ReferenceEntity");
 const GeneralInfoEntity_1 = require("../entities/GeneralInfoEntity");
 const NextOfKinEntity_1 = require("../entities/NextOfKinEntity");
 const constants_1 = require("../constants");
+const typeorm_1 = require("typeorm");
 class ApplicationService {
     static createApplication(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -208,31 +209,46 @@ class ApplicationService {
             }
         });
     }
+    // Service
     static deleteAllApplicantData() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                // Assuming there's a User repository to check roles
-                const applicants = yield data_source_1.AppDataSource.getRepository(UserEntity_1.User).find({ where: { role: constants_1.UserRole.Applicant } });
-                // Extract application numbers of applicants
-                const applicationNo = applicants.map(applicant => applicant.applicationNo);
-                // Only proceed if there are applicants
-                if (applicationNo.length > 0) {
-                    yield data_source_1.AppDataSource.getRepository(PersonalDetailsEntity_1.PersonalDetails).clear();
-                    yield data_source_1.AppDataSource.getRepository(ContactDetailsEntity_1.ContactDetails).clear();
-                    yield data_source_1.AppDataSource.getRepository(ProfessionalDetailsEntity_1.ProfessionalDetails).clear();
-                    yield data_source_1.AppDataSource.getRepository(EducationalDetailsEntity_1.EducationalDetails).clear();
-                    yield data_source_1.AppDataSource.getRepository(HealthAndDisabilityEntity_1.HealthAndDisability).clear();
-                    yield data_source_1.AppDataSource.getRepository(GeneralInfoEntity_1.GeneralInfo).clear();
-                    yield data_source_1.AppDataSource.getRepository(NextOfKinEntity_1.NextOfKin).clear();
-                    yield data_source_1.AppDataSource.getRepository(FoodSafetyQuestionnaireEntity_1.FoodSafetyQuestionnaire).clear();
-                    yield data_source_1.AppDataSource.getRepository(BankDetailsEntity_1.BankDetails).clear();
-                    yield data_source_1.AppDataSource.getRepository(AgreementConsentEntity_1.AgreementConsent).clear();
-                    yield data_source_1.AppDataSource.getRepository(ReferenceEntity_1.Reference).clear();
+                // Fetch all users with the role of Applicant
+                const applicantUsers = yield data_source_1.AppDataSource.getRepository(UserEntity_1.User).find({
+                    where: { role: constants_1.UserRole.Applicant },
+                    select: ['id'], // Select only the id field to optimize performance
+                });
+                // Extract applicant IDs
+                const applicantIds = applicantUsers.map(user => user.id);
+                // Check if any applicants exist before attempting to delete associated data
+                if (applicantIds.length === 0) {
+                    return { message: "No applicants found with role 'applicant'." };
                 }
+                // List of repositories to clear data related to applicants
+                const repositoriesToDeleteData = [
+                    PersonalDetailsEntity_1.PersonalDetails,
+                    ContactDetailsEntity_1.ContactDetails,
+                    ProfessionalDetailsEntity_1.ProfessionalDetails,
+                    EducationalDetailsEntity_1.EducationalDetails,
+                    HealthAndDisabilityEntity_1.HealthAndDisability,
+                    GeneralInfoEntity_1.GeneralInfo,
+                    NextOfKinEntity_1.NextOfKin,
+                    FoodSafetyQuestionnaireEntity_1.FoodSafetyQuestionnaire,
+                    BankDetailsEntity_1.BankDetails,
+                    AgreementConsentEntity_1.AgreementConsent,
+                    ReferenceEntity_1.Reference
+                ];
+                // Delete data from each repository where it is linked to applicant IDs
+                for (const entity of repositoriesToDeleteData) {
+                    yield data_source_1.AppDataSource.getRepository(entity).delete({ id: (0, typeorm_1.In)(applicantIds) });
+                }
+                // Now delete applicants from the User table
+                yield data_source_1.AppDataSource.getRepository(UserEntity_1.User).delete({ role: constants_1.UserRole.Applicant });
                 // Return a confirmation message after successful deletion
-                return { message: "All applicant data for roles 'applicant' has been deleted successfully." };
+                return { message: "All data related to applicants with role 'applicant' has been deleted successfully." };
             }
             catch (error) {
+                // Throw a more descriptive error message
                 throw new Error(`Error deleting applicant data: ${error.message}`);
             }
         });

@@ -13,6 +13,7 @@ import { Reference } from '../entities/ReferenceEntity';
 import { GeneralInfo } from '../entities/GeneralInfoEntity';
 import { NextOfKin } from '../entities/NextOfKinEntity';
 import { UserRole } from '../constants';
+import { In } from 'typeorm';
 
 export class ApplicationService {
   static async createApplication(data: any) {
@@ -203,35 +204,54 @@ export class ApplicationService {
     }
   }
 
-  static async deleteAllApplicantData() {
-    try {
-        // Assuming there's a User repository to check roles
-        const applicants = await AppDataSource.getRepository(User).find({ where: { role: UserRole.Applicant } });
+ // Service
+static async deleteAllApplicantData() {
+  try {
+      // Fetch all users with the role of Applicant
+      const applicantUsers = await AppDataSource.getRepository(User).find({
+          where: { role: UserRole.Applicant },
+          select: ['id'], // Select only the id field to optimize performance
+      });
 
-        // Extract application numbers of applicants
-        const applicationNo = applicants.map(applicant => applicant.applicationNo);
+      // Extract applicant IDs
+      const applicantIds = applicantUsers.map(user => user.id);
 
-        // Only proceed if there are applicants
-        if (applicationNo.length > 0) {
-            await AppDataSource.getRepository(PersonalDetails).clear();
-            await AppDataSource.getRepository(ContactDetails).clear();
-            await AppDataSource.getRepository(ProfessionalDetails).clear();
-            await AppDataSource.getRepository(EducationalDetails).clear();
-            await AppDataSource.getRepository(HealthAndDisability).clear();
-            await AppDataSource.getRepository(GeneralInfo).clear();
-            await AppDataSource.getRepository(NextOfKin).clear();
-            await AppDataSource.getRepository(FoodSafetyQuestionnaire).clear();
-            await AppDataSource.getRepository(BankDetails).clear();
-            await AppDataSource.getRepository(AgreementConsent).clear();
-            await AppDataSource.getRepository(Reference).clear();
-        }
+      // Check if any applicants exist before attempting to delete associated data
+      if (applicantIds.length === 0) {
+          return { message: "No applicants found with role 'applicant'." };
+      }
 
-        // Return a confirmation message after successful deletion
-        return { message: "All applicant data for roles 'applicant' has been deleted successfully." };
-    } catch (error) {
-        throw new Error(`Error deleting applicant data: ${error.message}`);
-    }
+      // List of repositories to clear data related to applicants
+      const repositoriesToDeleteData = [
+          PersonalDetails,
+          ContactDetails,
+          ProfessionalDetails,
+          EducationalDetails,
+          HealthAndDisability,
+          GeneralInfo,
+          NextOfKin,
+          FoodSafetyQuestionnaire,
+          BankDetails,
+          AgreementConsent,
+          Reference
+      ];
+
+      // Delete data from each repository where it is linked to applicant IDs
+      for (const entity of repositoriesToDeleteData) {
+          await AppDataSource.getRepository(entity).delete({ id: In(applicantIds) });
+      }
+
+      // Now delete applicants from the User table
+      await AppDataSource.getRepository(User).delete({ role: UserRole.Applicant });
+
+      // Return a confirmation message after successful deletion
+      return { message: "All data related to applicants with role 'applicant' has been deleted successfully." };
+  } catch (error) {
+      // Throw a more descriptive error message
+      throw new Error(`Error deleting applicant data: ${error.message}`);
   }
+}
+
 
   
   

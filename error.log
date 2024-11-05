@@ -1,0 +1,12 @@
+2024-11-05 05:26:48 [[31merror[39m]: unhandledRejection: res.status is not a function
+TypeError: res.status is not a function
+    at C:\Users\ADMIN\Documents\GitHub\copora-job-api\dist\src\controllers\ApplicationController.js:443:21
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\ADMIN\Documents\GitHub\copora-job-api\dist\src\controllers\ApplicationController.js:5:58)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Stack trace:
+TypeError: res.status is not a function
+    at C:\Users\ADMIN\Documents\GitHub\copora-job-api\dist\src\controllers\ApplicationController.js:443:21
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\ADMIN\Documents\GitHub\copora-job-api\dist\src\controllers\ApplicationController.js:5:58)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

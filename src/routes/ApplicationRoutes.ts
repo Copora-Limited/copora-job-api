@@ -393,7 +393,7 @@ router.delete('/:applicationNo', ApplicationController.deleteApplicant);
 
 /**
  * @swagger
- * /applicants:
+ * /applicant:
  *   delete:
  *     summary: Delete all applicant data except Admins 
  *     tags: [Applicants]

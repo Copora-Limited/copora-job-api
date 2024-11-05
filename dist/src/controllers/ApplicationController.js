@@ -433,7 +433,7 @@ class ApplicationController {
         });
     }
     // Delete applicant data from all tables for users with the 'applicant' role
-    static deleteApplicants(res) {
+    static deleteApplicants(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const result = yield ApplicationService_1.ApplicationService.deleteAllApplicantData();
