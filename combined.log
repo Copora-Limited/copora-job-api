@@ -529,3 +529,9 @@ TypeError: res.status is not a function
 2024-11-05 05:40:29 [[32minfo[39m]: HTTP POST /users/register
 2024-11-05 05:40:58 [[32minfo[39m]: HTTP POST /users/login
 2024-11-05 05:41:04 [[32minfo[39m]: HTTP GET /auth/users
+2024-11-05 06:16:30 [[32minfo[39m]: HTTP POST /users/register
+2024-11-05 06:30:27 [[32minfo[39m]: HTTP POST /users/login
+2024-11-05 06:30:35 [[32minfo[39m]: HTTP GET /personal-details/APP-64CC2EC5
+2024-11-05 06:30:36 [[32minfo[39m]: HTTP GET /educational-details/APP-64CC2EC5
+2024-11-05 06:30:36 [[32minfo[39m]: HTTP GET /educational-details/APP-64CC2EC5
+2024-11-05 06:30:44 [[32minfo[39m]: HTTP POST /educational-details

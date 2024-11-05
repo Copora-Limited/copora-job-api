@@ -49,22 +49,41 @@ export class EducationalDetailsController {
     
                     // Validate required fields
                     if (!schoolName) {
-                         return res.status(400).json({ statusCode: 400, message: `At Row ${index + 1}: Name of School / College / University is required` });
+                        return res.status(400).json({ statusCode: 400, message: `At Row ${index + 1}: Name of School / College / University is required` });
                     }
                     if (!certificateObtained) {
-                         return res.status(400).json({ statusCode: 400, message: `At Row ${index + 1}: Select Qualifications is required` });
+                        return res.status(400).json({ statusCode: 400, message: `At Row ${index + 1}: Select Qualifications is required` });
                     }
                     if (!courseOfStudy) {
-                         return res.status(400).json({ statusCode: 400, message: `At Row ${index + 1}: Subject Studied is required` });
-                    }
-                    if (yearAdmitted === undefined) {
-                         return res.status(400).json({ statusCode: 400, message: `At Row ${index + 1}: Year Admitted is required` });
-                    }
-                    if (yearGraduated === undefined) {
-                         return res.status(400).json({ statusCode: 400, message: `At Row ${index + 1}: Date of Completion is required` });
+                        return res.status(400).json({ statusCode: 400, message: `At Row ${index + 1}: Subject Studied is required` });
                     }
     
-                   
+                    // Validate yearAdmitted and yearGraduated
+                    if (!yearAdmitted || isNaN(Number(yearAdmitted))) {
+                        return res.status(400).json({
+                            statusCode: 400,
+                            message: `At Row ${index + 1}: Year Admitted is required and must be a valid number`
+                        });
+                    }
+                    
+                    if (!yearGraduated || isNaN(Number(yearGraduated))) {
+                        return res.status(400).json({
+                            statusCode: 400,
+                            message: `At Row ${index + 1}: Year Graduated is required and must be a valid number`
+                        });
+                    }
+    
+                    // Convert yearAdmitted and yearGraduated to numbers for comparison
+                    const admittedYear = Number(yearAdmitted);
+                    const graduatedYear = Number(yearGraduated);
+    
+                    // Ensure yearGraduated is not less than yearAdmitted
+                    if (graduatedYear < admittedYear) {
+                        return res.status(400).json({
+                            statusCode: 400,
+                            message: `At Row ${index + 1}: Year Graduated cannot be earlier than Year Admitted`
+                        });
+                    }
     
                     // Check for existing entry by courseOfStudy
                     const existingEntry = await EducationalDetailsService.findByApplicationNoAndCourseOfStudy(applicationNo, courseOfStudy);
@@ -89,7 +108,6 @@ export class EducationalDetailsController {
                 }
             }
     
-    
             return res.status(201).json({
                 message: 'Educational details processed successfully',
                 data: { updatedEntries, newEntries }
@@ -100,7 +118,6 @@ export class EducationalDetailsController {
             res.status(500).json({ message: 'Error creating or updating educational details', error: error.message });
         }
     }
-    
     
     
 
