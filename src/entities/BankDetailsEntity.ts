@@ -29,9 +29,9 @@ export class BankDetails {
     studentLoanStatus: string;
 
     // Field for indicating whether P45 is attached
-    @Column({ default: false })
+    @Column({ default: false, nullable: true })
     p45Attached: boolean;
 
     @Column({nullable: true, default: false})
-    attempted: boolean;
+attempted: boolean;
 }

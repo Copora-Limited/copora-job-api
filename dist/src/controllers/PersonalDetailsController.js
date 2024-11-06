@@ -8,6 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PersonalDetailsController = void 0;
 const PersonalDetailsService_1 = require("../services/PersonalDetailsService");
@@ -23,70 +34,138 @@ cloudinary_1.v2.config({
 });
 class PersonalDetailsController {
     // Helper function to upload a file to Cloudinary
-    static uploadPassportPhoto(file) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!file)
-                return '';
-            try {
-                const result = yield cloudinary_1.v2.uploader.upload(file.path);
-                return result.secure_url;
-            }
-            catch (error) {
-                console.error('Error uploading passport photo:', error);
-                throw new Error('Failed to upload passport photo');
-            }
-        });
-    }
+    // static async uploadPassportPhoto(file: Express.Multer.File | undefined): Promise<string> {
+    //   if (!file) return '';
+    //   try {
+    //     const result = await cloudinary.uploader.upload(file.path);
+    //     return result.secure_url;
+    //   } catch (error) {
+    //     console.error('Error uploading passport photo:', error);
+    //     throw new Error('Failed to upload passport photo');
+    //   }
+    // }
     // Create or update PersonalDetails
+    // static async createOrUpdatePersonalDetails(req: Request, res: Response): Promise<void> {
+    //   try {
+    //     const { applicationNo, dateOfBirth, gender, nationalInsuranceNumber } = req.body;
+    //     const file = req.file;
+    //     // Check required fields
+    //     if (!dateOfBirth) {
+    //       res.status(400).json({ statusCode: 400, message: 'Date of birth is required' });
+    //       return;
+    //     }
+    //     // Age validation: Check if the applicant is at least 16 years old
+    //     const age = differenceInYears(new Date(), new Date(dateOfBirth));
+    //     if (age < 16) {
+    //       res.status(400).json({ statusCode: 400, message: 'Under Age: Date of birth invalid. You must be at least 16 years old to proceed.' });
+    //       return;
+    //     }
+    //     if (age >= 50) {
+    //       res.status(400).json({ statusCode: 400, message: 'Date of birth invalid. Age must be below 50 to proceed.' });
+    //       return;
+    //     }
+    //     if (!gender) {
+    //       res.status(400).json({ statusCode: 400, message: 'Gender is required' });
+    //       return;
+    //     }
+    //     if (!nationalInsuranceNumber) {
+    //       res.status(400).json({ statusCode: 400, message: 'National Insurance Number is required' });
+    //       return;
+    //     }
+    //     const existingApplicant = await UserService.findApplicationNo(applicationNo);
+    //     if (!existingApplicant) {
+    //       res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
+    //       return;
+    //     }
+    //     // Check if the PersonalDetails with the given applicationNo exists
+    //     const existingEntry = await PersonalDetailsService.getByApplicationNo(applicationNo);
+    //     // Preserve existing passport photo if no new file is uploaded
+    //     let passportPhoto = existingEntry?.passportPhoto || '';
+    //     if (file) {
+    //       passportPhoto = await handleFileUpload(file);
+    //     }
+    //     // Merge the new data with the existing data, updating only fields that are provided
+    //     const dataToSave = {
+    //       ...existingEntry,
+    //       ...req.body,
+    //       passportPhoto: passportPhoto || existingEntry?.passportPhoto,
+    //       attempted: true, // Set attempted to true
+    //     };
+    //     if (existingEntry) {
+    //       // Update the existing record
+    //       const updatedEntry = await PersonalDetailsService.updateByApplicationNo(applicationNo, dataToSave);
+    //       res.status(200).json({ message: 'Personal details updated', data: updatedEntry });
+    //     } else {
+    //       // Create a new record
+    //       const newEntry = await PersonalDetailsService.create(dataToSave);
+    //       res.status(201).json({ message: 'Personal details created', data: newEntry });
+    //     }
+    //   } catch (error) {
+    //     console.error('Error creating or updating personal details:', error);
+    //     res.status(500).json({ message: 'Error creating or updating personal details', error: error.message });
+    //   }
+    // }
     static createOrUpdatePersonalDetails(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { applicationNo, dateOfBirth, gender, nationalInsuranceNumber } = req.body;
-                const file = req.file;
-                // Check required fields
+                const _a = req.body, { applicationNo, dateOfBirth, gender, nationalInsuranceNumber } = _a, otherFields = __rest(_a, ["applicationNo", "dateOfBirth", "gender", "nationalInsuranceNumber"]);
+                // Validate required fields
                 if (!dateOfBirth) {
                     res.status(400).json({ statusCode: 400, message: 'Date of birth is required' });
                     return;
                 }
-                // Age validation: Check if the applicant is at least 16 years old
+                // Age validation
                 const age = (0, date_fns_1.differenceInYears)(new Date(), new Date(dateOfBirth));
-                if (age < 16) {
-                    res.status(400).json({ statusCode: 400, message: 'Under Age: Date of birth invalid. You must be at least 16 years old to proceed.' });
+                if (age < 16 || age >= 50) {
+                    res.status(400).json({
+                        statusCode: 400,
+                        message: `Date of birth invalid. Age must be between 16 and 50 to proceed.`,
+                    });
                     return;
                 }
-                if (age >= 50) {
-                    res.status(400).json({ statusCode: 400, message: 'Date of birth invalid. Age must be below 50 to proceed.' });
+                if (!gender || !nationalInsuranceNumber) {
+                    res.status(400).json({
+                        statusCode: 400,
+                        message: 'Gender and National Insurance Number are required',
+                    });
                     return;
                 }
-                if (!gender) {
-                    res.status(400).json({ statusCode: 400, message: 'Gender is required' });
-                    return;
-                }
-                if (!nationalInsuranceNumber) {
-                    res.status(400).json({ statusCode: 400, message: 'National Insurance Number is required' });
-                    return;
-                }
+                // Check if the applicant exists
                 const existingApplicant = yield UserService_1.UserService.findApplicationNo(applicationNo);
                 if (!existingApplicant) {
                     res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
                     return;
                 }
-                // Check if the PersonalDetails with the given applicationNo exists
+                // Get any existing personal details entry
                 const existingEntry = yield PersonalDetailsService_1.PersonalDetailsService.getByApplicationNo(applicationNo);
-                // Preserve existing passport photo if no new file is uploaded
-                let passportPhoto = (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.passportPhoto) || '';
-                if (file) {
-                    passportPhoto = yield (0, uploadToSpace_1.handleFileUpload)(file);
-                }
-                // Merge the new data with the existing data, updating only fields that are provided
-                const dataToSave = Object.assign(Object.assign(Object.assign({}, existingEntry), req.body), { passportPhoto: passportPhoto || (existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.passportPhoto), attempted: true });
+                // File handling with fallback to existing data if files are not uploaded
+                const { passportPhoto, internationalPassport, visaDocument, ninProof, addressProof } = req.files;
+                const passportPhotoUrl = (passportPhoto === null || passportPhoto === void 0 ? void 0 : passportPhoto[0])
+                    ? yield (0, uploadToSpace_1.handleFileUpload)(passportPhoto[0])
+                    : existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.passportPhoto;
+                const internationalPassportUrl = (internationalPassport === null || internationalPassport === void 0 ? void 0 : internationalPassport[0])
+                    ? yield (0, uploadToSpace_1.handleFileUpload)(internationalPassport[0])
+                    : existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.internationalPassport;
+                const visaDocumentUrl = (visaDocument === null || visaDocument === void 0 ? void 0 : visaDocument[0])
+                    ? yield (0, uploadToSpace_1.handleFileUpload)(visaDocument[0])
+                    : existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.visaDocument;
+                const ninProofUrl = (ninProof === null || ninProof === void 0 ? void 0 : ninProof[0])
+                    ? yield (0, uploadToSpace_1.handleFileUpload)(ninProof[0])
+                    : existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.ninProof;
+                const addressProofUrl = (addressProof === null || addressProof === void 0 ? void 0 : addressProof[0])
+                    ? yield (0, uploadToSpace_1.handleFileUpload)(addressProof[0])
+                    : existingEntry === null || existingEntry === void 0 ? void 0 : existingEntry.addressProof;
+                // Merge the new data with the existing data, only updating fields that are provided
+                const dataToSave = Object.assign(Object.assign(Object.assign(Object.assign({}, existingEntry), { applicationNo,
+                    dateOfBirth,
+                    gender,
+                    nationalInsuranceNumber }), otherFields), { passportPhoto: passportPhotoUrl, internationalPassport: internationalPassportUrl, visaDocument: visaDocumentUrl, ninProof: ninProofUrl, addressProof: addressProofUrl, attempted: true });
+                // Create or update the personal details entry
                 if (existingEntry) {
-                    // Update the existing record
                     const updatedEntry = yield PersonalDetailsService_1.PersonalDetailsService.updateByApplicationNo(applicationNo, dataToSave);
                     res.status(200).json({ message: 'Personal details updated', data: updatedEntry });
                 }
                 else {
-                    // Create a new record
                     const newEntry = yield PersonalDetailsService_1.PersonalDetailsService.create(dataToSave);
                     res.status(201).json({ message: 'Personal details created', data: newEntry });
                 }

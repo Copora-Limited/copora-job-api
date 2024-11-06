@@ -50,7 +50,18 @@ const router = Router();
  *         description: Bad request
  */
 // router.post('/', PersonalDetailsController.createOrUpdatePersonalDetails);
-router.post('/', uploadDocumentsAndImages.single('passportPhoto'), PersonalDetailsController.createOrUpdatePersonalDetails);
+// router.post('/', uploadDocumentsAndImages.single('passportPhoto'), PersonalDetailsController.createOrUpdatePersonalDetails);
+
+router.post('/', uploadDocumentsAndImages.fields([
+    { name: 'passportPhoto', maxCount: 1 },
+    { name: 'internationalPassport', maxCount: 1 },
+    { name: 'visaDocument', maxCount: 1 },
+    { name: 'ninProof', maxCount: 1 },
+    { name: 'addressProof', maxCount: 1 },
+  ]),
+  PersonalDetailsController.createOrUpdatePersonalDetails);
+
+
 
 
 /**

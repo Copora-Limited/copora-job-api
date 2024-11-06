@@ -47,7 +47,7 @@ __decorate([
     __metadata("design:type", String)
 ], BankDetails.prototype, "studentLoanStatus", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: false }),
+    (0, typeorm_1.Column)({ default: false, nullable: true }),
     __metadata("design:type", Boolean)
 ], BankDetails.prototype, "p45Attached", void 0);
 __decorate([

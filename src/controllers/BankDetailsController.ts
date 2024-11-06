@@ -14,7 +14,7 @@ export class BankDetailsController {
                 accountName,
                 employmentStatusDeclaration,
                 studentLoanStatus,
-                p45Attached
+                // p45Attached
             } = req.body;
 
             // Validate required fields

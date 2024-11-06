@@ -23,7 +23,23 @@ export class PersonalDetails {
     @Column({nullable: true})
     passportPhoto: string;
 
+    @Column({nullable: true})
+    requireWorkVisa: string;
+
+    @Column({ nullable: true })
+    internationalPassport: string;
+
+    @Column({ nullable: true })
+    visaDocument: string;
+
+    @Column({ nullable: true })
+    ninProof: string;
+
+    @Column({ nullable: true })
+    addressProof: string;
+
     @Column({nullable: true, default: false})
     attempted: boolean;
+
     
 }

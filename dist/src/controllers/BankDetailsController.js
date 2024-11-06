@@ -16,7 +16,9 @@ class BankDetailsController {
     static createBankDetails(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { applicationNo, bankName, accountNumber, sortCode, accountName, employmentStatusDeclaration, studentLoanStatus, p45Attached } = req.body;
+                const { applicationNo, bankName, accountNumber, sortCode, accountName, employmentStatusDeclaration, studentLoanStatus,
+                // p45Attached
+                 } = req.body;
                 // Validate required fields
                 if (!bankName) {
                     return res.status(400).json({ statusCode: 400, message: 'Bank Name is required' });

@@ -43,6 +43,26 @@ __decorate([
     __metadata("design:type", String)
 ], PersonalDetails.prototype, "passportPhoto", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], PersonalDetails.prototype, "requireWorkVisa", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], PersonalDetails.prototype, "internationalPassport", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], PersonalDetails.prototype, "visaDocument", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], PersonalDetails.prototype, "ninProof", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], PersonalDetails.prototype, "addressProof", void 0);
+__decorate([
     (0, typeorm_1.Column)({ nullable: true, default: false }),
     __metadata("design:type", Boolean)
 ], PersonalDetails.prototype, "attempted", void 0);

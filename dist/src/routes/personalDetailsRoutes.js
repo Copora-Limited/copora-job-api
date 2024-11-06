@@ -52,7 +52,14 @@ const router = (0, express_1.Router)();
  *         description: Bad request
  */
 // router.post('/', PersonalDetailsController.createOrUpdatePersonalDetails);
-router.post('/', multerConfig_1.default.single('passportPhoto'), PersonalDetailsController_1.PersonalDetailsController.createOrUpdatePersonalDetails);
+// router.post('/', uploadDocumentsAndImages.single('passportPhoto'), PersonalDetailsController.createOrUpdatePersonalDetails);
+router.post('/', multerConfig_1.default.fields([
+    { name: 'passportPhoto', maxCount: 1 },
+    { name: 'internationalPassport', maxCount: 1 },
+    { name: 'visaDocument', maxCount: 1 },
+    { name: 'ninProof', maxCount: 1 },
+    { name: 'addressProof', maxCount: 1 },
+]), PersonalDetailsController_1.PersonalDetailsController.createOrUpdatePersonalDetails);
 /**
  * @swagger
  * /personal-details/{applicationNo}:
