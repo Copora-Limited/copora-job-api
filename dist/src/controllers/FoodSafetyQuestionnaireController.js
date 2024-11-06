@@ -49,8 +49,26 @@ class FoodSafetyQuestionnaireController {
                 if (otherFields.temperatureDangerZone === null || otherFields.temperatureDangerZone === "") {
                     return res.status(400).json({ message: 'Answer for "Temperature danger zone" is required.' });
                 }
-                if (otherFields.handWashingScenarios === null || otherFields.handWashingScenarios.length === 0) {
-                    return res.status(400).json({ message: 'Answer for "Hand washing scenarios" is required.' });
+                if (otherFields.handWashingScenarios === null ||
+                    otherFields.handWashingScenarios.length === 0) {
+                    return res.status(400).json({
+                        message: 'Answer for "Hand washing scenarios" is required.'
+                    });
+                }
+                if (otherFields.handWashingScenarios[0] === "") {
+                    return res.status(400).json({
+                        message: 'Please provide answer for  scenarios 1 for "Hand washing scenarios".'
+                    });
+                }
+                if (otherFields.handWashingScenarios[1] === "") {
+                    return res.status(400).json({
+                        message: 'Please provide answer for  scenarios 2 for "Hand washing scenarios".'
+                    });
+                }
+                if (otherFields.handWashingScenarios[2] === "") {
+                    return res.status(400).json({
+                        message: 'Please provide answer for  scenarios 3 for "Hand washing scenarios".'
+                    });
                 }
                 // if (otherFields.foodSafetyActTrueOrFalse === null || otherFields.foodSafetyActTrueOrFalse === "") {
                 //     return res.status(400).json({ message: 'Answer for "Food Safety Act true or false" is required.' });

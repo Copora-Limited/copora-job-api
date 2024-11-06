@@ -47,6 +47,12 @@ class ReferenceController {
                 if (entries.length === 0) {
                     return res.status(400).json({ statusCode: 400, message: 'No valid reference entries provided' });
                 }
+                if (entries.length < 2) {
+                    return res.status(400).json({
+                        statusCode: 400,
+                        message: 'Please provide at least 2 reference information.'
+                    });
+                }
                 const updatedEntries = [];
                 const newEntries = [];
                 for (const [index, entry] of entries.entries()) {
