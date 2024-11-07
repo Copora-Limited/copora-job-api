@@ -1,17 +1,70 @@
 import { Request, Response } from 'express';
 import { JobListingService } from '../services/JobListingService';
+import { UserService } from '../services/UserService';
+import { OnboardingStatus, UserRole } from '../constants';
+
 
 export class JobListingController {
     // Create a new Job Title
+    // static async create(req: Request, res: Response) {
+    //     const { applicationNo } = req.body;
+
+
+    //     const existingApplicant = await UserService.findApplicationNo(applicationNo);
+
+    //     if (!existingApplicant) {
+    //         res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
+    //         return;
+    //     }
+
+    //   const existingEntry = await JobListingService.findByApplicationNo(applicationNo);
+
+    //     try {
+    //         const jobListingData = req.body;
+    //         const newJobList = await JobListingService.create(jobListingData);
+    //         res.status(201).json(newJobList);
+    //     } catch (error) {
+    //         res.status(400).send({ message: 'Error creating job title', error: error.message });
+    //     }
+    // }
+
     static async create(req: Request, res: Response) {
+        const { applicationNo } = req.body;
+    
         try {
+            // Check if the applicant exists
+            const existingApplicant = await UserService.findApplicationNo(applicationNo);
+    
+            if (!existingApplicant) {
+                res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
+                return;
+            }
+    
+            // Check if the applicant has an existing entry in JobListings
+            const existingEntry = await JobListingService.findByApplicationNo(applicationNo);
+    
+            if (existingEntry) {
+                // If the entry already exists, update the job listing or onboarding status
+                const updatedJobList = await JobListingService.update(existingEntry.id, req.body);
+                await UserService.updateOnboardingStatus(applicationNo, OnboardingStatus.Approved);  // Update the applicant's onboarding status
+                res.status(200).json({ message: 'Job listing updated and applicant status approved', updatedJobList });
+                return;
+            }
+    
+            // If no existing entry found, create a new job listing
             const jobListingData = req.body;
             const newJobList = await JobListingService.create(jobListingData);
-            res.status(201).json(newJobList);
+    
+            // After creating the job listing, update the user's onboarding status
+            await UserService.updateOnboardingStatus(applicationNo, OnboardingStatus.Approved);
+    
+            res.status(201).json({ message: 'New job listing created and applicant status approved', newJobList });
+    
         } catch (error) {
-            res.status(400).send({ message: 'Error creating job title', error: error.message });
+            res.status(400).send({ message: 'Error processing request', error: error.message });
         }
     }
+    
 
     // Get all Job Titles
     static async getAll(req: Request, res: Response) {

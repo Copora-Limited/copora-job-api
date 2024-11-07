@@ -11,17 +11,54 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JobListingController = void 0;
 const JobListingService_1 = require("../services/JobListingService");
+const UserService_1 = require("../services/UserService");
+const constants_1 = require("../constants");
 class JobListingController {
     // Create a new Job Title
+    // static async create(req: Request, res: Response) {
+    //     const { applicationNo } = req.body;
+    //     const existingApplicant = await UserService.findApplicationNo(applicationNo);
+    //     if (!existingApplicant) {
+    //         res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
+    //         return;
+    //     }
+    //   const existingEntry = await JobListingService.findByApplicationNo(applicationNo);
+    //     try {
+    //         const jobListingData = req.body;
+    //         const newJobList = await JobListingService.create(jobListingData);
+    //         res.status(201).json(newJobList);
+    //     } catch (error) {
+    //         res.status(400).send({ message: 'Error creating job title', error: error.message });
+    //     }
+    // }
     static create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            const { applicationNo } = req.body;
             try {
+                // Check if the applicant exists
+                const existingApplicant = yield UserService_1.UserService.findApplicationNo(applicationNo);
+                if (!existingApplicant) {
+                    res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
+                    return;
+                }
+                // Check if the applicant has an existing entry in JobListings
+                const existingEntry = yield JobListingService_1.JobListingService.findByApplicationNo(applicationNo);
+                if (existingEntry) {
+                    // If the entry already exists, update the job listing or onboarding status
+                    const updatedJobList = yield JobListingService_1.JobListingService.update(existingEntry.id, req.body);
+                    yield UserService_1.UserService.updateOnboardingStatus(applicationNo, constants_1.OnboardingStatus.Approved); // Update the applicant's onboarding status
+                    res.status(200).json({ message: 'Job listing updated and applicant status approved', updatedJobList });
+                    return;
+                }
+                // If no existing entry found, create a new job listing
                 const jobListingData = req.body;
                 const newJobList = yield JobListingService_1.JobListingService.create(jobListingData);
-                res.status(201).json(newJobList);
+                // After creating the job listing, update the user's onboarding status
+                yield UserService_1.UserService.updateOnboardingStatus(applicationNo, constants_1.OnboardingStatus.Approved);
+                res.status(201).json({ message: 'New job listing created and applicant status approved', newJobList });
             }
             catch (error) {
-                res.status(400).send({ message: 'Error creating job title', error: error.message });
+                res.status(400).send({ message: 'Error processing request', error: error.message });
             }
         });
     }
