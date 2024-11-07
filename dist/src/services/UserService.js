@@ -344,7 +344,7 @@ class UserService {
     findUsersWithIncompleteOnboarding() {
         return __awaiter(this, void 0, void 0, function* () {
             return exports.userRepository.createQueryBuilder('user')
-                .where('user.onboardingStep < :step', { step: 5 })
+                .where('user.onboardingStep < :step', { step: 12 })
                 .andWhere('user.role = :role', { role: 'applicant' })
                 .getMany();
         });

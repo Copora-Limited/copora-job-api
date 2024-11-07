@@ -342,7 +342,7 @@ export class UserService {
 
   async findUsersWithIncompleteOnboarding(): Promise<User[]> {
     return userRepository.createQueryBuilder('user')
-        .where('user.onboardingStep < :step', { step: 5 })
+        .where('user.onboardingStep < :step', { step: 12 })
         .andWhere('user.role = :role', { role: 'applicant' })
         .getMany();
   }

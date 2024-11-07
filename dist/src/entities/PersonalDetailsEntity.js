@@ -64,7 +64,7 @@ __decorate([
 ], PersonalDetails.prototype, "addressProof", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
+    __metadata("design:type", Boolean)
 ], PersonalDetails.prototype, "declarationAccepted", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true, default: false }),
