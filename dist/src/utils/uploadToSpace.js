@@ -43,7 +43,7 @@ exports.uploadDocumentToSpace = uploadDocumentToSpace;
 const handleFileUpload = (file) => __awaiter(void 0, void 0, void 0, function* () {
     const fileExtension = path_1.default.extname(file.originalname).toLowerCase();
     // Check for supported document formats
-    if (['.jpg', 'jpeg', 'png', '.pdf', '.doc', '.docx'].includes(fileExtension)) {
+    if (['.jpg', 'jpeg', '.png', '.pdf', '.doc', '.docx'].includes(fileExtension)) {
         return yield (0, exports.uploadDocumentToSpace)(file); // Upload to DigitalOcean Spaces
     }
     else {
