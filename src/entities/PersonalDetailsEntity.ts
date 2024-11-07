@@ -38,6 +38,9 @@ export class PersonalDetails {
     @Column({ nullable: true })
     addressProof: string;
 
+    @Column({ nullable: true })
+    declarationAccepted: string;
+
     @Column({nullable: true, default: false})
     attempted: boolean;
 
