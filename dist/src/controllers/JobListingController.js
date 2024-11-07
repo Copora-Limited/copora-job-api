@@ -42,14 +42,14 @@ class JobListingController {
                     return;
                 }
                 // Check if the applicant has an existing entry in JobListings
-                const existingEntry = yield JobListingService_1.JobListingService.findByApplicationNo(applicationNo);
-                if (existingEntry) {
-                    // If the entry already exists, update the job listing or onboarding status
-                    const updatedJobList = yield JobListingService_1.JobListingService.update(existingEntry.id, req.body);
-                    yield UserService_1.UserService.updateOnboardingStatus(applicationNo, constants_1.OnboardingStatus.Approved); // Update the applicant's onboarding status
-                    res.status(200).json({ message: 'Job listing updated and applicant status approved', updatedJobList });
-                    return;
-                }
+                // const existingEntry = await JobListingService.findByApplicationNo(applicationNo);
+                // if (existingEntry) {
+                //     // If the entry already exists, update the job listing or onboarding status
+                //     const updatedJobList = await JobListingService.update(existingEntry.id, req.body);
+                //     await UserService.updateOnboardingStatus(applicationNo, OnboardingStatus.Approved);  // Update the applicant's onboarding status
+                //     res.status(200).json({ message: 'Job listing updated and applicant status approved', updatedJobList });
+                //     return;
+                // }
                 // If no existing entry found, create a new job listing
                 const jobListingData = req.body;
                 const newJobList = yield JobListingService_1.JobListingService.create(jobListingData);
