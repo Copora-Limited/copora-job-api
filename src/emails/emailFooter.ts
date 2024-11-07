@@ -20,9 +20,7 @@ export function emailFooter() {
               <a href="https://www.linkedin.com/company/usenidi/" style="color: #000000; text-decoration: none;">
                 <img src="https://res.cloudinary.com/dhcikhvpu/image/upload/v1728681653/COPORA_IN_mw4ldq_p6kjvr.png" alt="LinkedIn" style="width: 24px; height: 24px;">
               </a>
-              <a href="https://www.youtube.com/channel/usenidi" style="color: #000000; text-decoration: none;">
-                <img src="https://res.cloudinary.com/dhcikhvpu/image/upload/v1728681653/COPORA_YT_x4omls_y1mwgb.png" alt="YouTube" style="width: 24px; height: 24px;">
-              </a>
+              
             </div>
                 
             <p style="font-size: 12px; color: #777;">&copy; ${new Date().getFullYear()} ${process.env.APP_COMPANY}. All rights reserved.</p>
