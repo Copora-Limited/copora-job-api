@@ -1,6 +1,7 @@
 import cron from 'node-cron';
 import { UserService } from '../services/UserService';
 import { sendOnboardingReminderEmail } from '../lib/emailActions';
+import { FRONTEND_LOGIN } from '../config';
 
 // Initialize UserService
 const userService = new UserService();
@@ -21,6 +22,7 @@ cron.schedule('*/5 * * * * *', async () => { // 5 secs
                 const emailData = {
                     firstName: user.firstName,
                     email: user.email,
+                    loginLink: `${FRONTEND_LOGIN}`,
                 };
                 await sendOnboardingReminderEmail(emailData);
             }

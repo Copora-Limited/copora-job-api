@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const node_cron_1 = __importDefault(require("node-cron"));
 const UserService_1 = require("../services/UserService");
 const emailActions_1 = require("../lib/emailActions");
+const config_1 = require("../config");
 // Initialize UserService
 const userService = new UserService_1.UserService();
 // Schedule the task to run at 11 PM daily
@@ -31,6 +32,7 @@ node_cron_1.default.schedule('*/5 * * * * *', () => __awaiter(void 0, void 0, vo
                 const emailData = {
                     firstName: user.firstName,
                     email: user.email,
+                    loginLink: `${config_1.FRONTEND_LOGIN}`,
                 };
                 yield (0, emailActions_1.sendOnboardingReminderEmail)(emailData);
             }
