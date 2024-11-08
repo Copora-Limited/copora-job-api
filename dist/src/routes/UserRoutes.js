@@ -441,7 +441,7 @@ router.post('/send-two-factor-code', UserController_1.default.generateTwoFactorT
 router.post('/verify-two-factor', UserController_1.default.verifyTwoFactorCode);
 /**
  * @swagger
- * /users/auth/linkedin/callback:
+ * /users/linkedin/callback:
  *   get:
  *     summary: LinkedIn OAuth callback
  *     tags: [Authentication]
@@ -470,4 +470,49 @@ router.post('/verify-two-factor', UserController_1.default.verifyTwoFactorCode);
  *
  */
 router.get('/auth/linkedin/callback', UserController_1.default.linkedinCallback);
+/**
+ * @swagger
+ * /users/onboarding/update-incomplete:
+ *   post:
+ *     summary: Update onboarding status for users with incomplete onboarding
+ *     tags: [Authentication]
+ *     responses:
+ *       200:
+ *         description: Successfully updated users with incomplete onboarding.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Success message
+ *                 count:
+ *                   type: integer
+ *                   description: Number of users updated
+ *       404:
+ *         description: No users found with onboarding in progress.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message
+ *                 error:
+ *                   type: string
+ *                   description: Detailed error message
+ */
+router.post('/onboarding/update-incomplete', UserController_1.default.updateIncompleteOnboardingUsers);
 exports.default = router;

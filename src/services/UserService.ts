@@ -346,5 +346,14 @@ export class UserService {
         .andWhere('user.role = :role', { role: 'applicant' })
         .getMany();
   }
+
+  async findUsersWithOnboardingInProgress(): Promise<User[]> {
+    return userRepository.createQueryBuilder('user')
+      .where('user.onboardingStep > :minStep', { minStep: 1 })
+      .andWhere('user.onboardingStep < :maxStep', { maxStep: 11 })
+      .andWhere('user.role = :role', { role: 'applicant' })
+      .getMany();
+  }
+  
 }
 

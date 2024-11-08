@@ -444,7 +444,7 @@ const router = Router();
 
   /**
    * @swagger
-   * /users/auth/linkedin/callback:
+   * /users/linkedin/callback:
    *   get:
    *     summary: LinkedIn OAuth callback
    *     tags: [Authentication]
@@ -475,7 +475,52 @@ const router = Router();
   router.get('/auth/linkedin/callback', UserController.linkedinCallback);
 
 
-  
+/**
+ * @swagger
+ * /users/onboarding/update-incomplete:
+ *   post:
+ *     summary: Update onboarding status for users with incomplete onboarding
+ *     tags: [Authentication]
+ *     responses:
+ *       200:
+ *         description: Successfully updated users with incomplete onboarding.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Success message
+ *                 count:
+ *                   type: integer
+ *                   description: Number of users updated
+ *       404:
+ *         description: No users found with onboarding in progress.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message
+ *                 error:
+ *                   type: string
+ *                   description: Detailed error message
+ */
+router.post('/onboarding/update-incomplete', UserController.updateIncompleteOnboardingUsers);
+
 
 export default router;
 

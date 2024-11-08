@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const UserService_1 = require("../services/UserService");
 const emailActions_1 = require("../lib/emailActions");
+const config_1 = require("../config");
 // Initialize UserService
 const userService = new UserService_1.UserService();
 // Define the batch size (number of emails to send per batch)
@@ -32,6 +33,7 @@ class Reminders {
                             const emailData = {
                                 firstName: user.firstName,
                                 email: user.email,
+                                loginLink: `${config_1.FRONTEND_LOGIN}`,
                             };
                             yield (0, emailActions_1.sendOnboardingReminderEmail)(emailData);
                         })));

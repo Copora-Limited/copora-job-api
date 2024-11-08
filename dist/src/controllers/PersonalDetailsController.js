@@ -26,6 +26,7 @@ const UserService_1 = require("../services/UserService");
 const cloudinary_1 = require("cloudinary");
 const date_fns_1 = require("date-fns"); // Use date-fns or similar library to calculate age
 const uploadToSpace_1 = require("../utils/uploadToSpace"); // Adjust the import path as necessary
+const constants_1 = require("../constants");
 // Configure Cloudinary
 cloudinary_1.v2.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -45,66 +46,6 @@ class PersonalDetailsController {
     //   }
     // }
     // Create or update PersonalDetails
-    // static async createOrUpdatePersonalDetails(req: Request, res: Response): Promise<void> {
-    //   try {
-    //     const { applicationNo, dateOfBirth, gender, nationalInsuranceNumber } = req.body;
-    //     const file = req.file;
-    //     // Check required fields
-    //     if (!dateOfBirth) {
-    //       res.status(400).json({ statusCode: 400, message: 'Date of birth is required' });
-    //       return;
-    //     }
-    //     // Age validation: Check if the applicant is at least 16 years old
-    //     const age = differenceInYears(new Date(), new Date(dateOfBirth));
-    //     if (age < 16) {
-    //       res.status(400).json({ statusCode: 400, message: 'Under Age: Date of birth invalid. You must be at least 16 years old to proceed.' });
-    //       return;
-    //     }
-    //     if (age >= 50) {
-    //       res.status(400).json({ statusCode: 400, message: 'Date of birth invalid. Age must be below 50 to proceed.' });
-    //       return;
-    //     }
-    //     if (!gender) {
-    //       res.status(400).json({ statusCode: 400, message: 'Gender is required' });
-    //       return;
-    //     }
-    //     if (!nationalInsuranceNumber) {
-    //       res.status(400).json({ statusCode: 400, message: 'National Insurance Number is required' });
-    //       return;
-    //     }
-    //     const existingApplicant = await UserService.findApplicationNo(applicationNo);
-    //     if (!existingApplicant) {
-    //       res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
-    //       return;
-    //     }
-    //     // Check if the PersonalDetails with the given applicationNo exists
-    //     const existingEntry = await PersonalDetailsService.getByApplicationNo(applicationNo);
-    //     // Preserve existing passport photo if no new file is uploaded
-    //     let passportPhoto = existingEntry?.passportPhoto || '';
-    //     if (file) {
-    //       passportPhoto = await handleFileUpload(file);
-    //     }
-    //     // Merge the new data with the existing data, updating only fields that are provided
-    //     const dataToSave = {
-    //       ...existingEntry,
-    //       ...req.body,
-    //       passportPhoto: passportPhoto || existingEntry?.passportPhoto,
-    //       attempted: true, // Set attempted to true
-    //     };
-    //     if (existingEntry) {
-    //       // Update the existing record
-    //       const updatedEntry = await PersonalDetailsService.updateByApplicationNo(applicationNo, dataToSave);
-    //       res.status(200).json({ message: 'Personal details updated', data: updatedEntry });
-    //     } else {
-    //       // Create a new record
-    //       const newEntry = await PersonalDetailsService.create(dataToSave);
-    //       res.status(201).json({ message: 'Personal details created', data: newEntry });
-    //     }
-    //   } catch (error) {
-    //     console.error('Error creating or updating personal details:', error);
-    //     res.status(500).json({ message: 'Error creating or updating personal details', error: error.message });
-    //   }
-    // }
     static createOrUpdatePersonalDetails(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -116,10 +57,10 @@ class PersonalDetailsController {
                 }
                 // Age validation
                 const age = (0, date_fns_1.differenceInYears)(new Date(), new Date(dateOfBirth));
-                if (age < 16 || age >= 50) {
+                if (age < 16) {
                     res.status(400).json({
                         statusCode: 400,
-                        message: `Date of birth invalid. Age must be between 16 and 50 to proceed.`,
+                        message: `Date of birth invalid. Age must be 16 and above.`,
                     });
                     return;
                 }
@@ -167,6 +108,8 @@ class PersonalDetailsController {
                 }
                 else {
                     const newEntry = yield PersonalDetailsService_1.PersonalDetailsService.create(dataToSave);
+                    // Update the user's onboarding status to "Onboarding not completed"
+                    yield UserService_1.UserService.updateOnboardingStatus(applicationNo, constants_1.OnboardingStatus.OnboardingNotCompleted);
                     res.status(201).json({ message: 'Personal details created', data: newEntry });
                 }
             }

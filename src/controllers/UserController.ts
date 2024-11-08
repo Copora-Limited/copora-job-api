@@ -19,12 +19,14 @@ import { OnboardingStatus, UserRole } from '../constants';
 // import { format } from 'date-fns';
 
 const userService = new UserService();
+const userRepository = AppDataSource.getRepository(User);
 
 // Multer configuration for handling file uploads
 const storage = multer.memoryStorage(); // Store the file in memory
 const upload = multer({ storage }).single('file'); // Single file upload under 'file' field
 
-
+// Define the batch size (number of users to process per batch)
+const BATCH_SIZE = 10;
 // Configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -39,8 +41,7 @@ class UserController {
     this.bulkUploadUsers = this.bulkUploadUsers.bind(this);
   }
 
-  
-  async testEmail(req: Request, res: Response): Promise<Response> {
+  public async testEmail(req: Request, res: Response): Promise<Response> {
     try {
       const { email } = req.body;
   
@@ -69,8 +70,7 @@ class UserController {
     }
   }
   
-
-  async linkedinCallback(req: Request, res: Response): Promise<Response> {
+  public async linkedinCallback(req: Request, res: Response): Promise<Response> {
     const authorizationCode = req.query.code as string;
 
     if (!authorizationCode) {
@@ -116,7 +116,7 @@ class UserController {
     }
   }
 
-  async register(req: Request, res: Response): Promise<Response> {
+  public async register(req: Request, res: Response): Promise<Response> {
     try {
       const { firstName, middleName, lastName, email, password, role, accountStatus, createdBy } = req.body;
   
@@ -182,8 +182,6 @@ class UserController {
     }
   }
 
-  
-
   private async generateApplicationNumber(role: string): Promise<string> {
     const prefix = role === 'admin' ? 'ADM' : 'APP';
     const uniqueId = uuidv4().slice(0, 8).toUpperCase(); // Unique part of the application number
@@ -221,7 +219,7 @@ class UserController {
     }
   }
 
-  async forgetPassword(req: Request, res: Response) {
+  public async forgetPassword(req: Request, res: Response) {
     try {
         const { email } = req.body;
 
@@ -265,7 +263,7 @@ class UserController {
     }
   }
 
-  async resetPassword(req: Request, res: Response) {
+  public async resetPassword(req: Request, res: Response) {
     try {
       const { token, newPassword } = req.body;
 
@@ -296,7 +294,7 @@ class UserController {
     }
   }
 
-  async toggleTwoFactor(req: Request, res: Response) {
+  public async toggleTwoFactor(req: Request, res: Response) {
     try {
       const { userId } = req.body;
 
@@ -334,7 +332,7 @@ class UserController {
       res.status(500).json({ message: 'Server error', error: error.message });
     }
   }
-  async generateTwoFactorToken(req: Request, res: Response) {
+  public async generateTwoFactorToken(req: Request, res: Response) {
     try {
       const { email, loginType } = req.body;
   
@@ -363,7 +361,7 @@ class UserController {
   }
 
   // Admin endpoint to upload Excel file
-  async bulkUploadUsers(req: Request, res: Response) {
+  public async bulkUploadUsers(req: Request, res: Response) {
     upload(req, res, async (err) => {
       if (err) {
         return res.status(500).json({ message: 'Error uploading file', error: err.message });
@@ -481,7 +479,7 @@ class UserController {
     });
   }
 
-  async login(req: Request, res: Response) {
+  public async login(req: Request, res: Response) {
     try {
         const secret = process.env.JWT_SECRET || 'your-secret-key';
         const userRepository = AppDataSource.getRepository(User);
@@ -548,7 +546,7 @@ class UserController {
     }
   }
 
-  async verifyTwoFactorCode(req: Request, res: Response) {
+  public async verifyTwoFactorCode(req: Request, res: Response) {
     try {
       const { email, twoFactorCode } = req.body;
       console.log(email, twoFactorCode)
@@ -592,7 +590,7 @@ class UserController {
     }
   }
 
-  async updateProfile(req: Request, res: Response) {
+  public async updateProfile(req: Request, res: Response) {
     try {
       const userRepository = AppDataSource.getRepository(User);
       const { userId } = req.params;
@@ -624,7 +622,7 @@ class UserController {
     }
   }
 
-  async getUserProfile(req: Request, res: Response) {
+  public async getUserProfile(req: Request, res: Response) {
     try {
       const userId = req.body?.id; // Access the userId from req.user
       if (!userId) {
@@ -653,9 +651,8 @@ class UserController {
       res.status(500).json({ message: 'Server error', error: error.message });
     }
   }
-
   
-  async changeUserRole(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+  public async changeUserRole(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     const userId = parseInt(req.params.userId, 10); // Convert string to number
     const { role } = req.body;
 
@@ -689,7 +686,7 @@ class UserController {
   }
   
   // Update onboarding step controller
-  async updateOnboardingStep(req: Request, res: Response) {
+  public async updateOnboardingStep(req: Request, res: Response) {
       const { applicationNo, onboardingStep } = req.body;
       const userRepository = AppDataSource.getRepository(User);
       try {
@@ -729,7 +726,7 @@ class UserController {
       }
   };
 
-  async updateOnboardingStatus(req: Request, res: Response) {
+  public async updateOnboardingStatus(req: Request, res: Response) {
     const { applicationNo, onboardingStatus } = req.body;
     const userRepository = AppDataSource.getRepository(User);
     try {
@@ -767,9 +764,9 @@ class UserController {
             error: error.message,
         });
     }
-};
+  }; 
   // Get all users
-  async getAll(req: Request, res: Response): Promise<void> {
+  public async getAll(req: Request, res: Response): Promise<void> {
     try {
       const users = await userService.getAll();
       res.status(200).json(users);
@@ -779,62 +776,7 @@ class UserController {
     }
   }
 
-  // async getUsersByStatus(req: Request, res: Response) {
-  //     try {
-  //         // Extract the onboarding status from the request parameters
-  //         const statusParam = req.params.status;
-
-  //         // Validate the status against the OnboardingStatus enum
-  //         if (!Object.values(OnboardingStatus).includes(statusParam as OnboardingStatus)) {
-  //             return res.status(400).json({ message: 'Invalid status provided.' });
-  //         }
-
-  //         // Cast the parameter to the OnboardingStatus enum
-  //         const onboardingStatus = statusParam as OnboardingStatus;
-
-  //         console.log("onboardingStatus:", onboardingStatus);
-
-  //         // Fetch users by status and role "applicant"
-  //         const users = await userService.findByStatusAndRole(onboardingStatus, UserRole.Applicant);
-
-  //         // Return an empty array if no users are found
-  //         res.status(200).json(users.length > 0 ? users : []); 
-  //     } catch (error) {
-  //         res.status(400).send({ message: 'Error fetching users', error: error.message });
-  //     }
-  // }
-
-  // async getUsersByStatus(req: Request, res: Response) {
-  //   try {
-  //       // Extract the onboarding status from the request parameters
-  //       const statusParam = req.params.status;
-
-  //       // Validate the status against the OnboardingStatus enum
-  //       if (!Object.values(OnboardingStatus).includes(statusParam as OnboardingStatus)) {
-  //           return res.status(400).json({ message: 'Invalid status provided.' });
-  //       }
-
-  //       // Cast the parameter to the OnboardingStatus enum
-  //       const onboardingStatus = statusParam as OnboardingStatus;
-
-  //       console.log("onboardingStatus:", onboardingStatus);
-
-  //       // Extract role from the request body or set default to 'applicant'
-  //       const role = req.body.role || "applicant" as UserRole;
-
-  //       console.log("role:", role);
-
-  //       // Fetch users by status and role
-  //       const users = await userService.findByStatusAndRole(onboardingStatus, role);
-
-  //       // Return an empty array if no users are found
-  //       res.status(200).json(users.length > 0 ? users : []); 
-  //   } catch (error) {
-  //       res.status(400).send({ message: 'Error fetching users', error: error.message });
-  //   }
-  // }
-
-  async getUsersByStatus(req: Request, res: Response) {
+  public async getUsersByStatus(req: Request, res: Response) {
     try {
         // Extract the onboarding status from the request parameters
         const statusParam = req.params.status;
@@ -863,10 +805,9 @@ class UserController {
     } catch (error) {
         res.status(400).send({ message: 'Error fetching users', error: error.message });
     }
-}
+  }
 
-
-  async getOnboardingStepByApplicationNo(req: Request, res: Response) {
+  public async getOnboardingStepByApplicationNo(req: Request, res: Response) {
     try {
         const { applicationNo } = req.params;
         
@@ -882,16 +823,9 @@ class UserController {
     } catch (error) {
         res.status(500).json({ message: 'Error fetching onboarding step', error: error.message });
     }
-}
-
-
-
-  
-
-
-
+  }
   // Get user by ID
-  async getById(req: Request, res: Response): Promise<Response> {
+  public async getById(req: Request, res: Response): Promise<Response> {
     try {
       const userId = parseInt(req.params.id, 10);
       const user = await userService.getById(userId);
@@ -908,26 +842,7 @@ class UserController {
   }
 
   // Update user
-
-  
-  // async update(req: Request, res: Response): Promise<Response> {
-  //   try {
-  //     const userId = parseInt(req.params.id, 10);
-  //     const userData = req.body;
-  //     const updatedUser = await userService.update(userId, userData);
-
-  //     if (!updatedUser) {
-  //       return res.status(404).json({ message: 'User not found' });
-  //     }
-
-  //     return res.status(200).json(updatedUser);
-  //   } catch (error) {
-  //     console.error('Error updating user:', error);
-  //     return res.status(500).json({ message: 'Server error', error: error.message });
-  //   }
-  // }
-
-  async update(req: Request, res: Response): Promise<Response> {
+  public async update(req: Request, res: Response): Promise<Response> {
     try {
       const userId = parseInt(req.params.id, 10);
       
@@ -962,7 +877,7 @@ class UserController {
   }
 
   // Delete user
-  async delete(req: Request, res: Response): Promise<void> {
+  public async delete(req: Request, res: Response): Promise<void> {
     try {
       const userId = parseInt(req.params.id, 10);
       await userService.delete(userId);
@@ -973,7 +888,7 @@ class UserController {
     }
   }
 
-  async verifyEmail(req: Request, res: Response): Promise<Response> {
+  public async verifyEmail(req: Request, res: Response): Promise<Response> {
     const verifyToken = req.query.token as string;
 
     if (!verifyToken) {
@@ -1002,8 +917,49 @@ class UserController {
       return res.status(500).json({ message: 'Server error', error: error.message });
     }
   }
-
   
+  public async updateIncompleteOnboardingUsers(req: Request, res: Response): Promise<Response> {
+        
+    try {
+      // Find users with onboarding in progress
+      const users = await userService.findUsersWithOnboardingInProgress();
+
+      if (users.length === 0) {
+        console.log('No users found with onboarding in progress.');
+        return res.status(404).json({ message: 'No users found with onboarding in progress.' });
+      }
+
+      console.log(`Found ${users.length} users with incomplete onboarding`);
+
+      // Process users in batches
+      // for (let i = 0; i < users.length; i += BATCH_SIZE) {
+      //   const batch = users.slice(i, i + BATCH_SIZE);
+      //   console.log(`Processing batch ${i / BATCH_SIZE + 1}`);
+
+      //   // Update onboarding status for each user in the current batch
+      //   batch.forEach((user) => {
+      //     user.onboardingStatus = OnboardingStatus.OnboardingNotCompleted;
+      //   });
+
+      //   // Save the batch of updated users
+      //   await userRepository.save(batch);
+
+      //   console.log(`Batch ${i / BATCH_SIZE + 1} processed successfully.`);
+      // }
+
+      console.log('All users updated successfully.');
+      return res.status(200).json({
+        message: 'All users with onboarding in progress updated successfully.',
+        count: users.length,
+      });
+    } catch (error) {
+      console.error('Error updating users with incomplete onboarding:', error);
+      return res.status(500).json({
+        message: 'Internal server error.',
+        error: error.message,
+      });
+    }
+  }
 
 
 }

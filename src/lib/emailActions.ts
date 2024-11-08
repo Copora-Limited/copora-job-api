@@ -72,7 +72,7 @@ export async function sendLoginLink(user: { firstName?: string; email: string; }
 }
 
 // Function to send onboarding reminder email
-export async function sendOnboardingReminderEmail(user: { firstName: string; email: string }) {
+export async function sendOnboardingReminderEmail(user: { firstName: string; email: string, loginLink: string; }) {
     const subject = 'Complete Your Onboarding with Copora';
     const html = onboardingReminderEmail(user);  // Generate the email HTML
     await sendEmail(user.email, subject, html);  // Send the email

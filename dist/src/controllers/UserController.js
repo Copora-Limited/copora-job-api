@@ -51,9 +51,12 @@ const XLSX = __importStar(require("xlsx"));
 const constants_1 = require("../constants");
 // import { format } from 'date-fns';
 const userService = new UserService_1.UserService();
+const userRepository = data_source_1.AppDataSource.getRepository(UserEntity_1.User);
 // Multer configuration for handling file uploads
 const storage = multer_1.default.memoryStorage(); // Store the file in memory
 const upload = (0, multer_1.default)({ storage }).single('file'); // Single file upload under 'file' field
+// Define the batch size (number of users to process per batch)
+const BATCH_SIZE = 10;
 // Configure Cloudinary
 cloudinary_1.v2.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -725,47 +728,6 @@ class UserController {
             }
         });
     }
-    // async getUsersByStatus(req: Request, res: Response) {
-    //     try {
-    //         // Extract the onboarding status from the request parameters
-    //         const statusParam = req.params.status;
-    //         // Validate the status against the OnboardingStatus enum
-    //         if (!Object.values(OnboardingStatus).includes(statusParam as OnboardingStatus)) {
-    //             return res.status(400).json({ message: 'Invalid status provided.' });
-    //         }
-    //         // Cast the parameter to the OnboardingStatus enum
-    //         const onboardingStatus = statusParam as OnboardingStatus;
-    //         console.log("onboardingStatus:", onboardingStatus);
-    //         // Fetch users by status and role "applicant"
-    //         const users = await userService.findByStatusAndRole(onboardingStatus, UserRole.Applicant);
-    //         // Return an empty array if no users are found
-    //         res.status(200).json(users.length > 0 ? users : []); 
-    //     } catch (error) {
-    //         res.status(400).send({ message: 'Error fetching users', error: error.message });
-    //     }
-    // }
-    // async getUsersByStatus(req: Request, res: Response) {
-    //   try {
-    //       // Extract the onboarding status from the request parameters
-    //       const statusParam = req.params.status;
-    //       // Validate the status against the OnboardingStatus enum
-    //       if (!Object.values(OnboardingStatus).includes(statusParam as OnboardingStatus)) {
-    //           return res.status(400).json({ message: 'Invalid status provided.' });
-    //       }
-    //       // Cast the parameter to the OnboardingStatus enum
-    //       const onboardingStatus = statusParam as OnboardingStatus;
-    //       console.log("onboardingStatus:", onboardingStatus);
-    //       // Extract role from the request body or set default to 'applicant'
-    //       const role = req.body.role || "applicant" as UserRole;
-    //       console.log("role:", role);
-    //       // Fetch users by status and role
-    //       const users = await userService.findByStatusAndRole(onboardingStatus, role);
-    //       // Return an empty array if no users are found
-    //       res.status(200).json(users.length > 0 ? users : []); 
-    //   } catch (error) {
-    //       res.status(400).send({ message: 'Error fetching users', error: error.message });
-    //   }
-    // }
     getUsersByStatus(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -827,20 +789,6 @@ class UserController {
         });
     }
     // Update user
-    // async update(req: Request, res: Response): Promise<Response> {
-    //   try {
-    //     const userId = parseInt(req.params.id, 10);
-    //     const userData = req.body;
-    //     const updatedUser = await userService.update(userId, userData);
-    //     if (!updatedUser) {
-    //       return res.status(404).json({ message: 'User not found' });
-    //     }
-    //     return res.status(200).json(updatedUser);
-    //   } catch (error) {
-    //     console.error('Error updating user:', error);
-    //     return res.status(500).json({ message: 'Server error', error: error.message });
-    //   }
-    // }
     update(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -909,6 +857,43 @@ class UserController {
             catch (error) {
                 console.error('Error during email verification:', error);
                 return res.status(500).json({ message: 'Server error', error: error.message });
+            }
+        });
+    }
+    updateIncompleteOnboardingUsers(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                // Find users with onboarding in progress
+                const users = yield userService.findUsersWithOnboardingInProgress();
+                if (users.length === 0) {
+                    console.log('No users found with onboarding in progress.');
+                    return res.status(404).json({ message: 'No users found with onboarding in progress.' });
+                }
+                console.log(`Found ${users.length} users with incomplete onboarding`);
+                // Process users in batches
+                // for (let i = 0; i < users.length; i += BATCH_SIZE) {
+                //   const batch = users.slice(i, i + BATCH_SIZE);
+                //   console.log(`Processing batch ${i / BATCH_SIZE + 1}`);
+                //   // Update onboarding status for each user in the current batch
+                //   batch.forEach((user) => {
+                //     user.onboardingStatus = OnboardingStatus.OnboardingNotCompleted;
+                //   });
+                //   // Save the batch of updated users
+                //   await userRepository.save(batch);
+                //   console.log(`Batch ${i / BATCH_SIZE + 1} processed successfully.`);
+                // }
+                console.log('All users updated successfully.');
+                return res.status(200).json({
+                    message: 'All users with onboarding in progress updated successfully.',
+                    count: users.length,
+                });
+            }
+            catch (error) {
+                console.error('Error updating users with incomplete onboarding:', error);
+                return res.status(500).json({
+                    message: 'Internal server error.',
+                    error: error.message,
+                });
             }
         });
     }

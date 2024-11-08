@@ -349,5 +349,14 @@ class UserService {
                 .getMany();
         });
     }
+    findUsersWithOnboardingInProgress() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return exports.userRepository.createQueryBuilder('user')
+                .where('user.onboardingStep > :minStep', { minStep: 1 })
+                .andWhere('user.onboardingStep < :maxStep', { maxStep: 11 })
+                .andWhere('user.role = :role', { role: 'applicant' })
+                .getMany();
+        });
+    }
 }
 exports.UserService = UserService;

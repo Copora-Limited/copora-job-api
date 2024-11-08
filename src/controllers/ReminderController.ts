@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { UserService } from '../services/UserService';
 import { sendOnboardingReminderEmail } from '../lib/emailActions';
-
+import { FRONTEND_LOGIN } from '../config';
 // Initialize UserService
 const userService = new UserService();
 
@@ -9,12 +9,11 @@ const userService = new UserService();
 const BATCH_SIZE = 50;
 
 class Reminders {
-
-    async sendOnboardingReminder(req: Request, res: Response) {
+    public async sendOnboardingReminder(req: Request, res: Response) {
         try {
             // Query users with onboardingStep less than 5 and role is applicant
             const users = await userService.findUsersWithIncompleteOnboarding();
-    
+
             if (users.length > 0) {
                 console.log(`Found ${users.length} users with incomplete onboarding`);
 
@@ -28,8 +27,9 @@ class Reminders {
                         const emailData = {
                             firstName: user.firstName,
                             email: user.email,
+                            loginLink: `${FRONTEND_LOGIN}`,
                         };
-                        await sendOnboardingReminderEmail(emailData);
+                        await sendOnboardingReminderEmail(emailData); 
                     }));
 
                     console.log(`Batch ${i / BATCH_SIZE + 1} processed successfully.`);
