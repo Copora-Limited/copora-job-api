@@ -1762,3 +1762,6 @@ TypeError: res.status is not a function
 2024-11-08 14:23:50 [[32minfo[39m]: HTTP POST /users/onboarding/update-incomplete
 2024-11-08 14:57:33 [[32minfo[39m]: HTTP POST /users/onboarding/update-incomplete
 2024-11-08 14:58:24 [[32minfo[39m]: HTTP POST /users/onboarding/update-incomplete
+2024-11-09 07:16:21 [[32minfo[39m]: HTTP GET /auth/users/status/Approved?role=applicant
+2024-11-09 07:17:06 [[32minfo[39m]: HTTP POST /users/login
+2024-11-09 07:17:56 [[32minfo[39m]: HTTP POST /users/login

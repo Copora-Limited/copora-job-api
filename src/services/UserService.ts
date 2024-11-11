@@ -354,6 +354,12 @@ export class UserService {
       .andWhere('user.role = :role', { role: 'applicant' })
       .getMany();
   }
+
+  async findAllAprrovedCandidates(): Promise<User[]> {
+    return userRepository.createQueryBuilder('user')
+      .where('user.onboardingStatus = :onboardingStatus', { onboardingStatus: 'Approved' })
+      .getMany();
+  }
   
 }
 

@@ -358,5 +358,12 @@ class UserService {
                 .getMany();
         });
     }
+    findAllAprrovedCandidates() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return exports.userRepository.createQueryBuilder('user')
+                .where('user.onboardingStatus = :onboardingStatus', { onboardingStatus: 'Approved' })
+                .getMany();
+        });
+    }
 }
 exports.UserService = UserService;
