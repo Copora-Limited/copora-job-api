@@ -330,6 +330,16 @@ class UserService {
             }
         });
     }
+    static updateByApplicationNo(applicationNo, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const entry = yield this.findApplicationNo(applicationNo);
+            if (!entry) {
+                throw new Error('User details not found');
+            }
+            Object.assign(entry, data);
+            return yield exports.userRepository.save(entry);
+        });
+    }
     updateData(user) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

@@ -40,9 +40,6 @@ const router = Router();
    *         description: Server error
    */
   router.post('/test-email', UserController.testEmail);
-  
-  
-
 
   /**
    * @swagger
@@ -87,76 +84,148 @@ const router = Router();
    */
   router.post('/login', UserController.login);
 
-/**
- * @swagger
- * /users/register:
- *   post:
- *     summary: Register a new user
- *     tags: [Authentication]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               firstName:
- *                 type: string
- *                 description: First name of the user
- *                 example: John
- *               middleName:
- *                 type: string
- *                 description: Middle name of the user
- *                 example: Michael
- *               lastName:
- *                 type: string
- *                 description: Last name of the user
- *                 example: Doe
- *               email:
- *                 type: string
- *                 description: Email address of the user
- *                 example: john.doe@example.com
- *               password:
- *                 type: string
- *                 description: Password of the user
- *                 example: mypassword
- *               role:
- *                 type: string
- *                 enum: [admin, applicant]
- *                 description: Role of the user
- *                 default: applicant
- *                 example: applicant
- *               createdBy:
- *                 type: string
- *                 enum: [admin, applicant]
- *                 description: User who created this account (e.g., 'admin')
- *                 default: applicant
- *                 example: applicant
- *     responses:
- *       '201':
- *         description: User registered successfully. Please check your email to verify your account.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: User registered successfully. Please check your email to verify your account.
- *       '400':
- *         description: Bad request. Required fields are missing or user already exists.
- *       '500':
- *         description: Server error.
- */
-  router.post('/register', uploadDocumentsAndImages.single('profilePicture'), async (req, res) => {
-    try {
-      // Call UserController method for registration
-      await UserController.register(req, res);
-    } catch (error) {
-      console.error('Error during registration:', error);
-      // No response here; UserController handles it
-    }
-  });
+  /**
+   * @swagger
+   * /users/register:
+   *   post:
+   *     summary: Register a new user
+   *     tags: [Authentication]
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               firstName:
+   *                 type: string
+   *                 description: First name of the user
+   *                 example: John
+   *               middleName:
+   *                 type: string
+   *                 description: Middle name of the user
+   *                 example: Michael
+   *               lastName:
+   *                 type: string
+   *                 description: Last name of the user
+   *                 example: Doe
+   *               email:
+   *                 type: string
+   *                 description: Email address of the user
+   *                 example: john.doe@example.com
+   *               password:
+   *                 type: string
+   *                 description: Password of the user
+   *                 example: mypassword
+   *               role:
+   *                 type: string
+   *                 enum: [admin, applicant]
+   *                 description: Role of the user
+   *                 default: applicant
+   *                 example: applicant
+   *               createdBy:
+   *                 type: string
+   *                 enum: [admin, applicant]
+   *                 description: User who created this account (e.g., 'admin')
+   *                 default: applicant
+   *                 example: applicant
+   *     responses:
+   *       '201':
+   *         description: User registered successfully. Please check your email to verify your account.
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 message:
+   *                   type: string
+   *                   example: User registered successfully. Please check your email to verify your account.
+   *       '400':
+   *         description: Bad request. Required fields are missing or user already exists.
+   *       '500':
+   *         description: Server error.
+   */
+    router.post('/register', uploadDocumentsAndImages.single('profilePicture'), async (req, res) => {
+      try {
+        // Call UserController method for registration
+        await UserController.register(req, res);
+      } catch (error) {
+        console.error('Error during registration:', error);
+        // No response here; UserController handles it
+      }
+    });
+
+  /**
+   * @swagger
+   * /users/resend-invitation:
+   *   post:
+   *     summary: Resend an invitation email with login details
+   *     tags: [Authentication]
+   *     description: Resends an invitation email to the applicant with a temporary password and login link.
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               applicationNo:
+   *                 type: string
+   *                 example: "APP12345"
+   *                 description: The application number of the applicant.
+   *               password:
+   *                 type: string
+   *                 example: "newpass123"
+   *                 description: Optional custom password. If not provided, a random password will be generated.
+   *     responses:
+   *       200:
+   *         description: Invitation email resent successfully
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 message:
+   *                   type: string
+   *                   example: "Invitation email resent successfully"
+   *                 data:
+   *                   type: object
+   *                   properties:
+   *                     applicationNo:
+   *                       type: string
+   *                       example: "APP12345"
+   *                     firstName:
+   *                       type: string
+   *                       example: "John"
+   *                     email:
+   *                       type: string
+   *                       example: "john.doe@example.com"
+   *       400:
+   *         description: Applicant does not exist
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 message:
+   *                   type: string
+   *                   example: "Applicant does not exist"
+   *       500:
+   *         description: Server error
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 message:
+   *                   type: string
+   *                   example: "Server error"
+   *                 error:
+   *                   type: string
+   *                   example: "Detailed error message"
+   */
+  router.post('/resend-invitation', UserController.resendInvitation);
+
 
   /**
    * @swagger
@@ -438,9 +507,6 @@ const router = Router();
    *                   example: "Error details"
    */
   router.post('/verify-two-factor', UserController.verifyTwoFactorCode);
-  
-  
-
 
   /**
    * @swagger
@@ -474,52 +540,51 @@ const router = Router();
    */
   router.get('/auth/linkedin/callback', UserController.linkedinCallback);
 
-
-/**
- * @swagger
- * /users/onboarding/update-incomplete:
- *   post:
- *     summary: Update onboarding status for users with incomplete onboarding
- *     tags: [Authentication]
- *     responses:
- *       200:
- *         description: Successfully updated users with incomplete onboarding.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Success message
- *                 count:
- *                   type: integer
- *                   description: Number of users updated
- *       404:
- *         description: No users found with onboarding in progress.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message
- *       500:
- *         description: Internal server error.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message
- *                 error:
- *                   type: string
- *                   description: Detailed error message
- */
-router.post('/onboarding/update-incomplete', UserController.updateIncompleteOnboardingUsers);
+  /**
+   * @swagger
+   * /users/onboarding/update-incomplete:
+   *   post:
+   *     summary: Update onboarding status for users with incomplete onboarding
+   *     tags: [Authentication]
+   *     responses:
+   *       200:
+   *         description: Successfully updated users with incomplete onboarding.
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 message:
+   *                   type: string
+   *                   description: Success message
+   *                 count:
+   *                   type: integer
+   *                   description: Number of users updated
+   *       404:
+   *         description: No users found with onboarding in progress.
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 message:
+   *                   type: string
+   *                   description: Error message
+   *       500:
+   *         description: Internal server error.
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 message:
+   *                   type: string
+   *                   description: Error message
+   *                 error:
+   *                   type: string
+   *                   description: Detailed error message
+   */
+  router.post('/onboarding/update-incomplete', UserController.updateIncompleteOnboardingUsers);
 
 
 export default router;

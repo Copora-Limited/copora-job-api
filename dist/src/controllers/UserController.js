@@ -190,6 +190,44 @@ class UserController {
             }
         });
     }
+    resendInvitation(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { applicationNo, password } = req.body;
+                // Verify if applicant exists
+                const existingApplicant = yield UserService_1.UserService.findApplicationNo(applicationNo);
+                if (!existingApplicant) {
+                    return res.status(400).json({ message: 'Applicant does not exist' });
+                }
+                // Generate or use provided password
+                const effectivePassword = password || (0, uuid_1.v4)().slice(0, 8);
+                const hashedPassword = yield bcrypt_1.default.hash(effectivePassword, 10);
+                // Extract applicant data and set update data
+                const { firstName, email } = existingApplicant;
+                const updateData = { password: hashedPassword };
+                // Send invitation email
+                yield (0, emailActions_1.sendInvitationToOnboard)({
+                    email,
+                    firstName,
+                    loginLink: `${config_1.FRONTEND_LOGIN}`,
+                    temporaryPassword: effectivePassword
+                });
+                // Update applicant record with hashed password
+                const updatedApplicant = yield UserService_1.UserService.updateByApplicationNo(applicationNo, updateData);
+                // Respond with success message and updated data
+                return res.status(200).json({
+                    message: 'Inivitation email resent successfully',
+                    data: updatedApplicant,
+                });
+            }
+            catch (error) {
+                console.error('Error during invitation resend:', error);
+                if (!res.headersSent) {
+                    return res.status(500).json({ message: 'Server error', error: error.message });
+                }
+            }
+        });
+    }
     generateApplicationNumber(role) {
         return __awaiter(this, void 0, void 0, function* () {
             const prefix = role === 'admin' ? 'ADM' : 'APP';

@@ -166,6 +166,76 @@ router.post('/register', multerConfig_1.default.single('profilePicture'), (req, 
 }));
 /**
  * @swagger
+ * /users/resend-invitation:
+ *   post:
+ *     summary: Resend an invitation email with login details
+ *     tags: [Authentication]
+ *     description: Resends an invitation email to the applicant with a temporary password and login link.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               applicationNo:
+ *                 type: string
+ *                 example: "APP12345"
+ *                 description: The application number of the applicant.
+ *               password:
+ *                 type: string
+ *                 example: "newpass123"
+ *                 description: Optional custom password. If not provided, a random password will be generated.
+ *     responses:
+ *       200:
+ *         description: Invitation email resent successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Invitation email resent successfully"
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     applicationNo:
+ *                       type: string
+ *                       example: "APP12345"
+ *                     firstName:
+ *                       type: string
+ *                       example: "John"
+ *                     email:
+ *                       type: string
+ *                       example: "john.doe@example.com"
+ *       400:
+ *         description: Applicant does not exist
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Applicant does not exist"
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Server error"
+ *                 error:
+ *                   type: string
+ *                   example: "Detailed error message"
+ */
+router.post('/resend-invitation', UserController_1.default.resendInvitation);
+/**
+ * @swagger
  * /users/verify-email:
  *   get:
  *     summary: Verify user email

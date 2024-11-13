@@ -148,6 +148,7 @@ class UserController {
       const profilePictureUrl = await this.uploadProfilePicture(req.file);
   
       // Hash the effective password
+      
       const hashedPassword = await bcrypt.hash(effectivePassword, 10);
   
       // Create new user
@@ -181,6 +182,50 @@ class UserController {
         : undefined;
     }
   }
+
+  public async resendInvitation(req: Request, res: Response): Promise<Response> {
+    try {
+      const { applicationNo, password } = req.body;
+  
+      // Verify if applicant exists
+      const existingApplicant = await UserService.findApplicationNo(applicationNo);
+      if (!existingApplicant) {
+        return res.status(400).json({ message: 'Applicant does not exist' });
+      }
+  
+      // Generate or use provided password
+      const effectivePassword = password || uuidv4().slice(0, 8);
+      const hashedPassword = await bcrypt.hash(effectivePassword, 10);
+  
+      // Extract applicant data and set update data
+      const { firstName, email } = existingApplicant;
+      const updateData = { password: hashedPassword };
+  
+      // Send invitation email
+      await sendInvitationToOnboard({
+        email,
+        firstName,
+        loginLink: `${FRONTEND_LOGIN}`,
+        temporaryPassword: effectivePassword
+      });
+  
+      // Update applicant record with hashed password
+      const updatedApplicant = await UserService.updateByApplicationNo(applicationNo, updateData);
+  
+      // Respond with success message and updated data
+      return res.status(200).json({
+        message: 'Inivitation email resent successfully',
+        data: updatedApplicant,
+      });
+  
+    } catch (error) {
+      console.error('Error during invitation resend:', error);
+      if (!res.headersSent) {
+        return res.status(500).json({ message: 'Server error', error: error.message });
+      }
+    }
+  }
+  
 
   private async generateApplicationNumber(role: string): Promise<string> {
     const prefix = role === 'admin' ? 'ADM' : 'APP';

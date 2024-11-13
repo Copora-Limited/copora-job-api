@@ -331,6 +331,15 @@ export class UserService {
     }
   }
 
+  static async updateByApplicationNo(applicationNo: string, data: any) {
+    const entry = await this.findApplicationNo(applicationNo);
+    if (!entry) {
+        throw new Error('User details not found');
+    }
+    Object.assign(entry, data);
+    return await userRepository.save(entry);
+  }
+
   async updateData(user: User): Promise<User> {
     try {
       return await userRepository.save(user);
