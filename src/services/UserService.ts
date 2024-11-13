@@ -168,11 +168,14 @@ export class UserService {
 
       // Find users by onboarding status and role
       const users = await userRepository.find({
-          where: {
-              onboardingStatus: status,
-              role: role,
-          },
-      });
+        where: {
+            onboardingStatus: status,
+            role: role,
+        },
+        order: {
+            updatedAt: 'DESC',
+        },
+    });
 
       return users;
   }

@@ -171,6 +171,9 @@ class UserService {
                     onboardingStatus: status,
                     role: role,
                 },
+                order: {
+                    updatedAt: 'DESC',
+                },
             });
             return users;
         });
