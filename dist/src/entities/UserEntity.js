@@ -60,6 +60,10 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "onboardingStatus", void 0);
 __decorate([
+    (0, typeorm_1.Column)('simple-array', { nullable: true }),
+    __metadata("design:type", Array)
+], User.prototype, "tags", void 0);
+__decorate([
     (0, typeorm_1.Column)({
         type: 'boolean',
         default: false,

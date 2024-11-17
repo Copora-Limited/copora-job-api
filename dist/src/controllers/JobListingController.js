@@ -15,22 +15,6 @@ const UserService_1 = require("../services/UserService");
 const constants_1 = require("../constants");
 class JobListingController {
     // Create a new Job Title
-    // static async create(req: Request, res: Response) {
-    //     const { applicationNo } = req.body;
-    //     const existingApplicant = await UserService.findApplicationNo(applicationNo);
-    //     if (!existingApplicant) {
-    //         res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
-    //         return;
-    //     }
-    //   const existingEntry = await JobListingService.findByApplicationNo(applicationNo);
-    //     try {
-    //         const jobListingData = req.body;
-    //         const newJobList = await JobListingService.create(jobListingData);
-    //         res.status(201).json(newJobList);
-    //     } catch (error) {
-    //         res.status(400).send({ message: 'Error creating job title', error: error.message });
-    //     }
-    // }
     static create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { applicationNo } = req.body;
@@ -71,6 +55,18 @@ class JobListingController {
             }
             catch (error) {
                 res.status(500).send({ message: 'Error fetching job titles', error: error.message });
+            }
+        });
+    }
+    static getAllTags(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const tags = yield JobListingService_1.JobListingService.getAllTags();
+                res.status(200).json(tags); // Return the result as JSON
+            }
+            catch (error) {
+                console.error('Error retrieving all tags:', error);
+                res.status(500).json({ message: 'Server error', error: error.message });
             }
         });
     }

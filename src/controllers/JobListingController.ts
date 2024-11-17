@@ -6,28 +6,6 @@ import { OnboardingStatus, UserRole } from '../constants';
 
 export class JobListingController {
     // Create a new Job Title
-    // static async create(req: Request, res: Response) {
-    //     const { applicationNo } = req.body;
-
-
-    //     const existingApplicant = await UserService.findApplicationNo(applicationNo);
-
-    //     if (!existingApplicant) {
-    //         res.status(400).json({ statusCode: 400, message: 'Applicant does not exist' });
-    //         return;
-    //     }
-
-    //   const existingEntry = await JobListingService.findByApplicationNo(applicationNo);
-
-    //     try {
-    //         const jobListingData = req.body;
-    //         const newJobList = await JobListingService.create(jobListingData);
-    //         res.status(201).json(newJobList);
-    //     } catch (error) {
-    //         res.status(400).send({ message: 'Error creating job title', error: error.message });
-    //     }
-    // }
-
     static async create(req: Request, res: Response) {
         const { applicationNo } = req.body;
     
@@ -75,6 +53,17 @@ export class JobListingController {
             res.status(500).send({ message: 'Error fetching job titles', error: error.message });
         }
     }
+
+    static async getAllTags(req: Request, res: Response) {
+        try {
+            const tags = await JobListingService.getAllTags();
+            res.status(200).json(tags); // Return the result as JSON
+        } catch (error) {
+            console.error('Error retrieving all tags:', error);
+            res.status(500).json({ message: 'Server error', error: error.message });
+        }
+    }
+        
 
     // Get Job Title by ID
     static async getById(req: Request, res: Response) {
@@ -136,4 +125,6 @@ export class JobListingController {
             res.status(404).send({ message: 'Job Title not found', error: error.message });
         }
     }
+
+   
 }

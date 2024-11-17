@@ -38,6 +38,9 @@ export class User {
   })
   onboardingStatus: OnboardingStatus;
 
+  @Column('simple-array', { nullable: true })
+  tags: string[];
+
   @Column({
     type: 'boolean',  
     default: false,

@@ -123,6 +123,7 @@ AppDataSource.initialize()
     app.use('/api/job-listings', jobListingRoutes);
     
     
+    
     // Swagger setup
     app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 

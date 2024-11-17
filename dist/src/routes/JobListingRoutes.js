@@ -17,9 +17,43 @@ const router = (0, express_1.Router)();
  *             schema:
  *               type: array
  *               items:
- *
+ *                 type: object
  */
 router.get('/', JobListingController_1.JobListingController.getAll);
+/**
+ * @swagger
+ * /api/job-listings/tags:
+ *   get:
+ *     summary: Retrieve a list of all tags
+ *     tags: [Job Listings]
+ *     responses:
+ *       200:
+ *         description: A list of all tags
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 location:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Location'
+ *                 group:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Group'
+ *                 employmentType:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/EmploymentType'
+ *                 jobTitle:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/JobTitle'
+ *       500:
+ *         description: Server error
+ */
+router.get('/tags', JobListingController_1.JobListingController.getAllTags);
 /**
  * @swagger
  * /api/job-listings/{id}:
