@@ -137,7 +137,7 @@ class UserController {
     register(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { firstName, middleName, lastName, email, password, role, accountStatus, createdBy } = req.body;
+                const { firstName, middleName, lastName, email, password, role, tags, createdBy } = req.body;
                 // Validate required fields
                 if (!firstName || !lastName || !email) {
                     return res.status(400).json({ message: 'Required fields are missing' });
@@ -170,6 +170,7 @@ class UserController {
                     password: hashedPassword,
                     profilePicture: profilePictureUrl,
                     role,
+                    tags,
                     createdBy,
                     verificationToken,
                     applicationNo, // Save the generated application number

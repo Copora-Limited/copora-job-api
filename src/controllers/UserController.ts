@@ -118,7 +118,7 @@ class UserController {
 
   public async register(req: Request, res: Response): Promise<Response> {
     try {
-      const { firstName, middleName, lastName, email, password, role, accountStatus, createdBy } = req.body;
+      const { firstName, middleName, lastName, email, password, role, tags, createdBy } = req.body;
   
       // Validate required fields
       if (!firstName || !lastName || !email) {
@@ -161,6 +161,7 @@ class UserController {
         password: hashedPassword,
         profilePicture: profilePictureUrl,
         role,
+        tags,
         createdBy,
         verificationToken,
         applicationNo, // Save the generated application number
