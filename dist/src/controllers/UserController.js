@@ -139,8 +139,14 @@ class UserController {
             try {
                 const { firstName, middleName, lastName, email, password, role, tags, createdBy } = req.body;
                 // Validate required fields
-                if (!firstName || !lastName || !email) {
+                if (!firstName || !lastName) {
                     return res.status(400).json({ message: 'Required fields are missing' });
+                }
+                if (!email) {
+                    return res.status(400).json({ message: 'Email is required' });
+                }
+                if (!role) {
+                    return res.status(400).json({ message: 'Role fields is required' });
                 }
                 if (!createdBy) {
                     return res.status(400).json({ message: 'Created By field is missing' });

@@ -558,3 +558,15 @@
 2024-11-18 11:29:54 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
 2024-11-18 11:29:54 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
 2024-11-18 11:29:55 [[32minfo[39m]: HTTP GET /api-docs/favicon-32x32.png
+2024-11-18 13:53:24 [[32minfo[39m]: HTTP GET /api/job-listings/tags
+2024-11-18 14:36:01 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-11-18 14:36:01 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-11-18 14:36:01 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-11-18 14:36:11 [[32minfo[39m]: HTTP GET /
+2024-11-18 14:36:18 [[32minfo[39m]: HTTP GET /api-docs/
+2024-11-18 14:36:18 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui.css
+2024-11-18 14:36:18 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-11-18 14:36:18 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-11-18 14:36:18 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-11-18 14:36:18 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-11-18 14:39:57 [[32minfo[39m]: HTTP POST /users/register
