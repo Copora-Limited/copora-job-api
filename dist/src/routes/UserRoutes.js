@@ -132,6 +132,10 @@ router.post('/login', UserController_1.default.login);
  *                 description: Role of the user
  *                 default: applicant
  *                 example: applicant
+ *               tags:
+ *                 type: string
+ *                 enum: [Manchester, Driver, Oriental Hotel]
+ *                 example: [Manchester, Driver, Oriental Hotel]
  *               createdBy:
  *                 type: string
  *                 enum: [admin, applicant]

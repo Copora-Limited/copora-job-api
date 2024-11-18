@@ -12,7 +12,7 @@ export default function resetPasswordEmail(user: { firstName?: string; email: st
                     <p style="font-size: 16px; color: #333;">
                         We received a request to reset your password. Click the link below to reset your password:
                     </p>
-                    <a href="${FRONTEND_URL}/reset-password?token=${resetToken}" style="display: inline-block; margin: 20px 0; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #211c1c; text-decoration: none; border-radius: 5px;">Reset Password</a>
+                    <a href="${FRONTEND_URL}/auth/reset-password?token=${resetToken}" style="display: inline-block; margin: 20px 0; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #211c1c; text-decoration: none; border-radius: 5px;">Reset Password</a>
                     <p style="font-size: 16px; color: #333;">
                         If you did not request this, please ignore this email and your password will remain unchanged.
                     </p>

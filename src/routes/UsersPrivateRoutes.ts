@@ -128,6 +128,10 @@ router.get('/status/:status', authenticateToken, authorizeRoles('admin'), UserCo
  *                 description: Role of the user
  *                 default: applicant
  *                 example: admin
+ *               tags:
+ *                 type: string
+ *                 enum: [Manchester, Driver, Oriental Hotel]
+ *                 example: [Manchester, Driver, Oriental Hotel]  
  *               createdBy:
  *                 type: string
  *                 enum: [admin, applicant]
