@@ -184,7 +184,7 @@ export class ApplicationService {
   static async deleteApplicantData(applicationNo: string) {
     try {
         // Delete records from each table associated with the given application number
-        // await AppDataSource.getRepository(User).delete({ applicationNo });
+        await AppDataSource.getRepository(User).delete({ applicationNo });
         await AppDataSource.getRepository(PersonalDetails).delete({ applicationNo });
         await AppDataSource.getRepository(ContactDetails).delete({ applicationNo });
         await AppDataSource.getRepository(ProfessionalDetails).delete({ applicationNo });

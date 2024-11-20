@@ -189,7 +189,7 @@ class ApplicationService {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 // Delete records from each table associated with the given application number
-                // await AppDataSource.getRepository(User).delete({ applicationNo });
+                yield data_source_1.AppDataSource.getRepository(UserEntity_1.User).delete({ applicationNo });
                 yield data_source_1.AppDataSource.getRepository(PersonalDetailsEntity_1.PersonalDetails).delete({ applicationNo });
                 yield data_source_1.AppDataSource.getRepository(ContactDetailsEntity_1.ContactDetails).delete({ applicationNo });
                 yield data_source_1.AppDataSource.getRepository(ProfessionalDetailsEntity_1.ProfessionalDetails).delete({ applicationNo });
