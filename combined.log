@@ -570,3 +570,13 @@
 2024-11-18 14:36:18 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
 2024-11-18 14:36:18 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
 2024-11-18 14:39:57 [[32minfo[39m]: HTTP POST /users/register
+2024-11-18 18:30:35 [[32minfo[39m]: HTTP GET /api-docs/
+2024-11-18 18:30:35 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-11-18 18:30:35 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui.css
+2024-11-18 18:30:35 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-11-18 18:30:35 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-11-18 18:30:35 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-11-18 18:30:36 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-11-18 18:30:36 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-11-18 18:33:03 [[32minfo[39m]: HTTP POST /users/resend-invitation
+2024-11-18 19:40:46 [[32minfo[39m]: HTTP POST /users/login
