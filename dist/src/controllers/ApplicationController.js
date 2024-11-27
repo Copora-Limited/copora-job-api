@@ -218,7 +218,7 @@ class ApplicationController {
     // New method for downloading applicant data as CSV
     static downloadApplicantDataCsv(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3;
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4;
             try {
                 const { applicationNo } = req.params;
                 const applicantData = yield ApplicationService_1.ApplicationService.getApplicantData(applicationNo);
@@ -228,25 +228,26 @@ class ApplicationController {
                 // Map applicant data into the CSV structure
                 const csvData = {
                     Title: (_a = applicantData.personalDetails) === null || _a === void 0 ? void 0 : _a.title,
-                    Forename1: (_b = applicantData.user) === null || _b === void 0 ? void 0 : _b.firstName,
-                    Forename2: (_c = applicantData.user) === null || _c === void 0 ? void 0 : _c.middleName,
-                    Surname: (_d = applicantData.user) === null || _d === void 0 ? void 0 : _d.lastName,
-                    PreferredName: (_e = applicantData.user) === null || _e === void 0 ? void 0 : _e.firstName,
-                    Telephone: (_f = applicantData.contactDetails) === null || _f === void 0 ? void 0 : _f.phone,
-                    Mobile: (_g = applicantData.contactDetails) === null || _g === void 0 ? void 0 : _g.phone, // Assuming phone is used for both
-                    Email: (_h = applicantData.user) === null || _h === void 0 ? void 0 : _h.email,
-                    Address: `${(_j = applicantData.contactDetails) === null || _j === void 0 ? void 0 : _j.address_line_1}, ${(_k = applicantData.contactDetails) === null || _k === void 0 ? void 0 : _k.town}, ${(_l = applicantData.contactDetails) === null || _l === void 0 ? void 0 : _l.postcode}`,
-                    Country: (_m = applicantData.contactDetails) === null || _m === void 0 ? void 0 : _m.country,
-                    Gender: (_o = applicantData.personalDetails) === null || _o === void 0 ? void 0 : _o.gender,
-                    Birthday: (_p = applicantData.personalDetails) === null || _p === void 0 ? void 0 : _p.dateOfBirth,
-                    PassportNumber: (_q = applicantData.personalDetails) === null || _q === void 0 ? void 0 : _q.passportPhoto, // Assuming passport photo contains passport info
-                    NINumber: (_r = applicantData.personalDetails) === null || _r === void 0 ? void 0 : _r.nationalInsuranceNumber,
+                    ProfilePicture: (_b = applicantData.personalDetails) === null || _b === void 0 ? void 0 : _b.passportPhoto,
+                    Forename1: (_c = applicantData.user) === null || _c === void 0 ? void 0 : _c.firstName,
+                    Forename2: (_d = applicantData.user) === null || _d === void 0 ? void 0 : _d.middleName,
+                    Surname: (_e = applicantData.user) === null || _e === void 0 ? void 0 : _e.lastName,
+                    PreferredName: (_f = applicantData.user) === null || _f === void 0 ? void 0 : _f.firstName,
+                    Telephone: (_g = applicantData.contactDetails) === null || _g === void 0 ? void 0 : _g.phone,
+                    Mobile: (_h = applicantData.contactDetails) === null || _h === void 0 ? void 0 : _h.phone, // Assuming phone is used for both
+                    Email: (_j = applicantData.user) === null || _j === void 0 ? void 0 : _j.email,
+                    Address: `${(_k = applicantData.contactDetails) === null || _k === void 0 ? void 0 : _k.address_line_1}, ${(_l = applicantData.contactDetails) === null || _l === void 0 ? void 0 : _l.town}, ${(_m = applicantData.contactDetails) === null || _m === void 0 ? void 0 : _m.postcode}`,
+                    Country: (_o = applicantData.contactDetails) === null || _o === void 0 ? void 0 : _o.country,
+                    Gender: (_p = applicantData.personalDetails) === null || _p === void 0 ? void 0 : _p.gender,
+                    Birthday: (_q = applicantData.personalDetails) === null || _q === void 0 ? void 0 : _q.dateOfBirth,
+                    PassportNumber: (_r = applicantData.personalDetails) === null || _r === void 0 ? void 0 : _r.passportPhoto, // Assuming passport photo contains passport info
+                    NINumber: (_s = applicantData.personalDetails) === null || _s === void 0 ? void 0 : _s.nationalInsuranceNumber,
                     WorksNumber: '', // This field is not mapped in your data
                     Department: '', // This field is not mapped in your data
-                    JobTitle: (_t = (_s = applicantData.professionalDetails) === null || _s === void 0 ? void 0 : _s[0]) === null || _t === void 0 ? void 0 : _t.jobTitle,
-                    College: (_v = (_u = applicantData.educationalDetails) === null || _u === void 0 ? void 0 : _u[0]) === null || _v === void 0 ? void 0 : _v.schoolName,
-                    DateStarted: (_x = (_w = applicantData.professionalDetails) === null || _w === void 0 ? void 0 : _w[0]) === null || _x === void 0 ? void 0 : _x.startDate,
-                    DateLeft: (_z = (_y = applicantData.professionalDetails) === null || _y === void 0 ? void 0 : _y[0]) === null || _z === void 0 ? void 0 : _z.endDate,
+                    JobTitle: (_u = (_t = applicantData.professionalDetails) === null || _t === void 0 ? void 0 : _t[0]) === null || _u === void 0 ? void 0 : _u.jobTitle,
+                    College: (_w = (_v = applicantData.educationalDetails) === null || _v === void 0 ? void 0 : _v[0]) === null || _w === void 0 ? void 0 : _w.schoolName,
+                    DateStarted: (_y = (_x = applicantData.professionalDetails) === null || _x === void 0 ? void 0 : _x[0]) === null || _y === void 0 ? void 0 : _y.startDate,
+                    DateLeft: (_0 = (_z = applicantData.professionalDetails) === null || _z === void 0 ? void 0 : _z[0]) === null || _0 === void 0 ? void 0 : _0.endDate,
                     Director: '', // This field is not mapped in your data
                     DirectorStartDate: '', // This field is not mapped in your data
                     DirectorEndDate: '', // This field is not mapped in your data
@@ -255,11 +256,11 @@ class ApplicationController {
                     PayFrequency: '', // This field is not mapped in your data
                     PayMethod: '', // This field is not mapped in your data
                     DeliveryMethod: '', // This field is not mapped in your data
-                    BankName: (_0 = applicantData.bankDetails) === null || _0 === void 0 ? void 0 : _0.bankName,
+                    BankName: (_1 = applicantData.bankDetails) === null || _1 === void 0 ? void 0 : _1.bankName,
                     BranchName: '', // This field is not mapped in your data
-                    SortCode: (_1 = applicantData.bankDetails) === null || _1 === void 0 ? void 0 : _1.sortCode,
-                    AccountName: (_2 = applicantData.bankDetails) === null || _2 === void 0 ? void 0 : _2.accountName,
-                    AccountNumber: (_3 = applicantData.bankDetails) === null || _3 === void 0 ? void 0 : _3.accountNumber,
+                    SortCode: (_2 = applicantData.bankDetails) === null || _2 === void 0 ? void 0 : _2.sortCode,
+                    AccountName: (_3 = applicantData.bankDetails) === null || _3 === void 0 ? void 0 : _3.accountName,
+                    AccountNumber: (_4 = applicantData.bankDetails) === null || _4 === void 0 ? void 0 : _4.accountNumber,
                     PaymentReference: '', // This field is not mapped in your data
                     BuildingSocietyReference: '', // This field is not mapped in your data
                     BankTelephone: '', // This field is not mapped in your data

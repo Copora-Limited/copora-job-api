@@ -218,6 +218,7 @@ export class ApplicationController {
       // Map applicant data into the CSV structure
       const csvData = {
         Title: applicantData.personalDetails?.title,
+        ProfilePicture: applicantData.personalDetails?.passportPhoto,
         Forename1: applicantData.user?.firstName,
         Forename2: applicantData.user?.middleName,
         Surname: applicantData.user?.lastName,
