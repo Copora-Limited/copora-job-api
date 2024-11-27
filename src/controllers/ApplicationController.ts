@@ -237,9 +237,9 @@ export class ApplicationController {
         College: applicantData.educationalDetails?.[0]?.schoolName,
         DateStarted: applicantData.professionalDetails?.[0]?.startDate,
         DateLeft: applicantData.professionalDetails?.[0]?.endDate,
-        Director: '', // This field is not mapped in your data
-        DirectorStartDate: '', // This field is not mapped in your data
-        DirectorEndDate: '', // This field is not mapped in your data
+        Director: applicantData.personalDetails?.ninProof, // This field is not mapped in your data
+        DirectorStartDate: applicantData.personalDetails.visaDocument, // This field is not mapped in your data
+        DirectorEndDate: applicantData.personalDetails.internationalPassport, // This field is not mapped in your data
         AlternativeDirectorsNIC: '', // This field is not mapped in your data
         PrimaryNICOnly: '', // This field is not mapped in your data
         PayFrequency: '', // This field is not mapped in your data

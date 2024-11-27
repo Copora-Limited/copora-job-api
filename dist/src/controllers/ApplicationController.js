@@ -218,7 +218,7 @@ class ApplicationController {
     // New method for downloading applicant data as CSV
     static downloadApplicantDataCsv(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3;
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4;
             try {
                 const { applicationNo } = req.params;
                 const applicantData = yield ApplicationService_1.ApplicationService.getApplicantData(applicationNo);
@@ -247,19 +247,19 @@ class ApplicationController {
                     College: (_v = (_u = applicantData.educationalDetails) === null || _u === void 0 ? void 0 : _u[0]) === null || _v === void 0 ? void 0 : _v.schoolName,
                     DateStarted: (_x = (_w = applicantData.professionalDetails) === null || _w === void 0 ? void 0 : _w[0]) === null || _x === void 0 ? void 0 : _x.startDate,
                     DateLeft: (_z = (_y = applicantData.professionalDetails) === null || _y === void 0 ? void 0 : _y[0]) === null || _z === void 0 ? void 0 : _z.endDate,
-                    Director: '', // This field is not mapped in your data
-                    DirectorStartDate: '', // This field is not mapped in your data
-                    DirectorEndDate: '', // This field is not mapped in your data
+                    Director: (_0 = applicantData.personalDetails) === null || _0 === void 0 ? void 0 : _0.ninProof, // This field is not mapped in your data
+                    DirectorStartDate: applicantData.personalDetails.visaDocument, // This field is not mapped in your data
+                    DirectorEndDate: applicantData.personalDetails.internationalPassport, // This field is not mapped in your data
                     AlternativeDirectorsNIC: '', // This field is not mapped in your data
                     PrimaryNICOnly: '', // This field is not mapped in your data
                     PayFrequency: '', // This field is not mapped in your data
                     PayMethod: '', // This field is not mapped in your data
                     DeliveryMethod: '', // This field is not mapped in your data
-                    BankName: (_0 = applicantData.bankDetails) === null || _0 === void 0 ? void 0 : _0.bankName,
+                    BankName: (_1 = applicantData.bankDetails) === null || _1 === void 0 ? void 0 : _1.bankName,
                     BranchName: '', // This field is not mapped in your data
-                    SortCode: (_1 = applicantData.bankDetails) === null || _1 === void 0 ? void 0 : _1.sortCode,
-                    AccountName: (_2 = applicantData.bankDetails) === null || _2 === void 0 ? void 0 : _2.accountName,
-                    AccountNumber: (_3 = applicantData.bankDetails) === null || _3 === void 0 ? void 0 : _3.accountNumber,
+                    SortCode: (_2 = applicantData.bankDetails) === null || _2 === void 0 ? void 0 : _2.sortCode,
+                    AccountName: (_3 = applicantData.bankDetails) === null || _3 === void 0 ? void 0 : _3.accountName,
+                    AccountNumber: (_4 = applicantData.bankDetails) === null || _4 === void 0 ? void 0 : _4.accountNumber,
                     PaymentReference: '', // This field is not mapped in your data
                     BuildingSocietyReference: '', // This field is not mapped in your data
                     BankTelephone: '', // This field is not mapped in your data
