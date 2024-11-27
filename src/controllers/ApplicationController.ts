@@ -218,7 +218,6 @@ export class ApplicationController {
       // Map applicant data into the CSV structure
       const csvData = {
         Title: applicantData.personalDetails?.title,
-        ProfilePicture: applicantData.personalDetails?.passportPhoto,
         Forename1: applicantData.user?.firstName,
         Forename2: applicantData.user?.middleName,
         Surname: applicantData.user?.lastName,
@@ -230,7 +229,7 @@ export class ApplicationController {
         Country: applicantData.contactDetails?.country,
         Gender: applicantData.personalDetails?.gender,
         Birthday: applicantData.personalDetails?.dateOfBirth,
-        PassportNumber: applicantData.personalDetails?.passportPhoto, // Assuming passport photo contains passport info
+        ProfilePicture: applicantData.personalDetails?.passportPhoto, // Assuming passport photo contains passport info
         NINumber: applicantData.personalDetails?.nationalInsuranceNumber,
         WorksNumber: '', // This field is not mapped in your data
         Department: '', // This field is not mapped in your data
