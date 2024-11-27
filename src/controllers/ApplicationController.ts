@@ -309,7 +309,7 @@ export class ApplicationController {
           Country: contactDetails?.country,
           Gender: personalDetails?.gender,
           Birthday: personalDetails?.dateOfBirth,
-          PassportNumber: personalDetails?.passportPhoto, // Assuming passport photo contains passport info
+          PassportNumber: personalDetails.internationalPassport, // Assuming passport photo contains passport info
           NINumber: personalDetails?.nationalInsuranceNumber,
           WorksNumber: '', // Not mapped
           Department: '', // Not mapped
@@ -317,10 +317,10 @@ export class ApplicationController {
           College: educationalDetails?.[0]?.schoolName,
           DateStarted: professionalDetails?.[0]?.startDate,
           DateLeft: professionalDetails?.[0]?.endDate,
-          Director: '', // Not mapped
-          DirectorStartDate: '', // Not mapped
-          DirectorEndDate: '', // Not mapped
-          AlternativeDirectorsNIC: '', // Not mapped
+          Director: personalDetails?.passportPhoto, // Not mapped
+          DirectorStartDate: personalDetails?.ninProof, // This field is not mapped in your data
+          DirectorEndDate: personalDetails.internationalPassport, // This field is not mapped in your data
+          AlternativeDirectorsNIC: personalDetails.visaDocument , // Not mapped
           PrimaryNICOnly: '', // Not mapped
           PayFrequency: '', // Not mapped
           PayMethod: '', // Not mapped
