@@ -589,3 +589,11 @@
 2024-12-05 07:26:23 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
 2024-12-05 07:26:25 [[32minfo[39m]: HTTP GET /api-docs/favicon-32x32.png
 2024-12-05 07:27:39 [[32minfo[39m]: HTTP POST /api/contact/inquiry
+2024-12-05 20:47:52 [[32minfo[39m]: HTTP GET /api-docs
+2024-12-05 20:47:52 [[32minfo[39m]: HTTP GET /api-docs/
+2024-12-05 20:47:52 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-init.js
+2024-12-05 20:47:52 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui.css
+2024-12-05 20:47:53 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-standalone-preset.js
+2024-12-05 20:47:53 [[32minfo[39m]: HTTP GET /api-docs/swagger-ui-bundle.js
+2024-12-05 20:47:54 [[32minfo[39m]: HTTP GET /api-docs/favicon-32x32.png
+2024-12-05 20:48:52 [[32minfo[39m]: HTTP GET /applicant/download/csv

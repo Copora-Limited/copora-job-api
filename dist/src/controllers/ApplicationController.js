@@ -316,7 +316,7 @@ class ApplicationController {
                         Country: contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.country,
                         Gender: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.gender,
                         Birthday: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.dateOfBirth,
-                        PassportNumber: personalDetails.internationalPassport, // Assuming passport photo contains passport info
+                        PassportNumber: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.internationalPassport, // Assuming passport photo contains passport info
                         NINumber: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.nationalInsuranceNumber,
                         WorksNumber: '', // Not mapped
                         Department: '', // Not mapped
@@ -327,7 +327,7 @@ class ApplicationController {
                         Director: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.passportPhoto, // Not mapped
                         DirectorStartDate: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.ninProof, // This field is not mapped in your data
                         DirectorEndDate: personalDetails.internationalPassport, // This field is not mapped in your data
-                        AlternativeDirectorsNIC: personalDetails.visaDocument, // Not mapped
+                        AlternativeDirectorsNIC: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.visaDocument, // Not mapped
                         PrimaryNICOnly: '', // Not mapped
                         PayFrequency: '', // Not mapped
                         PayMethod: '', // Not mapped
