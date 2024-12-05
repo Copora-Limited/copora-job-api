@@ -29,6 +29,7 @@ import jobTitleRoutes from './routes/JobTitleRoutes';
 import employmentTypeRoutes from './routes/EmploymentTypeRoutes';
 import groupRoutes from './routes/GroupRoutes';
 import jobListingRoutes from './routes/JobListingRoutes';
+import ContactRoutes from './routes/ContactRoutes';
 
 
 import expressWinston from 'express-winston';
@@ -120,6 +121,7 @@ AppDataSource.initialize()
     app.use('/api/job-titles', jobTitleRoutes);
     app.use('/api/employment-types', employmentTypeRoutes);
     app.use('/api/groups', groupRoutes);
+    app.use('/api/contact', ContactRoutes);
     app.use('/api/job-listings', jobListingRoutes);
     
     

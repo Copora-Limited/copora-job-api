@@ -25,6 +25,8 @@ exports.sendOnboardingHospitalityWorkerEmail = sendOnboardingHospitalityWorkerEm
 exports.sendBulkOnboardingCompletionEmails = sendBulkOnboardingCompletionEmails;
 exports.sendEmailsInBatches = sendEmailsInBatches;
 exports.sendAgreementEmail = sendAgreementEmail;
+exports.sendContactFormSubmissionEmail = sendContactFormSubmissionEmail;
+exports.sendAdminInquiryEmail = sendAdminInquiryEmail;
 // main.ts
 const testEmailTemplate_1 = __importDefault(require("../emails/testEmailTemplate"));
 const signupEmail_1 = __importDefault(require("../emails/signupEmail"));
@@ -33,6 +35,8 @@ const twoFactorEmail_1 = __importDefault(require("../emails/twoFactorEmail"));
 const loginLinkEmail_1 = __importDefault(require("../emails/loginLinkEmail"));
 const verificationEmail_1 = __importDefault(require("../emails/verificationEmail"));
 const invitationToOnboardEmail_1 = __importDefault(require("../emails/invitationToOnboardEmail"));
+const findTalentResponseEmail_1 = __importDefault(require("../emails/findTalentResponseEmail"));
+const generateAdminInquiryEmail_1 = __importDefault(require("../emails/generateAdminInquiryEmail"));
 const onboardingReminderEmail_1 = __importDefault(require("../emails/onboardingReminderEmail"));
 const onboardingCompletionEmail_1 = __importDefault(require("../emails/onboardingCompletionEmail"));
 const onboardingHospitalityWorkerEmail_1 = __importDefault(require("../emails/onboardingHospitalityWorkerEmail"));
@@ -174,5 +178,46 @@ function sendAgreementEmail(user, pdfPath) {
             },
         ];
         yield (0, email_1.sendEmail)(user.email, subject, html, attachments);
+    });
+}
+function sendContactFormSubmissionEmail(user, formDetails, attachmentPath // Optional attachment
+) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const subject = `Thank you for contacting us: ${formDetails.subject}`;
+        const html = (0, findTalentResponseEmail_1.default)({
+            firstName: user.firstName,
+            email: user.email,
+            phone: formDetails.phone,
+            subject: formDetails.subject,
+            message: formDetails.message,
+        });
+        // Prepare attachments if provided
+        const attachments = attachmentPath
+            ? [
+                {
+                    filename: 'details.pdf',
+                    content: fs_1.default.createReadStream(attachmentPath),
+                },
+            ]
+            : [];
+        yield (0, email_1.sendEmail)(user.email, subject, html, attachments);
+        console.log(`Contact form submission email sent to ${user.email}`);
+    });
+}
+function sendAdminInquiryEmail(user, formDetails, attachmentPath) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const adminEmail = 'info@copora.com'; // Replace with actual admin email
+        const subject = `Customer Inquiry: ${formDetails.subject}`;
+        const html = (0, generateAdminInquiryEmail_1.default)(user, formDetails);
+        const attachments = attachmentPath
+            ? [
+                {
+                    filename: 'attachment.pdf', // Customize based on the file type
+                    content: fs_1.default.createReadStream(attachmentPath),
+                },
+            ]
+            : [];
+        yield (0, email_1.sendEmail)(adminEmail, subject, html, attachments);
+        console.log(`Admin notification email sent successfully for inquiry from ${user.email}`);
     });
 }

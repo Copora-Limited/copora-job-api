@@ -7,6 +7,8 @@ import twoFactorEmail from "../emails/twoFactorEmail";
 import loginLinkEmail from "../emails/loginLinkEmail";
 import verificationEmail from "../emails/verificationEmail";
 import invitationToOnboardEmail from '../emails/invitationToOnboardEmail';
+import findTalentResponseEmail from '../emails/findTalentResponseEmail';
+import generateAdminInquiryEmail from '../emails/generateAdminInquiryEmail'
 import onboardingReminderEmail from '../emails/onboardingReminderEmail';
 import onboardingCompletionEmail from '../emails/onboardingCompletionEmail';
 import onboardingHospitalityWorkerEmail from '../emails/onboardingHospitalityWorkerEmail';
@@ -90,7 +92,6 @@ export async function sendOnboardingHospitalityWorkerEmail(user: { firstName: st
     await sendEmail(user.email, subject, html);  // Send the email
 }
 
-
 // Function to send bulk onboarding completion emails
 export async function sendBulkOnboardingCompletionEmails(
   recipients: { email: string; firstName: string }[],
@@ -141,19 +142,72 @@ export async function sendEmailsInBatches(
   }
 }
 
+export async function sendAgreementEmail(user: { firstName: string; email: string }, pdfPath: string) {
+  const subject = 'Your Employment Agreement';
+  const html = agreementEmail(user);  // Generate the email HTML
+  const attachments = [
+    {
+      filename: 'agreement.pdf',
+      content: fs.createReadStream(pdfPath),
+    },
+  ];
+  await sendEmail(user.email, subject, html, attachments); 
+}
 
 
-  export async function sendAgreementEmail(user: { firstName: string; email: string }, pdfPath: string) {
-    const subject = 'Your Employment Agreement';
-    const html = agreementEmail(user);  // Generate the email HTML
-    const attachments = [
-      {
-        filename: 'agreement.pdf',
-        content: fs.createReadStream(pdfPath),
-      },
-    ];
-    await sendEmail(user.email, subject, html, attachments); 
-  }
+export async function sendContactFormSubmissionEmail(
+  user: { firstName: string; email: string },
+  formDetails: { subject: string; message: string; phone?: string },
+  attachmentPath?: string // Optional attachment
+) {
+  const subject = `Thank you for contacting us: ${formDetails.subject}`;
+  const html = findTalentResponseEmail({
+    firstName: user.firstName,
+    email: user.email,
+    phone: formDetails.phone,
+    subject: formDetails.subject,
+    message: formDetails.message,
+  });
+
+  // Prepare attachments if provided
+  const attachments = attachmentPath
+    ? [
+        {
+          filename: 'details.pdf',
+          content: fs.createReadStream(attachmentPath),
+        },
+      ]
+    : [];
+
+  await sendEmail(user.email, subject, html, attachments);
+
+  console.log(`Contact form submission email sent to ${user.email}`);
+}
+
+
+export async function sendAdminInquiryEmail(
+  user: { firstName: string; lastName?: string; email: string },
+  formDetails: { subject: string; message: string; phone?: string },
+  attachmentPath?: string
+) {
+  const adminEmail = 'info@copora.com'; // Replace with actual admin email
+  const subject = `Customer Inquiry: ${formDetails.subject}`;
+  const html = generateAdminInquiryEmail(user, formDetails);
+
+  const attachments = attachmentPath
+    ? [
+        {
+          filename: 'attachment.pdf', // Customize based on the file type
+          content: fs.createReadStream(attachmentPath),
+        },
+      ]
+    : [];
+
+  await sendEmail(adminEmail, subject, html, attachments);
+
+  console.log(`Admin notification email sent successfully for inquiry from ${user.email}`);
+}
+
   
 
 
