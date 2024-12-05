@@ -61,7 +61,7 @@ router.post('/contact', ContactController.sendContactFormEmail);
 
 /**
  * @swagger
- * /api/inquiry:
+ * /api/contact/inquiry:
  *   post:
  *     summary: Submit a customer inquiry and notify the admin
  *     tags: [Contact]
@@ -108,6 +108,6 @@ router.post('/contact', ContactController.sendContactFormEmail);
  *       500:
  *         description: Failed to process the inquiry
  */
-router.post('/inquiry', upload.single('attachment'), ContactController.handleInquiry);
+router.post('/contact/inquiry', upload.single('attachment'), ContactController.handleInquiry);
 
 export default router;

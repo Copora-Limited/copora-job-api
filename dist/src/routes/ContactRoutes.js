@@ -62,7 +62,7 @@ const upload = (0, multer_1.default)({ dest: 'uploads/' }); // Setup for file up
 router.post('/contact', ContactController_1.default.sendContactFormEmail);
 /**
  * @swagger
- * /api/inquiry:
+ * /api/contact/inquiry:
  *   post:
  *     summary: Submit a customer inquiry and notify the admin
  *     tags: [Contact]
@@ -109,5 +109,5 @@ router.post('/contact', ContactController_1.default.sendContactFormEmail);
  *       500:
  *         description: Failed to process the inquiry
  */
-router.post('/inquiry', upload.single('attachment'), ContactController_1.default.handleInquiry);
+router.post('/contact/inquiry', upload.single('attachment'), ContactController_1.default.handleInquiry);
 exports.default = router;
