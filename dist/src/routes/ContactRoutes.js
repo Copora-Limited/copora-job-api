@@ -109,5 +109,5 @@ router.post('/contact', ContactController_1.default.sendContactFormEmail);
  *       500:
  *         description: Failed to process the inquiry
  */
-router.post('/contact/inquiry', upload.single('attachment'), ContactController_1.default.handleInquiry);
+router.post('/inquiry', upload.single('attachment'), ContactController_1.default.handleInquiry);
 exports.default = router;
