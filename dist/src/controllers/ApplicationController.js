@@ -218,7 +218,7 @@ class ApplicationController {
     // New method for downloading applicant data as CSV
     static downloadApplicantDataCsv(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4;
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6;
             try {
                 const { applicationNo } = req.params;
                 const applicantData = yield ApplicationService_1.ApplicationService.getApplicantData(applicationNo);
@@ -248,18 +248,18 @@ class ApplicationController {
                     DateStarted: (_x = (_w = applicantData.professionalDetails) === null || _w === void 0 ? void 0 : _w[0]) === null || _x === void 0 ? void 0 : _x.startDate,
                     DateLeft: (_z = (_y = applicantData.professionalDetails) === null || _y === void 0 ? void 0 : _y[0]) === null || _z === void 0 ? void 0 : _z.endDate,
                     Director: (_0 = applicantData.personalDetails) === null || _0 === void 0 ? void 0 : _0.ninProof, // This field is not mapped in your data
-                    DirectorStartDate: applicantData.personalDetails.visaDocument, // This field is not mapped in your data
-                    DirectorEndDate: applicantData.personalDetails.internationalPassport, // This field is not mapped in your data
+                    DirectorStartDate: (_1 = applicantData.personalDetails) === null || _1 === void 0 ? void 0 : _1.visaDocument, // This field is not mapped in your data
+                    DirectorEndDate: (_2 = applicantData.personalDetails) === null || _2 === void 0 ? void 0 : _2.internationalPassport, // This field is not mapped in your data
                     AlternativeDirectorsNIC: '', // This field is not mapped in your data
                     PrimaryNICOnly: '', // This field is not mapped in your data
                     PayFrequency: '', // This field is not mapped in your data
                     PayMethod: '', // This field is not mapped in your data
                     DeliveryMethod: '', // This field is not mapped in your data
-                    BankName: (_1 = applicantData.bankDetails) === null || _1 === void 0 ? void 0 : _1.bankName,
+                    BankName: (_3 = applicantData.bankDetails) === null || _3 === void 0 ? void 0 : _3.bankName,
                     BranchName: '', // This field is not mapped in your data
-                    SortCode: (_2 = applicantData.bankDetails) === null || _2 === void 0 ? void 0 : _2.sortCode,
-                    AccountName: (_3 = applicantData.bankDetails) === null || _3 === void 0 ? void 0 : _3.accountName,
-                    AccountNumber: (_4 = applicantData.bankDetails) === null || _4 === void 0 ? void 0 : _4.accountNumber,
+                    SortCode: (_4 = applicantData.bankDetails) === null || _4 === void 0 ? void 0 : _4.sortCode,
+                    AccountName: (_5 = applicantData.bankDetails) === null || _5 === void 0 ? void 0 : _5.accountName,
+                    AccountNumber: (_6 = applicantData.bankDetails) === null || _6 === void 0 ? void 0 : _6.accountNumber,
                     PaymentReference: '', // This field is not mapped in your data
                     BuildingSocietyReference: '', // This field is not mapped in your data
                     BankTelephone: '', // This field is not mapped in your data
@@ -301,57 +301,57 @@ class ApplicationController {
                 }
                 // Map all applicants' data into the CSV structure
                 const csvData = allApplicants.map(applicant => {
-                    var _a, _b, _c, _d;
+                    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6;
                     const { personalDetails, user, contactDetails, professionalDetails, educationalDetails, bankDetails } = applicant;
                     return {
-                        Title: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.title,
-                        Forename1: user === null || user === void 0 ? void 0 : user.firstName,
-                        Forename2: user === null || user === void 0 ? void 0 : user.middleName,
-                        Surname: user === null || user === void 0 ? void 0 : user.lastName,
-                        PreferredName: user === null || user === void 0 ? void 0 : user.firstName,
-                        Telephone: contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.phone,
-                        Mobile: contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.phone, // Assuming phone is used for both
-                        Email: user === null || user === void 0 ? void 0 : user.email,
-                        Address: `${contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.address_line_1}, ${contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.town}, ${contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.postcode}`,
-                        Country: contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.country,
-                        Gender: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.gender,
-                        Birthday: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.dateOfBirth,
-                        PassportNumber: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.internationalPassport, // Assuming passport photo contains passport info
-                        NINumber: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.nationalInsuranceNumber,
-                        WorksNumber: '', // Not mapped
-                        Department: '', // Not mapped
-                        JobTitle: (_a = professionalDetails === null || professionalDetails === void 0 ? void 0 : professionalDetails[0]) === null || _a === void 0 ? void 0 : _a.jobTitle,
-                        College: (_b = educationalDetails === null || educationalDetails === void 0 ? void 0 : educationalDetails[0]) === null || _b === void 0 ? void 0 : _b.schoolName,
-                        DateStarted: (_c = professionalDetails === null || professionalDetails === void 0 ? void 0 : professionalDetails[0]) === null || _c === void 0 ? void 0 : _c.startDate,
-                        DateLeft: (_d = professionalDetails === null || professionalDetails === void 0 ? void 0 : professionalDetails[0]) === null || _d === void 0 ? void 0 : _d.endDate,
-                        Director: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.passportPhoto, // Not mapped
-                        DirectorStartDate: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.ninProof, // This field is not mapped in your data
-                        DirectorEndDate: personalDetails.internationalPassport, // This field is not mapped in your data
-                        AlternativeDirectorsNIC: personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.visaDocument, // Not mapped
-                        PrimaryNICOnly: '', // Not mapped
-                        PayFrequency: '', // Not mapped
-                        PayMethod: '', // Not mapped
-                        DeliveryMethod: '', // Not mapped
-                        BankName: bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.bankName,
-                        BranchName: '', // Not mapped
-                        SortCode: bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.sortCode,
-                        AccountName: bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.accountName,
-                        AccountNumber: bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.accountNumber,
-                        PaymentReference: '', // Not mapped
-                        BuildingSocietyReference: '', // Not mapped
-                        BankTelephone: '', // Not mapped
-                        BankAddress: '', // Not mapped
-                        AEExcluded: '', // Not mapped
-                        PostponedUntil: '', // Not mapped
-                        AEPension: '', // Not mapped
-                        AEJoined: '', // Not mapped
-                        AEOptedIn: '', // Not mapped
-                        AELeft: '', // Not mapped
-                        AEOptedOut: '', // Not mapped
-                        Group: '', // Not mapped
-                        EmployeePercentage: '', // Not mapped
-                        EmployerPercentage: '', // Not mapped
-                        AVCPercentage: '' // Not mapped
+                        Title: (_a = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.title) !== null && _a !== void 0 ? _a : 'N/A',
+                        Forename1: (_b = user === null || user === void 0 ? void 0 : user.firstName) !== null && _b !== void 0 ? _b : 'N/A',
+                        Forename2: (_c = user === null || user === void 0 ? void 0 : user.middleName) !== null && _c !== void 0 ? _c : 'N/A',
+                        Surname: (_d = user === null || user === void 0 ? void 0 : user.lastName) !== null && _d !== void 0 ? _d : 'N/A',
+                        PreferredName: (_e = user === null || user === void 0 ? void 0 : user.firstName) !== null && _e !== void 0 ? _e : 'N/A',
+                        Telephone: (_f = contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.phone) !== null && _f !== void 0 ? _f : 'N/A',
+                        Mobile: (_g = contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.phone) !== null && _g !== void 0 ? _g : 'N/A', // Assuming phone is used for both
+                        Email: (_h = user === null || user === void 0 ? void 0 : user.email) !== null && _h !== void 0 ? _h : 'N/A',
+                        Address: `${(_j = contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.address_line_1) !== null && _j !== void 0 ? _j : 'N/A'}, ${(_k = contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.town) !== null && _k !== void 0 ? _k : 'N/A'}, ${(_l = contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.postcode) !== null && _l !== void 0 ? _l : 'N/A'}`,
+                        Country: (_m = contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.country) !== null && _m !== void 0 ? _m : 'N/A',
+                        Gender: (_o = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.gender) !== null && _o !== void 0 ? _o : 'N/A',
+                        Birthday: (_p = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.dateOfBirth) !== null && _p !== void 0 ? _p : 'N/A',
+                        PassportNumber: (_q = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.internationalPassport) !== null && _q !== void 0 ? _q : 'N/A',
+                        NINumber: (_r = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.nationalInsuranceNumber) !== null && _r !== void 0 ? _r : 'N/A',
+                        WorksNumber: 'N/A', // Not mapped
+                        Department: 'N/A', // Not mapped
+                        JobTitle: (_t = (_s = professionalDetails === null || professionalDetails === void 0 ? void 0 : professionalDetails[0]) === null || _s === void 0 ? void 0 : _s.jobTitle) !== null && _t !== void 0 ? _t : 'N/A',
+                        College: (_v = (_u = educationalDetails === null || educationalDetails === void 0 ? void 0 : educationalDetails[0]) === null || _u === void 0 ? void 0 : _u.schoolName) !== null && _v !== void 0 ? _v : 'N/A',
+                        DateStarted: (_x = (_w = professionalDetails === null || professionalDetails === void 0 ? void 0 : professionalDetails[0]) === null || _w === void 0 ? void 0 : _w.startDate) !== null && _x !== void 0 ? _x : 'N/A',
+                        DateLeft: (_z = (_y = professionalDetails === null || professionalDetails === void 0 ? void 0 : professionalDetails[0]) === null || _y === void 0 ? void 0 : _y.endDate) !== null && _z !== void 0 ? _z : 'N/A',
+                        Director: (_0 = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.passportPhoto) !== null && _0 !== void 0 ? _0 : 'N/A', // Not mapped
+                        DirectorStartDate: (_1 = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.ninProof) !== null && _1 !== void 0 ? _1 : 'N/A', // This field is not mapped in your data
+                        DirectorEndDate: 'N/A', // This field is not mapped in your data
+                        AlternativeDirectorsNIC: (_2 = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.visaDocument) !== null && _2 !== void 0 ? _2 : 'N/A', // Not mapped
+                        PrimaryNICOnly: 'N/A', // Not mapped
+                        PayFrequency: 'N/A', // Not mapped
+                        PayMethod: 'N/A', // Not mapped
+                        DeliveryMethod: 'N/A', // Not mapped
+                        BankName: (_3 = bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.bankName) !== null && _3 !== void 0 ? _3 : 'N/A',
+                        BranchName: 'N/A', // Not mapped
+                        SortCode: (_4 = bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.sortCode) !== null && _4 !== void 0 ? _4 : 'N/A',
+                        AccountName: (_5 = bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.accountName) !== null && _5 !== void 0 ? _5 : 'N/A',
+                        AccountNumber: (_6 = bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.accountNumber) !== null && _6 !== void 0 ? _6 : 'N/A',
+                        PaymentReference: 'N/A', // Not mapped
+                        BuildingSocietyReference: 'N/A', // Not mapped
+                        BankTelephone: 'N/A', // Not mapped
+                        BankAddress: 'N/A', // Not mapped
+                        AEExcluded: 'N/A', // Not mapped
+                        PostponedUntil: 'N/A', // Not mapped
+                        AEPension: 'N/A', // Not mapped
+                        AEJoined: 'N/A', // Not mapped
+                        AEOptedIn: 'N/A', // Not mapped
+                        AELeft: 'N/A', // Not mapped
+                        AEOptedOut: 'N/A', // Not mapped
+                        Group: 'N/A', // Not mapped
+                        EmployeePercentage: 'N/A', // Not mapped
+                        EmployerPercentage: 'N/A', // Not mapped
+                        AVCPercentage: 'N/A' // Not mapped
                     };
                 });
                 // Convert the data to CSV

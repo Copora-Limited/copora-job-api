@@ -238,8 +238,8 @@ export class ApplicationController {
         DateStarted: applicantData.professionalDetails?.[0]?.startDate,
         DateLeft: applicantData.professionalDetails?.[0]?.endDate,
         Director: applicantData.personalDetails?.ninProof, // This field is not mapped in your data
-        DirectorStartDate: applicantData.personalDetails.visaDocument, // This field is not mapped in your data
-        DirectorEndDate: applicantData.personalDetails.internationalPassport, // This field is not mapped in your data
+        DirectorStartDate: applicantData.personalDetails?.visaDocument, // This field is not mapped in your data
+        DirectorEndDate: applicantData.personalDetails?.internationalPassport, // This field is not mapped in your data
         AlternativeDirectorsNIC: '', // This field is not mapped in your data
         PrimaryNICOnly: '', // This field is not mapped in your data
         PayFrequency: '', // This field is not mapped in your data
@@ -287,81 +287,82 @@ export class ApplicationController {
     try {
       // Fetch all applicants from the service
       const allApplicants = await ApplicationService.getAllApplicantsData(); // Update to the correct method name
-
+  
       if (!allApplicants || allApplicants.length === 0) {
         return res.status(404).json({ message: 'No applicants found' });
       }
-
+  
       // Map all applicants' data into the CSV structure
       const csvData = allApplicants.map(applicant => {
         const { personalDetails, user, contactDetails, professionalDetails, educationalDetails, bankDetails } = applicant;
-        
+  
         return {
-          Title: personalDetails?.title,
-          Forename1: user?.firstName,
-          Forename2: user?.middleName,
-          Surname: user?.lastName,
-          PreferredName: user?.firstName,
-          Telephone: contactDetails?.phone,
-          Mobile: contactDetails?.phone, // Assuming phone is used for both
-          Email: user?.email,
-          Address: `${contactDetails?.address_line_1}, ${contactDetails?.town}, ${contactDetails?.postcode}`,
-          Country: contactDetails?.country,
-          Gender: personalDetails?.gender,
-          Birthday: personalDetails?.dateOfBirth,
-          PassportNumber: personalDetails?.internationalPassport, // Assuming passport photo contains passport info
-          NINumber: personalDetails?.nationalInsuranceNumber,
-          WorksNumber: '', // Not mapped
-          Department: '', // Not mapped
-          JobTitle: professionalDetails?.[0]?.jobTitle,
-          College: educationalDetails?.[0]?.schoolName,
-          DateStarted: professionalDetails?.[0]?.startDate,
-          DateLeft: professionalDetails?.[0]?.endDate,
-          Director: personalDetails?.passportPhoto, // Not mapped
-          DirectorStartDate: personalDetails?.ninProof, // This field is not mapped in your data
-          DirectorEndDate: personalDetails.internationalPassport, // This field is not mapped in your data
-          AlternativeDirectorsNIC: personalDetails?.visaDocument , // Not mapped
-          PrimaryNICOnly: '', // Not mapped
-          PayFrequency: '', // Not mapped
-          PayMethod: '', // Not mapped
-          DeliveryMethod: '', // Not mapped
-          BankName: bankDetails?.bankName,
-          BranchName: '', // Not mapped
-          SortCode: bankDetails?.sortCode,
-          AccountName: bankDetails?.accountName,
-          AccountNumber: bankDetails?.accountNumber,
-          PaymentReference: '', // Not mapped
-          BuildingSocietyReference: '', // Not mapped
-          BankTelephone: '', // Not mapped
-          BankAddress: '', // Not mapped
-          AEExcluded: '', // Not mapped
-          PostponedUntil: '', // Not mapped
-          AEPension: '', // Not mapped
-          AEJoined: '', // Not mapped
-          AEOptedIn: '', // Not mapped
-          AELeft: '', // Not mapped
-          AEOptedOut: '', // Not mapped
-          Group: '', // Not mapped
-          EmployeePercentage: '', // Not mapped
-          EmployerPercentage: '', // Not mapped
-          AVCPercentage: '' // Not mapped
+          Title: personalDetails?.title ?? 'N/A',
+          Forename1: user?.firstName ?? 'N/A',
+          Forename2: user?.middleName ?? 'N/A',
+          Surname: user?.lastName ?? 'N/A',
+          PreferredName: user?.firstName ?? 'N/A',
+          Telephone: contactDetails?.phone ?? 'N/A',
+          Mobile: contactDetails?.phone ?? 'N/A', // Assuming phone is used for both
+          Email: user?.email ?? 'N/A',
+          Address: `${contactDetails?.address_line_1 ?? 'N/A'}, ${contactDetails?.town ?? 'N/A'}, ${contactDetails?.postcode ?? 'N/A'}`,
+          Country: contactDetails?.country ?? 'N/A',
+          Gender: personalDetails?.gender ?? 'N/A',
+          Birthday: personalDetails?.dateOfBirth ?? 'N/A',
+          PassportNumber: personalDetails?.internationalPassport ?? 'N/A',
+          NINumber: personalDetails?.nationalInsuranceNumber ?? 'N/A',
+          WorksNumber: 'N/A', // Not mapped
+          Department: 'N/A', // Not mapped
+          JobTitle: professionalDetails?.[0]?.jobTitle ?? 'N/A',
+          College: educationalDetails?.[0]?.schoolName ?? 'N/A',
+          DateStarted: professionalDetails?.[0]?.startDate ?? 'N/A',
+          DateLeft: professionalDetails?.[0]?.endDate ?? 'N/A',
+          Director: personalDetails?.passportPhoto ?? 'N/A', // Not mapped
+          DirectorStartDate: personalDetails?.ninProof ?? 'N/A', // This field is not mapped in your data
+          DirectorEndDate: 'N/A', // This field is not mapped in your data
+          AlternativeDirectorsNIC: personalDetails?.visaDocument ?? 'N/A', // Not mapped
+          PrimaryNICOnly: 'N/A', // Not mapped
+          PayFrequency: 'N/A', // Not mapped
+          PayMethod: 'N/A', // Not mapped
+          DeliveryMethod: 'N/A', // Not mapped
+          BankName: bankDetails?.bankName ?? 'N/A',
+          BranchName: 'N/A', // Not mapped
+          SortCode: bankDetails?.sortCode ?? 'N/A',
+          AccountName: bankDetails?.accountName ?? 'N/A',
+          AccountNumber: bankDetails?.accountNumber ?? 'N/A',
+          PaymentReference: 'N/A', // Not mapped
+          BuildingSocietyReference: 'N/A', // Not mapped
+          BankTelephone: 'N/A', // Not mapped
+          BankAddress: 'N/A', // Not mapped
+          AEExcluded: 'N/A', // Not mapped
+          PostponedUntil: 'N/A', // Not mapped
+          AEPension: 'N/A', // Not mapped
+          AEJoined: 'N/A', // Not mapped
+          AEOptedIn: 'N/A', // Not mapped
+          AELeft: 'N/A', // Not mapped
+          AEOptedOut: 'N/A', // Not mapped
+          Group: 'N/A', // Not mapped
+          EmployeePercentage: 'N/A', // Not mapped
+          EmployerPercentage: 'N/A', // Not mapped
+          AVCPercentage: 'N/A' // Not mapped
         };
       });
-
+  
       // Convert the data to CSV
       const fields = Object.keys(csvData[0]);
       const json2csvParser = new Parser({ fields });
       const csv = json2csvParser.parse(csvData); // Parse all applicants' data into CSV
-
+  
       // Set headers for file download
       res.header('Content-Type', 'text/csv');
       res.attachment('all_applicants.csv');
       return res.send(csv);
-
+  
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
   }
+  
 
   // New method for downloading applicant data as PDF
   static async downloadApplicantDataPdf(req: Request, res: Response) {
