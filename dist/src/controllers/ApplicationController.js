@@ -290,6 +290,7 @@ class ApplicationController {
             }
         });
     }
+    // Helper function to format phone numbers
     // New method for downloading all applicants' data as CSV
     static downloadAllApplicantsCsv(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -299,44 +300,52 @@ class ApplicationController {
                 if (!allApplicants || allApplicants.length === 0) {
                     return res.status(404).json({ message: 'No applicants found' });
                 }
+                const formatPhoneNumber = (phone) => {
+                    if (!phone)
+                        return 'N/A'; // Return 'N/A' if the phone number is null or undefined
+                    // Clean the phone number by removing any non-digit characters
+                    const cleanedPhone = phone.replace(/\D/g, '');
+                    // Return the formatted phone number with a '+' in front
+                    return `+${cleanedPhone}`;
+                };
                 // Map all applicants' data into the CSV structure
                 const csvData = allApplicants.map(applicant => {
-                    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6;
+                    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5;
                     const { personalDetails, user, contactDetails, professionalDetails, educationalDetails, bankDetails } = applicant;
                     return {
-                        Title: (_a = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.title) !== null && _a !== void 0 ? _a : 'N/A',
-                        Forename1: (_b = user === null || user === void 0 ? void 0 : user.firstName) !== null && _b !== void 0 ? _b : 'N/A',
-                        Forename2: (_c = user === null || user === void 0 ? void 0 : user.middleName) !== null && _c !== void 0 ? _c : 'N/A',
-                        Surname: (_d = user === null || user === void 0 ? void 0 : user.lastName) !== null && _d !== void 0 ? _d : 'N/A',
-                        PreferredName: (_e = user === null || user === void 0 ? void 0 : user.firstName) !== null && _e !== void 0 ? _e : 'N/A',
-                        Telephone: (_f = contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.phone) !== null && _f !== void 0 ? _f : 'N/A',
-                        Mobile: (_g = contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.phone) !== null && _g !== void 0 ? _g : 'N/A', // Assuming phone is used for both
-                        Email: (_h = user === null || user === void 0 ? void 0 : user.email) !== null && _h !== void 0 ? _h : 'N/A',
-                        Address: `${(_j = contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.address_line_1) !== null && _j !== void 0 ? _j : 'N/A'}, ${(_k = contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.town) !== null && _k !== void 0 ? _k : 'N/A'}, ${(_l = contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.postcode) !== null && _l !== void 0 ? _l : 'N/A'}`,
-                        Country: (_m = contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.country) !== null && _m !== void 0 ? _m : 'N/A',
-                        Gender: (_o = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.gender) !== null && _o !== void 0 ? _o : 'N/A',
-                        Birthday: (_p = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.dateOfBirth) !== null && _p !== void 0 ? _p : 'N/A',
-                        PassportNumber: (_q = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.internationalPassport) !== null && _q !== void 0 ? _q : 'N/A',
-                        NINumber: (_r = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.nationalInsuranceNumber) !== null && _r !== void 0 ? _r : 'N/A',
+                        Title: (personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.gender) == "Female" ? 'Miss' : 'Mr',
+                        Forename1: (_a = user === null || user === void 0 ? void 0 : user.firstName) !== null && _a !== void 0 ? _a : 'N/A',
+                        Forename2: (_b = user === null || user === void 0 ? void 0 : user.middleName) !== null && _b !== void 0 ? _b : 'N/A',
+                        Surname: (_c = user === null || user === void 0 ? void 0 : user.lastName) !== null && _c !== void 0 ? _c : 'N/A',
+                        PreferredName: (_d = user === null || user === void 0 ? void 0 : user.firstName) !== null && _d !== void 0 ? _d : 'N/A',
+                        Telephone: (_e = formatPhoneNumber(contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.phone)) !== null && _e !== void 0 ? _e : 'N/A',
+                        Mobile: (_f = formatPhoneNumber(contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.phone)) !== null && _f !== void 0 ? _f : 'N/A', // Assuming phone is used for both
+                        Email: (_g = user === null || user === void 0 ? void 0 : user.email) !== null && _g !== void 0 ? _g : 'N/A',
+                        Address: `${(_h = contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.address_line_1) !== null && _h !== void 0 ? _h : 'N/A'}, ${(_j = contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.town) !== null && _j !== void 0 ? _j : 'N/A'}, ${(_k = contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.postcode) !== null && _k !== void 0 ? _k : 'N/A'}`,
+                        Country: (_l = contactDetails === null || contactDetails === void 0 ? void 0 : contactDetails.country) !== null && _l !== void 0 ? _l : 'N/A',
+                        Gender: (_m = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.gender) !== null && _m !== void 0 ? _m : 'N/A',
+                        Birthday: (_o = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.dateOfBirth) !== null && _o !== void 0 ? _o : 'N/A',
+                        PassportNumber: (_p = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.internationalPassport) !== null && _p !== void 0 ? _p : 'N/A',
+                        NINumber: (_q = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.nationalInsuranceNumber) !== null && _q !== void 0 ? _q : 'N/A',
                         WorksNumber: 'N/A', // Not mapped
                         Department: 'N/A', // Not mapped
-                        JobTitle: (_t = (_s = professionalDetails === null || professionalDetails === void 0 ? void 0 : professionalDetails[0]) === null || _s === void 0 ? void 0 : _s.jobTitle) !== null && _t !== void 0 ? _t : 'N/A',
-                        College: (_v = (_u = educationalDetails === null || educationalDetails === void 0 ? void 0 : educationalDetails[0]) === null || _u === void 0 ? void 0 : _u.schoolName) !== null && _v !== void 0 ? _v : 'N/A',
-                        DateStarted: (_x = (_w = professionalDetails === null || professionalDetails === void 0 ? void 0 : professionalDetails[0]) === null || _w === void 0 ? void 0 : _w.startDate) !== null && _x !== void 0 ? _x : 'N/A',
-                        DateLeft: (_z = (_y = professionalDetails === null || professionalDetails === void 0 ? void 0 : professionalDetails[0]) === null || _y === void 0 ? void 0 : _y.endDate) !== null && _z !== void 0 ? _z : 'N/A',
-                        Director: (_0 = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.passportPhoto) !== null && _0 !== void 0 ? _0 : 'N/A', // Not mapped
-                        DirectorStartDate: (_1 = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.ninProof) !== null && _1 !== void 0 ? _1 : 'N/A', // This field is not mapped in your data
+                        JobTitle: (_s = (_r = professionalDetails === null || professionalDetails === void 0 ? void 0 : professionalDetails[0]) === null || _r === void 0 ? void 0 : _r.jobTitle) !== null && _s !== void 0 ? _s : 'N/A',
+                        College: (_u = (_t = educationalDetails === null || educationalDetails === void 0 ? void 0 : educationalDetails[0]) === null || _t === void 0 ? void 0 : _t.schoolName) !== null && _u !== void 0 ? _u : 'N/A',
+                        DateStarted: (_w = (_v = professionalDetails === null || professionalDetails === void 0 ? void 0 : professionalDetails[0]) === null || _v === void 0 ? void 0 : _v.startDate) !== null && _w !== void 0 ? _w : 'N/A',
+                        DateLeft: (_y = (_x = professionalDetails === null || professionalDetails === void 0 ? void 0 : professionalDetails[0]) === null || _x === void 0 ? void 0 : _x.endDate) !== null && _y !== void 0 ? _y : 'N/A',
+                        Director: (_z = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.passportPhoto) !== null && _z !== void 0 ? _z : 'N/A', // Not mapped
+                        DirectorStartDate: (_0 = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.ninProof) !== null && _0 !== void 0 ? _0 : 'N/A',
                         DirectorEndDate: 'N/A', // This field is not mapped in your data
-                        AlternativeDirectorsNIC: (_2 = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.visaDocument) !== null && _2 !== void 0 ? _2 : 'N/A', // Not mapped
+                        AlternativeDirectorsNIC: (_1 = personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.visaDocument) !== null && _1 !== void 0 ? _1 : 'N/A', // Not mapped
                         PrimaryNICOnly: 'N/A', // Not mapped
                         PayFrequency: 'N/A', // Not mapped
                         PayMethod: 'N/A', // Not mapped
                         DeliveryMethod: 'N/A', // Not mapped
-                        BankName: (_3 = bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.bankName) !== null && _3 !== void 0 ? _3 : 'N/A',
+                        BankName: (_2 = bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.bankName) !== null && _2 !== void 0 ? _2 : 'N/A',
                         BranchName: 'N/A', // Not mapped
-                        SortCode: (_4 = bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.sortCode) !== null && _4 !== void 0 ? _4 : 'N/A',
-                        AccountName: (_5 = bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.accountName) !== null && _5 !== void 0 ? _5 : 'N/A',
-                        AccountNumber: (_6 = bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.accountNumber) !== null && _6 !== void 0 ? _6 : 'N/A',
+                        SortCode: (_3 = bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.sortCode) !== null && _3 !== void 0 ? _3 : 'N/A',
+                        AccountName: (_4 = bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.accountName) !== null && _4 !== void 0 ? _4 : 'N/A',
+                        AccountNumber: (_5 = bankDetails === null || bankDetails === void 0 ? void 0 : bankDetails.accountNumber) !== null && _5 !== void 0 ? _5 : 'N/A',
                         PaymentReference: 'N/A', // Not mapped
                         BuildingSocietyReference: 'N/A', // Not mapped
                         BankTelephone: 'N/A', // Not mapped

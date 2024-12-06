@@ -282,6 +282,9 @@ export class ApplicationController {
     }
   }
 
+  // Helper function to format phone numbers
+
+
   // New method for downloading all applicants' data as CSV
   static async downloadAllApplicantsCsv(req: Request, res: Response) {
     try {
@@ -291,19 +294,30 @@ export class ApplicationController {
       if (!allApplicants || allApplicants.length === 0) {
         return res.status(404).json({ message: 'No applicants found' });
       }
+
+      const formatPhoneNumber = (phone: string | undefined | null): string => {
+        if (!phone) return 'N/A'; // Return 'N/A' if the phone number is null or undefined
+        
+        // Clean the phone number by removing any non-digit characters
+        const cleanedPhone = phone.replace(/\D/g, '');
+      
+        // Return the formatted phone number with a '+' in front
+        return `+${cleanedPhone}`;
+      };
   
       // Map all applicants' data into the CSV structure
       const csvData = allApplicants.map(applicant => {
         const { personalDetails, user, contactDetails, professionalDetails, educationalDetails, bankDetails } = applicant;
   
         return {
-          Title: personalDetails?.title ?? 'N/A',
+          // Title: personalDetails?.gender == "Female" ? 'Miss' : 'Mr',
+          Title: personalDetails?.gender === "Female" ? "Miss" : personalDetails?.gender === "Male" ? "Mr" : "Others",
           Forename1: user?.firstName ?? 'N/A',
           Forename2: user?.middleName ?? 'N/A',
           Surname: user?.lastName ?? 'N/A',
           PreferredName: user?.firstName ?? 'N/A',
-          Telephone: contactDetails?.phone ?? 'N/A',
-          Mobile: contactDetails?.phone ?? 'N/A', // Assuming phone is used for both
+          Telephone: formatPhoneNumber(contactDetails?.phone) ?? 'N/A',
+          Mobile: formatPhoneNumber(contactDetails?.phone) ?? 'N/A', // Assuming phone is used for both
           Email: user?.email ?? 'N/A',
           Address: `${contactDetails?.address_line_1 ?? 'N/A'}, ${contactDetails?.town ?? 'N/A'}, ${contactDetails?.postcode ?? 'N/A'}`,
           Country: contactDetails?.country ?? 'N/A',
@@ -318,7 +332,7 @@ export class ApplicationController {
           DateStarted: professionalDetails?.[0]?.startDate ?? 'N/A',
           DateLeft: professionalDetails?.[0]?.endDate ?? 'N/A',
           Director: personalDetails?.passportPhoto ?? 'N/A', // Not mapped
-          DirectorStartDate: personalDetails?.ninProof ?? 'N/A', // This field is not mapped in your data
+          DirectorStartDate: personalDetails?.ninProof ?? 'N/A', 
           DirectorEndDate: 'N/A', // This field is not mapped in your data
           AlternativeDirectorsNIC: personalDetails?.visaDocument ?? 'N/A', // Not mapped
           PrimaryNICOnly: 'N/A', // Not mapped
