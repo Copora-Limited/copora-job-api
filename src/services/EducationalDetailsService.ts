@@ -2,6 +2,7 @@ import { EducationalDetails } from '../entities/EducationalDetailsEntity';
 import { AppDataSource } from '../data-source';
 
 const educationalDetailsRepository = AppDataSource.getRepository(EducationalDetails);
+
 export class EducationalDetailsService {
     
 
