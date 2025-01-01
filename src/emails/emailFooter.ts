@@ -11,15 +11,15 @@ export function emailFooter() {
                 gap: 15px;
                 align-items: center;
             ">
-              <a href="https://instagram.com/use_nidi" style="color: #000000; text-decoration: none;">
-                <img src="https://res.cloudinary.com/dhcikhvpu/image/upload/v1728681342/COPORA_IG_oc5r7i.png" alt="Instagram" style="width: 24px; height: 24px;">
-              </a>
-              <a href="https://x.com/usenidi?s=21&t=DJhnfOr8u2WipeCDcSFy9A" style="color: #000000; text-decoration: none;">
-                <img src="https://res.cloudinary.com/dhcikhvpu/image/upload/v1728681342/COPORA_X_gkddqh.png" alt="X (Twitter)" style="width: 24px; height: 24px;">
-              </a>
-              <a href="https://www.linkedin.com/company/usenidi/" style="color: #000000; text-decoration: none;">
+
+             <a href="https://www.linkedin.com/company/coporagroup/" style="color: #000000; text-decoration: none;">
                 <img src="https://res.cloudinary.com/dhcikhvpu/image/upload/v1728681653/COPORA_IN_mw4ldq_p6kjvr.png" alt="LinkedIn" style="width: 24px; height: 24px;">
               </a>
+
+              <a href="https://www.instagram.com/copora_recruitment/" style="color: #000000; text-decoration: none;">
+                <img src="https://res.cloudinary.com/dhcikhvpu/image/upload/v1728681342/COPORA_IG_oc5r7i.png" alt="Instagram" style="width: 24px; height: 24px;">
+              </a>
+            
               
             </div>
                 
