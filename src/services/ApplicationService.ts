@@ -23,9 +23,6 @@ export class ApplicationService {
   static async updateApplicationByNo(applicationNo: string, data: any) {
     // Implementation for updating an application by its number
   }
-
- 
-
   
   static async getApplicationByNo(applicationNo: string) {
     try {

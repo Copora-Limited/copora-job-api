@@ -20,6 +20,34 @@ export class GeneralInfoService {
         return await generalInfoRepository.findOneBy({ applicationNo });
     }
 
+    static async getOneByApplicationNo(applicationNo: string) {
+        const data = await generalInfoRepository.findOneBy({ applicationNo });
+
+        if (!data) {
+            throw new Error("General information not found.");
+        }
+
+        // Transform the data to ensure proper typing
+        return {
+            id: data.id,
+            applicationNo: data.applicationNo,
+            plateWaiting: data.plateWaiting === "true",
+            retailCashier: data.retailCashier === "true",
+            barWork: data.barWork === "true",
+            hospitality: data.hospitality === "true",
+            foodService: data.foodService === "true",
+            barista: data.barista === "true",
+            supervising: data.supervising === "true",
+            level2FoodHygieneCertificate: data.level2FoodHygieneCertificate === "true",
+            level2FoodHygieneCertificateUpload: data.level2FoodHygieneCertificateUpload || null,
+            personalLicenseHolder: data.personalLicenseHolder === "true",
+            personalLicenseCertificateUpload: data.personalLicenseCertificateUpload || null,
+            dbsDisclosureAndBarringService: data.dbsDisclosureAndBarringService === "true",
+            dbsCertificateUpload: data.dbsCertificateUpload || null,
+            attempted: Boolean(data.attempted),
+        };
+    }
+
     // Update PersonalDetails entry by applicationNo
     static async updateByApplicationNo(applicationNo: string, data: any) {
         const entry = await this.getByApplicationNo(applicationNo);

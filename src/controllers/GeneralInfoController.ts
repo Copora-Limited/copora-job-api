@@ -114,7 +114,7 @@ export class GeneralInfoController {
         console.log("req:", req.params);
         try {
             const { applicationNo } = req.params;
-            const entry = await GeneralInfoService.getByApplicationNo(applicationNo);
+            const entry = await GeneralInfoService.getOneByApplicationNo(applicationNo);
             console.log("entry:", entry);
     
             // Return an empty array if entry is not found

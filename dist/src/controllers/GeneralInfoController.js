@@ -93,7 +93,7 @@ class GeneralInfoController {
             console.log("req:", req.params);
             try {
                 const { applicationNo } = req.params;
-                const entry = yield GeneralInfoService_1.GeneralInfoService.getByApplicationNo(applicationNo);
+                const entry = yield GeneralInfoService_1.GeneralInfoService.getOneByApplicationNo(applicationNo);
                 console.log("entry:", entry);
                 // Return an empty array if entry is not found
                 if (!entry) {

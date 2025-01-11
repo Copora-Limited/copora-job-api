@@ -313,7 +313,8 @@ class ApplicationController {
                     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5;
                     const { personalDetails, user, contactDetails, professionalDetails, educationalDetails, bankDetails } = applicant;
                     return {
-                        Title: (personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.gender) == "Female" ? 'Miss' : 'Mr',
+                        // Title: personalDetails?.gender == "Female" ? 'Miss' : 'Mr',
+                        Title: (personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.gender) === "Female" ? "Miss" : (personalDetails === null || personalDetails === void 0 ? void 0 : personalDetails.gender) === "Male" ? "Mr" : "Others",
                         Forename1: (_a = user === null || user === void 0 ? void 0 : user.firstName) !== null && _a !== void 0 ? _a : 'N/A',
                         Forename2: (_b = user === null || user === void 0 ? void 0 : user.middleName) !== null && _b !== void 0 ? _b : 'N/A',
                         Surname: (_c = user === null || user === void 0 ? void 0 : user.lastName) !== null && _c !== void 0 ? _c : 'N/A',
