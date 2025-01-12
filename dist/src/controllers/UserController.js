@@ -942,5 +942,31 @@ class UserController {
             }
         });
     }
+    searchUsersByTags(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { tags } = req.body;
+                if (!tags || !Array.isArray(tags)) {
+                    return res.status(400).json({
+                        success: false,
+                        message: "Tags must be provided as an array.",
+                    });
+                }
+                // Call the service function to get users' emails
+                const emails = yield userService.findUsersByTags(tags);
+                return res.status(200).json({
+                    success: true,
+                    emails,
+                });
+            }
+            catch (error) {
+                console.error("Error searching users by tags:", error);
+                return res.status(500).json({
+                    success: false,
+                    message: "An error occurred while searching users.",
+                });
+            }
+        });
+    }
 }
 exports.default = new UserController();

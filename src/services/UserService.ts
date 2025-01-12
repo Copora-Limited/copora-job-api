@@ -1,4 +1,4 @@
-import { LessThan, MoreThan } from 'typeorm';
+import { Brackets, LessThan, MoreThan } from 'typeorm';
 import { AppDataSource } from '../data-source';
 import { User } from '../entities/UserEntity';
 import { UserRole } from '../constants';
@@ -372,6 +372,23 @@ export class UserService {
       .where('user.onboardingStatus = :onboardingStatus', { onboardingStatus: 'Approved' })
       .getMany();
   }
+
+  
+  async findUsersByTags(tags: string[]): Promise<string[]> {
+    const users = await userRepository
+      .createQueryBuilder("user")
+      .where(new Brackets((qb) => {
+        tags.forEach((tag) => {
+          qb.orWhere("user.tags ILIKE :tag", { tag: `%${tag}%` });
+        });
+      }))
+      .select("user.email")
+      .getMany();
+    
+    return users.map((user) => user.email);
+  }
+  
+  
   
 }
 

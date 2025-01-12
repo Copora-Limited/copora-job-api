@@ -378,5 +378,19 @@ class UserService {
                 .getMany();
         });
     }
+    findUsersByTags(tags) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const users = yield exports.userRepository
+                .createQueryBuilder("user")
+                .where(new typeorm_1.Brackets((qb) => {
+                tags.forEach((tag) => {
+                    qb.orWhere("user.tags ILIKE :tag", { tag: `%${tag}%` });
+                });
+            }))
+                .select("user.email")
+                .getMany();
+            return users.map((user) => user.email);
+        });
+    }
 }
 exports.UserService = UserService;

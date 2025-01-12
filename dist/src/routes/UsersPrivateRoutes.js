@@ -701,4 +701,77 @@ router.patch('/update-onboarding-status', UserController_1.default.updateOnboard
  *                   example: "Error details"
  */
 router.get('/onboarding-step/:applicationNo', UserController_1.default.getOnboardingStepByApplicationNo);
+/**
+ * @swagger
+ * /auth/users/search-by-tags:
+ *   post:
+ *     summary: Search users by tags
+ *     tags: [Admin - Private Endpoints]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: Array of tags to filter users by
+ *             example:
+ *               tags: ["Manchester", "Oxford"]
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved emails of users with matching tags.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Indicates if the request was successful
+ *                 emails:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: Array of email addresses for users with matching tags
+ *               example:
+ *                 success: true
+ *                 emails: ["user1@example.com", "user2@example.com"]
+ *       400:
+ *         description: Invalid input, tags must be provided as an array.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Indicates if the request was successful
+ *                 message:
+ *                   type: string
+ *                   description: Error message
+ *               example:
+ *                 success: false
+ *                 message: "Tags must be provided as an array."
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Indicates if the request was successful
+ *                 message:
+ *                   type: string
+ *                   description: Error message
+ *               example:
+ *                 success: false
+ *                 message: "An error occurred while searching users."
+ */
+router.post('/search-by-tags', UserController_1.default.searchUsersByTags);
 exports.default = router;
