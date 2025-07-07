@@ -109,9 +109,10 @@ data_source_1.AppDataSource.initialize()
           "http://localhost:4200",
           "http://localhost:5173",
           "http://localhost:5174",
-          "https://coporasystem-fe.vercel.app",
-          "https://coporajobs.netlify.app",
-          "https://staging-coporajobs.netlify.app",
+          //   "https://coporasystem-fe.vercel.app", // Deployed Frontend
+          //   "https://coporajobs.netlify.app",
+          //   "https://staging-coporajobs.netlify.app",
+          "https://copora-job-app-frontend.vercel.app",
         ],
         credentials: true,
       })
